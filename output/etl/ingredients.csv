@@ -1,0 +1,241 @@
+recipe_id,ingredient_name,quantity,unit
+aloo-paratha-10cfbd,Wheat flour,3,cups
+aloo-paratha-10cfbd,Boiled potatoes,4,medium
+aloo-paratha-10cfbd,Green chillies,2,pieces
+aloo-paratha-10cfbd,Coriander,2,tbsp
+aloo-paratha-10cfbd,Garam masala,0.5,tsp
+aloo-paratha-10cfbd,Salt,1,tsp
+aloo-paratha-10cfbd,Ghee or oil,3,tbsp
+aloo-paratha-10cfbd,Water,as needed,
+chicken-biryani-f5e5ca,Basmati rice,2,cups
+chicken-biryani-f5e5ca,Chicken (with bone),800,grams
+chicken-biryani-f5e5ca,Onions (fried),3,medium
+chicken-biryani-f5e5ca,Yogurt,1,cup
+chicken-biryani-f5e5ca,Ginger garlic paste,2,tbsp
+chicken-biryani-f5e5ca,Biryani masala,2,tbsp
+chicken-biryani-f5e5ca,Turmeric,0.5,tsp
+chicken-biryani-f5e5ca,Red chilli powder,1,tsp
+chicken-biryani-f5e5ca,Garam masala,1,tsp
+chicken-biryani-f5e5ca,Mint leaves,0.5,cup
+chicken-biryani-f5e5ca,Coriander leaves,0.5,cup
+chicken-biryani-f5e5ca,Fried onions,1,cup
+chicken-biryani-f5e5ca,Saffron,0.001,pinch
+chicken-biryani-f5e5ca,Milk (warm),2,tbsp
+chicken-biryani-f5e5ca,Ghee,2,tbsp
+chicken-biryani-f5e5ca,Salt,1.5,tsp
+chicken-biryani-f5e5ca,"Whole spices (bay leaf,cinnamon,cardamom,cloves)",1,tbsp
+chicken-biryani-f5e5ca,Oil,2,tbsp
+chicken-curry-8ae415,Chicken (cut),800,grams
+chicken-curry-8ae415,Onion,2,medium
+chicken-curry-8ae415,Tomato,2,medium
+chicken-curry-8ae415,Ginger garlic paste,1,tbsp
+chicken-curry-8ae415,Turmeric,0.5,tsp
+chicken-curry-8ae415,Red chilli powder,1,tsp
+chicken-curry-8ae415,Coriander powder,1,tbsp
+chicken-curry-8ae415,Garam masala,1,tsp
+chicken-curry-8ae415,Oil,3,tbsp
+chicken-curry-8ae415,Salt,1.5,tsp
+chicken-curry-8ae415,Coriander (garnish),2,tbsp
+chicken-tacos-da3bd6,Chicken breast (sliced),400,grams
+chicken-tacos-da3bd6,Taco spice mix,2,tbsp
+chicken-tacos-da3bd6,Tortillas,8,pieces
+chicken-tacos-da3bd6,Lettuce,1,cup shredded
+chicken-tacos-da3bd6,Tomato,1,cup diced
+chicken-tacos-da3bd6,Onion,0.5,cup chopped
+chicken-tacos-da3bd6,Oil,2,tbsp
+chicken-tacos-da3bd6,Sour cream (optional),4,tbsp
+chocolate-cake-f16dfc,All-purpose flour,1.5,cups
+chocolate-cake-f16dfc,Sugar,1,cup
+chocolate-cake-f16dfc,Cocoa powder,0.5,cup
+chocolate-cake-f16dfc,Baking powder,1,tsp
+chocolate-cake-f16dfc,Baking soda,0.5,tsp
+chocolate-cake-f16dfc,Salt,0.25,tsp
+chocolate-cake-f16dfc,Eggs,2,pieces
+chocolate-cake-f16dfc,Milk,0.5,cup
+chocolate-cake-f16dfc,Vegetable oil,0.5,cup
+chocolate-cake-f16dfc,Vanilla extract,1,tsp
+chocolate-cake-f16dfc,Hot water,0.5,cup
+chole-masala-9f567d,Chickpeas (soaked overnight),2,cups
+chole-masala-9f567d,Onion,2,medium
+chole-masala-9f567d,Tomato,3,medium
+chole-masala-9f567d,Ginger garlic paste,1,tbsp
+chole-masala-9f567d,Chole masala,2,tbsp
+chole-masala-9f567d,Red chilli powder,1,tsp
+chole-masala-9f567d,Amchur (dry mango),0.5,tsp
+chole-masala-9f567d,Oil,2,tbsp
+chole-masala-9f567d,Salt,1.5,tsp
+chole-masala-9f567d,Coriander,2,tbsp
+dal-tadka-c85b00,Toor dal,1,cup
+dal-tadka-c85b00,Turmeric,0.5,tsp
+dal-tadka-c85b00,Tomato,1,medium
+dal-tadka-c85b00,Garlic,4,cloves
+dal-tadka-c85b00,Ghee,2,tbsp
+dal-tadka-c85b00,Cumin seeds,1,tsp
+dal-tadka-c85b00,Red chilli,1,piece
+dal-tadka-c85b00,Curry leaves,5,leaves
+dal-tadka-c85b00,Salt,1,tsp
+dal-tadka-c85b00,Coriander (garnish),1,tbsp
+egg-fried-rice-72b54e,Cooked rice (day-old),2,cups
+egg-fried-rice-72b54e,Eggs,2,pieces
+egg-fried-rice-72b54e,Oil,2,tbsp
+egg-fried-rice-72b54e,Garlic,2,cloves
+egg-fried-rice-72b54e,Spring onions,2,tbsp
+egg-fried-rice-72b54e,Soy sauce,1,tbsp
+egg-fried-rice-72b54e,Salt,0.5,tsp
+egg-fried-rice-72b54e,Pepper,0.25,tsp
+gulab-jamun-728ea6,Milk powder,1,cup
+gulab-jamun-728ea6,All-purpose flour,0.25,cup
+gulab-jamun-728ea6,Baking soda (a pinch),0.01,tsp
+gulab-jamun-728ea6,Ghee or oil (for deep fry),500,ml
+gulab-jamun-728ea6,Milk (to knead),0.25,cup
+gulab-jamun-728ea6,Sugar,2,cups
+gulab-jamun-728ea6,Water,1.25,cups
+gulab-jamun-728ea6,Cardamom pods,4,pieces
+gulab-jamun-728ea6,Rose water (optional),1,tsp
+idli-sambar-975e40,Idli batter (rice+urad),4,cups
+idli-sambar-975e40,Toor dal,1,cup
+idli-sambar-975e40,Tamarind pulp,0.25,cup
+idli-sambar-975e40,Sambar powder,2,tbsp
+idli-sambar-975e40,"Mixed vegetables (drumstick, carrot, onion)",2,cups
+idli-sambar-975e40,Mustard seeds,1,tsp
+idli-sambar-975e40,Curry leaves,10,leaves
+idli-sambar-975e40,Oil,2,tbsp
+idli-sambar-975e40,Salt,1.5,tsp
+kheer-68fb1f,Basmati rice,0.25,cup
+kheer-68fb1f,Full cream milk,1,liter
+kheer-68fb1f,Sugar,0.5,cup
+kheer-68fb1f,Cardamom pods,3,pieces
+kheer-68fb1f,Saffron (optional),1,pinch
+kheer-68fb1f,Cashews & almonds (chopped),2,tbsp
+kheer-68fb1f,Raisins,1,tbsp
+khichdi-5072f67b,Rice,2,cups
+khichdi-5072f67b,Moong dal,0.5,cups
+khichdi-5072f67b,Toor dal,50,grams
+khichdi-5072f67b,Onions,2,medium
+khichdi-5072f67b,Tomato,1,small
+khichdi-5072f67b,Green chilies,4,pieces
+khichdi-5072f67b,Potato,1,small
+khichdi-5072f67b,Curry leaves,10,leaves
+khichdi-5072f67b,Coriander,15,grams
+khichdi-5072f67b,Jeera,1,tsp
+khichdi-5072f67b,Mustard seeds,0.25,tsp
+khichdi-5072f67b,Turmeric,0.5,tsp
+khichdi-5072f67b,Red chilli powder,1,tbsp
+khichdi-5072f67b,Ginger garlic paste,7,grams
+khichdi-5072f67b,Garam masala,1,tbsp
+khichdi-5072f67b,Salt,1,tbsp
+khichdi-5072f67b,Oil,20,ml
+khichdi-5072f67b,Water,4,cups
+masala-dosa-92a40e,Parboiled rice,3,cups
+masala-dosa-92a40e,Urad dal (split),1,cup
+masala-dosa-92a40e,Fenugreek seeds,1,tsp
+masala-dosa-92a40e,Potatoes,4,medium
+masala-dosa-92a40e,Onion,1,large
+masala-dosa-92a40e,Mustard seeds,1,tsp
+masala-dosa-92a40e,Curry leaves,10,leaves
+masala-dosa-92a40e,Turmeric,0.5,tsp
+masala-dosa-92a40e,Green chillies,2,pieces
+masala-dosa-92a40e,Oil/ghee,3,tbsp
+masala-dosa-92a40e,Salt,2,tsp
+masala-dosa-92a40e,Water (for batter),as needed,
+masala-dosa-92a40e,Corriander,2,tbsp
+paneer-butter-masala-800573,Paneer,250,grams
+paneer-butter-masala-800573,Butter,2,tbsp
+paneer-butter-masala-800573,Oil,1,tbsp
+paneer-butter-masala-800573,Onion,2,medium
+paneer-butter-masala-800573,Tomato,4,medium
+paneer-butter-masala-800573,Ginger garlic paste,1,tbsp
+paneer-butter-masala-800573,Cashews,12,pieces
+paneer-butter-masala-800573,Fresh cream,3,tbsp
+paneer-butter-masala-800573,Kashmiri red chilli powder,1.5,tsp
+paneer-butter-masala-800573,Turmeric powder,0.5,tsp
+paneer-butter-masala-800573,Coriander powder,1,tsp
+paneer-butter-masala-800573,Garam masala,1,tsp
+paneer-butter-masala-800573,Kasuri methi,1,tsp
+paneer-butter-masala-800573,Sugar,1,tsp
+paneer-butter-masala-800573,Salt,1,tsp
+paneer-butter-masala-800573,Water,0.5,cup
+paneer-butter-masala-800573,Coriander (garnish),2,tbsp
+paneer-butter-masala-800573,Cream (garnish),1,tsp
+pasta-alfredo-1a77fe,Fettuccine or pasta,200,grams
+pasta-alfredo-1a77fe,Butter,2,tbsp
+pasta-alfredo-1a77fe,Heavy cream,1,cup
+pasta-alfredo-1a77fe,Parmesan cheese,0.75,cup grated
+pasta-alfredo-1a77fe,Garlic (minced),2,cloves
+pasta-alfredo-1a77fe,Salt,0.5,tsp
+pasta-alfredo-1a77fe,Pepper,0.25,tsp
+pasta-alfredo-1a77fe,Parsley,1,tbsp chopped
+pav-bhaji-882dd3,Potatoes,4,medium
+pav-bhaji-882dd3,Cauliflower,1,cup chopped
+pav-bhaji-882dd3,Green peas,0.5,cup
+pav-bhaji-882dd3,Tomato,4,medium
+pav-bhaji-882dd3,Onion,2,medium
+pav-bhaji-882dd3,Pav bhaji masala,2,tbsp
+pav-bhaji-882dd3,Butter,3,tbsp
+pav-bhaji-882dd3,Oil,1,tbsp
+pav-bhaji-882dd3,Lemon,1,piece
+pav-bhaji-882dd3,Salt,1.5,tsp
+pav-bhaji-882dd3,Pav buns,8,pieces
+pav-bhaji-882dd3,Coriander (garnish),2,tbsp
+sweet-corn-soup-6ab0e5,Sweet corn (canned or boiled),1,cup
+sweet-corn-soup-6ab0e5,Vegetable stock or water,3,cups
+sweet-corn-soup-6ab0e5,Onion (finely chopped),1,small
+sweet-corn-soup-6ab0e5,Garlic (minced),2,cloves
+sweet-corn-soup-6ab0e5,Carrot (finely chopped),0.25,cup
+sweet-corn-soup-6ab0e5,Capsicum (finely chopped),0.25,cup
+sweet-corn-soup-6ab0e5,Cornflour,1.5,tbsp
+sweet-corn-soup-6ab0e5,"Egg (optional, beaten)",1,piece
+sweet-corn-soup-6ab0e5,Salt,1,tsp
+sweet-corn-soup-6ab0e5,Pepper,0.5,tsp
+sweet-corn-soup-6ab0e5,Spring onion,1,tbsp chopped
+sweet-corn-soup-6ab0e5,Oil,1,tbsp
+tomato-soup-a85541,Tomatoes (ripe),6,medium
+tomato-soup-a85541,Onion,1,small
+tomato-soup-a85541,Garlic,2,cloves
+tomato-soup-a85541,Vegetable stock or water,3,cups
+tomato-soup-a85541,Olive oil,1,tbsp
+tomato-soup-a85541,Sugar,0.5,tsp
+tomato-soup-a85541,Salt,1,tsp
+tomato-soup-a85541,Basil leaves (fresh),6,leaves
+tomato-soup-a85541,Cream (optional),1,tbsp
+tomato-soup-a85541,Pepper,0.25,tsp
+tomato-soup-a85541,Bread croutons (for serving),0.5,cup
+veg-burrito-62d582,Tortilla wraps,2,pieces
+veg-burrito-62d582,Cooked rice,1,cup
+veg-burrito-62d582,Black beans (cooked),0.5,cup
+veg-burrito-62d582,Corn,0.5,cup
+veg-burrito-62d582,Bell pepper,0.5,cup chopped
+veg-burrito-62d582,Onion,0.5,cup chopped
+veg-burrito-62d582,Salsa,3,tbsp
+veg-burrito-62d582,Cheese (optional),0.5,cup grated
+veg-burrito-62d582,Lettuce,0.5,cup shredded
+veg-hakka-noodles-c77a96,Hakka noodles,200,grams
+veg-hakka-noodles-c77a96,Oil,2,tbsp
+veg-hakka-noodles-c77a96,Garlic,3,cloves
+veg-hakka-noodles-c77a96,Green chillies,1,piece
+veg-hakka-noodles-c77a96,Onion,1,medium
+veg-hakka-noodles-c77a96,Cabbage,1,cup shredded
+veg-hakka-noodles-c77a96,Carrot,0.5,cup julienned
+veg-hakka-noodles-c77a96,Capsicum,0.5,cup julienned
+veg-hakka-noodles-c77a96,Spring onion greens,2,tbsp
+veg-hakka-noodles-c77a96,Soya sauce,1.5,tbsp
+veg-hakka-noodles-c77a96,Vinegar,1,tsp
+veg-hakka-noodles-c77a96,Chilli sauce,1,tsp
+veg-hakka-noodles-c77a96,Salt,1,tsp
+veg-hakka-noodles-c77a96,Pepper,0.5,tsp
+veg-manchurian-gravy-a8b654,Cabbage,1,cup finely shredded
+veg-manchurian-gravy-a8b654,Carrot,0.5,cup grated
+veg-manchurian-gravy-a8b654,Capsicum,0.5,cup finely chopped
+veg-manchurian-gravy-a8b654,Maida / All-purpose flour,3,tbsp
+veg-manchurian-gravy-a8b654,Cornflour,2,tbsp
+veg-manchurian-gravy-a8b654,Salt,0.75,tsp
+veg-manchurian-gravy-a8b654,Pepper,0.5,tsp
+veg-manchurian-gravy-a8b654,Oil (for frying),500,ml
+veg-manchurian-gravy-a8b654,Oil (for gravy),2,tbsp
+veg-manchurian-gravy-a8b654,Garlic,4,cloves minced
+veg-manchurian-gravy-a8b654,Ginger,1,tsp minced
+veg-manchurian-gravy-a8b654,Onion,1,medium chopped
+veg-manchurian-gravy-a8b654,Tomato ketchup,2,tbsp
+veg-manchurian-gravy-a8b654,Soya sauce,1,tbsp
+veg-manchurian-gravy-a8b654,Vinegar,1,tsp
+veg-manchurian-gravy-a8b654,Spring onion,2,tbsp chopped

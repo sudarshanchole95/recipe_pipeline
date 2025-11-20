@@ -1,0 +1,117 @@
+recipe_id,step_number,step_text
+aloo-paratha-10cfbd,1,Make a soft dough with wheat flour and water; rest 15 minutes.
+aloo-paratha-10cfbd,2,"Mash boiled potatoes, add chopped chillies, coriander, garam masala and salt."
+aloo-paratha-10cfbd,3,"Roll dough into small circle, place potato filling, seal and roll gently into paratha."
+aloo-paratha-10cfbd,4,Cook on tawa with ghee until golden brown on both sides; serve hot with curd or pickle.
+chicken-biryani-f5e5ca,1,Wash and soak basmati rice for 30 minutes.
+chicken-biryani-f5e5ca,2,"Marinate chicken with yogurt, ginger-garlic paste, biryani masala, red chilli, turmeric and salt for at least 30 minutes."
+chicken-biryani-f5e5ca,3,Fry onions until deep golden and set aside. Reserve some for garnish.
+chicken-biryani-f5e5ca,4,Par-cook rice in salted boiling water till 70% done; drain and keep aside.
+chicken-biryani-f5e5ca,5,"In a heavy bottom pan, heat ghee and oil, add whole spices and sauté for 30 seconds."
+chicken-biryani-f5e5ca,6,Add marinated chicken and cook until chicken is 80% done and oil separates.
+chicken-biryani-f5e5ca,7,"Layer half the rice over chicken, sprinkle half of mint, coriander and fried onions. Repeat layers."
+chicken-biryani-f5e5ca,8,"Dissolve saffron in warm milk and drizzle on top, add ghee."
+chicken-biryani-f5e5ca,9,Seal the pan with dough or tight lid and cook on low flame (dum) for 25-30 minutes.
+chicken-biryani-f5e5ca,10,Turn off heat and rest for 10 minutes before opening. Gently mix layers and serve hot with raita.
+chicken-curry-8ae415,1,"Heat oil, sauté onions until golden; add ginger-garlic paste and cook until raw smell disappears."
+chicken-curry-8ae415,2,Add tomato puree and cook until oil separates.
+chicken-curry-8ae415,3,"Add spices (turmeric, chilli, coriander) and mix; add chicken pieces and mix to coat."
+chicken-curry-8ae415,4,"Add water to cover chicken partly, simmer on medium-low for 25-30 minutes until chicken is cooked and gravy thickens."
+chicken-curry-8ae415,5,"Stir in garam masala, garnish with coriander and serve hot with rice or roti."
+chicken-tacos-da3bd6,1,Season chicken with taco spice and a pinch of salt; sauté in hot oil until cooked through.
+chicken-tacos-da3bd6,2,"Warm tortillas and layer with lettuce, chicken, tomato and onion."
+chicken-tacos-da3bd6,3,Top with sour cream or salsa and serve immediately.
+chocolate-cake-f16dfc,1,Preheat oven to 180°C (350°F). Grease and line a 8-inch cake pan.
+chocolate-cake-f16dfc,2,"In a bowl, sift flour, cocoa, baking powder, baking soda and salt."
+chocolate-cake-f16dfc,3,"In another bowl whisk eggs, sugar, oil and vanilla; mix with dry ingredients alternating with milk."
+chocolate-cake-f16dfc,4,Stir in hot water to make a smooth batter; pour into prepared pan and bake for 28-32 minutes until a skewer comes out clean.
+chocolate-cake-f16dfc,5,"Cool, remove from pan and frost or dust with cocoa as desired."
+chole-masala-9f567d,1,Pressure cook soaked chickpeas with salt until soft (about 6-7 whistles).
+chole-masala-9f567d,2,"Heat oil, add chopped onions and sauté until golden; add ginger-garlic paste and sauté briefly."
+chole-masala-9f567d,3,"Add tomato puree and cook until oil separates; add chole masala, red chilli and cook 1-2 minutes."
+chole-masala-9f567d,4,"Add cooked chickpeas, some of the cooking water, simmer for 10-12 minutes; add amchur and garnish with coriander."
+dal-tadka-c85b00,1,Rinse dal and cook with turmeric and water until soft (pressure cook 3-4 whistles).
+dal-tadka-c85b00,2,Mash dal to desired consistency and simmer for 4-5 minutes.
+dal-tadka-c85b00,3,"In a small pan, heat ghee, add cumin seeds, slit red chilli, garlic and curry leaves; sauté until garlic is golden."
+dal-tadka-c85b00,4,"Pour tadka over dal, mix well, garnish with coriander and serve with rice or roti."
+egg-fried-rice-72b54e,1,"Heat wok, add oil and scramble beaten eggs quickly; remove and set aside."
+egg-fried-rice-72b54e,2,"Add more oil, sauté garlic, then add cooked rice and toss on high heat."
+egg-fried-rice-72b54e,3,"Add soy sauce, salt, pepper and mix; fold in scrambled eggs and spring onions before serving."
+gulab-jamun-728ea6,1,"Make a smooth dough from milk powder, flour and milk; divide into small smooth balls without cracks."
+gulab-jamun-728ea6,2,Heat sugar and water to make a one-string syrup; add crushed cardamom and a dash of rose water.
+gulab-jamun-728ea6,3,Deep fry balls on low-medium heat until golden brown; drain briefly and transfer into warm sugar syrup. Let soak for 1-2 hours before serving.
+idli-sambar-975e40,1,Steam idlis from batter in idli moulds for 10–12 minutes until spongy.
+idli-sambar-975e40,2,Cook toor dal until soft and mash or blend to smooth consistency.
+idli-sambar-975e40,3,"In a pan, sauté vegetables, add sambar powder and tamarind pulp with water, bring to boil."
+idli-sambar-975e40,4,"Add cooked dal, simmer 7–8 minutes, finish with tadka of mustard seeds and curry leaves."
+idli-sambar-975e40,5,Serve hot idlis with sambar and coconut chutney.
+kheer-68fb1f,1,Wash rice and soak 15 minutes; drain.
+kheer-68fb1f,2,"Bring milk to a boil in a heavy-bottom pan; add rice and simmer on low, stirring frequently."
+kheer-68fb1f,3,Cook until rice is soft and milk reduces to creamy consistency (25-30 minutes).
+kheer-68fb1f,4,"Add sugar, cardamom, saffron, nuts and raisins; simmer 2-3 minutes more and serve warm or chilled."
+khichdi-5072f67b,1,"Wash rice, moong dal and toor dal thoroughly. Soak in water for 15 minutes, then drain."
+khichdi-5072f67b,2,"Peel and chop onions; chop tomatoes, green chilies and dice potatoes into small cubes. Keep curry leaves whole and finely chop coriander for garnish."
+khichdi-5072f67b,3,Place a 3–5 L pressure cooker on medium flame. Warm the cooker for 30–60 seconds and add oil; allow it to heat until it shimmers.
+khichdi-5072f67b,4,Add jeera and mustard seeds. Let them splutter for 20–30 seconds but do not burn.
+khichdi-5072f67b,5,"Add chopped onions and green chilies. Sauté for 3–4 minutes until onions turn light golden, stirring continuously."
+khichdi-5072f67b,6,Add chopped tomato and cook for 1–2 minutes until tomatoes soften and turn pulpy.
+khichdi-5072f67b,7,"Add salt, red chilli powder, turmeric, ginger-garlic paste, curry leaves and potato cubes. Mix and cook for 4–5 minutes to remove raw spice smell."
+khichdi-5072f67b,8,"Add soaked and drained rice, moong dal and toor dal. Mix gently to avoid breaking rice grains."
+khichdi-5072f67b,9,Pour 4 cups of water into the cooker and stir once. Check salt and adjust.
+khichdi-5072f67b,10,Close the cooker lid and place the whistle. Cook on medium flame for 3 whistles (~10–12 minutes).
+khichdi-5072f67b,11,Turn off the gas and allow the pressure to release naturally. Do not open immediately.
+khichdi-5072f67b,12,"Open the lid carefully once pressure is released. Add chopped coriander, mix gently and serve hot with ghee or curd."
+masala-dosa-92a40e,1,"Soak rice and urad dal with fenugreek separately for 4–6 hours. Grind to a smooth batter, mix and ferment overnight (8–12 hours)."
+masala-dosa-92a40e,2,"Boil potatoes, peel and mash lightly; in a pan heat oil, add mustard seeds, curry leaves and onions, sauté until soft."
+masala-dosa-92a40e,3,"Add turmeric and chopped green chillies, add mashed potatoes, salt and mix; cook 2–3 minutes and finish with coriander."
+masala-dosa-92a40e,4,"Heat a non-stick tawa, pour a ladle of batter and spread into a thin circle; drizzle oil around edges."
+masala-dosa-92a40e,5,"When dosa edges lift and bottom is golden, place potato masala on one side and fold; serve hot with sambar and chutney."
+paneer-butter-masala-800573,1,Soak cashews in warm water for 15 minutes and grind to a smooth paste with a tablespoon of water.
+paneer-butter-masala-800573,2,Heat butter and oil in a heavy-bottom pan on medium flame. Add finely chopped onions and sauté until translucent (4-5 minutes).
+paneer-butter-masala-800573,3,Add ginger-garlic paste and sauté for 30 seconds until raw smell disappears.
+paneer-butter-masala-800573,4,Add tomato puree and cook on medium heat until oil separates from the masala (6-7 minutes).
+paneer-butter-masala-800573,5,"Add Kashmiri red chilli, turmeric, coriander powder and salt. Mix well and cook for 1 minute."
+paneer-butter-masala-800573,6,"Stir in the cashew paste and 1/2 cup water. Cook for 2-3 minutes on low heat, stirring continuously."
+paneer-butter-masala-800573,7,Add paneer cubes gently and simmer for 3 minutes so paneer absorbs the gravy flavors.
+paneer-butter-masala-800573,8,"Stir in fresh cream, kasuri methi (crushed) and garam masala. Cook for 1 minute."
+paneer-butter-masala-800573,9,Add sugar to balance the acidity and taste; adjust salt if necessary.
+paneer-butter-masala-800573,10,"Turn off the heat, garnish with chopped coriander and a drizzle of cream."
+paneer-butter-masala-800573,11,"Serve hot with naan, roti or jeera rice."
+pasta-alfredo-1a77fe,1,Cook pasta according to package instructions until al dente; reserve 1/4 cup pasta water.
+pasta-alfredo-1a77fe,2,"In a pan, melt butter, sauté garlic briefly then add heavy cream and simmer 2 minutes."
+pasta-alfredo-1a77fe,3,Stir in grated parmesan until melted and smooth. Add cooked pasta and toss; use reserved pasta water to adjust consistency.
+pasta-alfredo-1a77fe,4,"Season with salt and pepper, garnish with parsley and serve immediately."
+pav-bhaji-882dd3,1,"Boil potatoes, cauliflower and peas until soft; mash roughly."
+pav-bhaji-882dd3,2,"In a large pan, heat butter and oil; sauté chopped onions until golden."
+pav-bhaji-882dd3,3,Add tomato puree and cook until oil separates; add pav bhaji masala and salt.
+pav-bhaji-882dd3,4,"Add mashed vegetables, adjust water and simmer for 8-10 minutes, mashing well to a thick consistency."
+pav-bhaji-882dd3,5,"Serve hot with buttered pav, chopped onions, coriander and lemon wedges."
+sweet-corn-soup-6ab0e5,1,Heat oil in a pot; sauté onions and garlic until soft.
+sweet-corn-soup-6ab0e5,2,Add carrots and capsicum and sauté for 1-2 minutes.
+sweet-corn-soup-6ab0e5,3,Add sweet corn and vegetable stock; bring to a gentle boil.
+sweet-corn-soup-6ab0e5,4,Mix cornflour with 3 tbsp water to make a slurry; slowly add to the soup while stirring to thicken.
+sweet-corn-soup-6ab0e5,5,"If using egg, slowly pour beaten egg in a thin stream while stirring to create egg ribbons."
+sweet-corn-soup-6ab0e5,6,"Season with salt and pepper, garnish with spring onion and serve hot."
+tomato-soup-a85541,1,"Blanch tomatoes in boiling water for 2 minutes, peel and roughly chop."
+tomato-soup-a85541,2,"Heat oil in a saucepan, sauté chopped onions and garlic until translucent."
+tomato-soup-a85541,3,Add chopped tomatoes and cook for 5-6 minutes until soft.
+tomato-soup-a85541,4,"Add stock, sugar and basil leaves; simmer for 10 minutes."
+tomato-soup-a85541,5,"Blend the soup until smooth, strain if desired, return to pot and adjust seasoning."
+tomato-soup-a85541,6,"Stir in a tablespoon of cream if using, garnish with basil and serve with croutons."
+veg-burrito-62d582,1,Warm tortillas on a pan for 20 seconds each to soften.
+veg-burrito-62d582,2,"Mix rice, beans, corn, sautéed onion and pepper, salsa and cheese."
+veg-burrito-62d582,3,"Place filling on tortilla, fold edges and roll tightly. Serve warm with salsa."
+veg-hakka-noodles-c77a96,1,"Boil noodles according to packet instructions with a little oil; drain, rinse in cold water and toss with a drop of oil to prevent sticking."
+veg-hakka-noodles-c77a96,2,"Heat wok, add oil and smashed garlic; sauté quickly."
+veg-hakka-noodles-c77a96,3,Add sliced onion and green chillies; stir-fry 1 minute until translucent.
+veg-hakka-noodles-c77a96,4,"Add shredded cabbage, carrots and capsicum; stir-fry on high heat for 2-3 minutes so vegetables remain crisp."
+veg-hakka-noodles-c77a96,5,"Add soy sauce, chilli sauce, vinegar, salt and pepper; toss well."
+veg-hakka-noodles-c77a96,6,Add noodles and toss vigorously on high heat for 1-2 minutes so sauces coat noodles evenly.
+veg-hakka-noodles-c77a96,7,Finish with spring onion greens and serve immediately.
+veg-manchurian-gravy-a8b654,1,"Combine shredded cabbage, carrot, capsicum with salt, pepper, cornflour and maida; mix to form a stiff mixture."
+veg-manchurian-gravy-a8b654,2,Shape mixture into small balls (manchurian balls) and deep fry in hot oil until golden brown; drain on paper towel.
+veg-manchurian-gravy-a8b654,3,"For gravy, heat 2 tbsp oil in a pan; add minced garlic and ginger and sauté until aromatic."
+veg-manchurian-gravy-a8b654,4,"Add chopped onion and sauté until soft; add ketchup, soy sauce and vinegar."
+veg-manchurian-gravy-a8b654,5,Add 1 cup water and bring to a simmer. Mix cornflour with a little water and add to thicken the gravy to desired consistency.
+veg-manchurian-gravy-a8b654,6,Add fried manchurian balls to the gravy and simmer for 2-3 minutes so flavors combine.
+veg-manchurian-gravy-a8b654,7,Garnish with chopped spring onion and serve hot with fried rice or noodles.

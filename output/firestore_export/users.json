@@ -1,0 +1,82 @@
+[
+    {
+        "joined_at": "2025-07-29T08:32:17.807586+00:00",
+        "city": "Mumbai",
+        "display_name": "Aditya Patel",
+        "account_level": "superfoodie",
+        "food_preferences": "vegan",
+        "id": "aditya_patel"
+    },
+    {
+        "joined_at": "2025-07-22T08:32:17.836180+00:00",
+        "city": "Bangalore",
+        "display_name": "ButterChickenBoss",
+        "account_level": "superfoodie",
+        "food_preferences": "eggetarian",
+        "id": "butterchickenboss"
+    },
+    {
+        "joined_at": "2023-10-18T08:32:17.934159+00:00",
+        "city": "Mumbai",
+        "display_name": "Kabir Singh",
+        "account_level": "regular",
+        "food_preferences": "vegan",
+        "id": "kabir_singh"
+    },
+    {
+        "joined_at": "2024-12-06T08:32:17.896020+00:00",
+        "city": "Bangalore",
+        "display_name": "NoodleNinja",
+        "account_level": "superfoodie",
+        "food_preferences": "eggetarian",
+        "id": "noodleninja"
+    },
+    {
+        "joined_at": "2025-02-24T08:32:17.634950+00:00",
+        "city": "Chennai",
+        "display_name": "Omar Hassan",
+        "account_level": "regular",
+        "food_preferences": "veg",
+        "id": "omar_hassan"
+    },
+    {
+        "joined_at": "2024-12-06T08:32:17.739086+00:00",
+        "city": "Hyderabad",
+        "display_name": "Priya Deshmukh",
+        "account_level": "superfoodie",
+        "food_preferences": "non-veg",
+        "id": "priya_deshmukh"
+    },
+    {
+        "joined_at": "2025-01-17T08:32:17.669299+00:00",
+        "city": "Pune",
+        "display_name": "SnackAttack",
+        "account_level": "superfoodie",
+        "food_preferences": "veg",
+        "id": "snackattack"
+    },
+    {
+        "joined_at": "2024-05-06T08:32:17.711552+00:00",
+        "city": "Pune",
+        "display_name": "Sofia Romano",
+        "account_level": "foodie",
+        "food_preferences": "non-veg",
+        "id": "sofia_romano"
+    },
+    {
+        "joined_at": "2024-12-08T08:32:17.869273+00:00",
+        "city": "Mumbai",
+        "display_name": "Sofia Romano",
+        "account_level": "regular",
+        "food_preferences": "non-veg",
+        "id": "sofia_romano_c21f"
+    },
+    {
+        "joined_at": "2024-02-14T08:32:17.775915+00:00",
+        "city": "Hyderabad",
+        "display_name": "SpiceQueen",
+        "account_level": "newbie",
+        "food_preferences": "eggetarian",
+        "id": "spicequeen"
+    }
+]

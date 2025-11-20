@@ -1,0 +1,51 @@
+id,user_id,recipe_id,type,timestamp,metadata_json,description
+int-07db5d08,kabir_singh,gulab-jamun-728ea6,view,2025-02-15T08:32:21.799923+00:00,"{""device"": ""mobile"", ""session_seconds"": 4}",Kabir Singh viewed Gulab Jamun
+int-0a7a66d5,omar_hassan,sweet-corn-soup-6ab0e5,attempt,2025-09-20T08:32:18.209353+00:00,"{""success"": true, ""time_taken_minutes"": 69}",Omar Hassan attempted Sweet Corn Soup (success)
+int-0ecde5a7,sofia_romano_c21f,veg-burrito-62d582,rating,2025-04-03T08:32:21.057429+00:00,"{""rating"": 4}",Sofia Romano rated Veg Burrito 4 stars
+int-11eeb1d8,snackattack,idli-sambar-975e40,like,2025-05-13T08:32:18.520752+00:00,{},SnackAttack liked Idli with Sambar
+int-13dd3cb9,noodleninja,kheer-68fb1f,rating,2025-08-20T08:32:21.384775+00:00,"{""rating"": 5}",NoodleNinja rated Kheer (Rice Pudding) 5 stars
+int-33351b7f,butterchickenboss,chicken-tacos-da3bd6,rating,2025-05-19T08:32:20.880479+00:00,"{""rating"": 3}",ButterChickenBoss rated Chicken Tacos 3 stars
+int-359672a3,butterchickenboss,khichdi-5072f67b,like,2025-09-08T08:32:20.779330+00:00,{},ButterChickenBoss liked Khichdi
+int-3d14f75c,priya_deshmukh,khichdi-5072f67b,attempt,2024-11-28T08:32:19.954971+00:00,"{""success"": true, ""time_taken_minutes"": 34}",Priya Deshmukh attempted Khichdi (success)
+int-40abef6d,snackattack,sweet-corn-soup-6ab0e5,attempt,2025-07-23T08:32:18.385841+00:00,"{""success"": false, ""time_taken_minutes"": 55}",SnackAttack attempted Sweet Corn Soup (failed)
+int-453cb956,aditya_patel,kheer-68fb1f,view,2025-11-20T08:32:20.482377+00:00,"{""device"": ""desktop"", ""session_seconds"": 8}",Aditya Patel viewed Kheer (Rice Pudding)
+int-45acaf08,aditya_patel,idli-sambar-975e40,like,2025-11-07T08:32:20.369779+00:00,{},Aditya Patel liked Idli with Sambar
+int-476a9a2f,sofia_romano,aloo-paratha-10cfbd,attempt,2025-04-10T08:32:18.912775+00:00,"{""success"": true, ""time_taken_minutes"": 85}",Sofia Romano attempted Aloo Paratha (success)
+int-4e426f7d,noodleninja,veg-hakka-noodles-c77a96,like,2025-06-03T08:32:21.532772+00:00,{},NoodleNinja liked Veg Hakka Noodles
+int-504caea9,sofia_romano,veg-hakka-noodles-c77a96,like,2025-10-30T08:32:19.150222+00:00,{},Sofia Romano liked Veg Hakka Noodles
+int-5bec61bd,snackattack,aloo-paratha-10cfbd,attempt,2025-04-19T08:32:18.450557+00:00,"{""success"": false, ""time_taken_minutes"": 30}",SnackAttack attempted Aloo Paratha (failed)
+int-5dd2f5c2,butterchickenboss,veg-manchurian-gravy-a8b654,rating,2024-11-22T08:32:20.830864+00:00,"{""rating"": 4}",ButterChickenBoss rated Veg Manchurian (Gravy) 4 stars
+int-66a49b06,kabir_singh,kheer-68fb1f,view,2024-12-14T08:32:21.734462+00:00,"{""device"": ""desktop"", ""session_seconds"": 13}",Kabir Singh viewed Kheer (Rice Pudding)
+int-708bbd07,snackattack,pasta-alfredo-1a77fe,attempt,2025-07-01T08:32:18.756866+00:00,"{""success"": true, ""time_taken_minutes"": 41}",SnackAttack attempted Pasta Alfredo (success)
+int-739abfcb,aditya_patel,chole-masala-9f567d,rating,2025-05-20T08:32:20.600006+00:00,"{""rating"": 4}",Aditya Patel rated Chole Masala 4 stars
+int-84743473,snackattack,masala-dosa-92a40e,rating,2024-12-18T08:32:18.607579+00:00,"{""rating"": 5}",SnackAttack rated Masala Dosa with Potato Masala 5 stars
+int-868caf6b,spicequeen,aloo-paratha-10cfbd,view,2025-05-30T08:32:20.179354+00:00,"{""device"": ""desktop"", ""session_seconds"": 4}",SpiceQueen viewed Aloo Paratha
+int-8baf358e,omar_hassan,veg-manchurian-gravy-a8b654,attempt,2025-04-05T08:32:18.271708+00:00,"{""success"": true, ""time_taken_minutes"": 41}",Omar Hassan attempted Veg Manchurian (Gravy) (success)
+int-8bd22036,noodleninja,gulab-jamun-728ea6,attempt,2025-02-17T08:32:21.454175+00:00,"{""success"": true, ""time_taken_minutes"": 72}",NoodleNinja attempted Gulab Jamun (success)
+int-9249fd7a,omar_hassan,chicken-biryani-f5e5ca,view,2025-05-02T08:32:18.138416+00:00,"{""device"": ""mobile"", ""session_seconds"": 7}",Omar Hassan viewed Chicken Biryani (Dum Style)
+int-950540e9,spicequeen,gulab-jamun-728ea6,attempt,2025-06-16T08:32:20.288679+00:00,"{""success"": false, ""time_taken_minutes"": 69}",SpiceQueen attempted Gulab Jamun (failed)
+int-983c8047,priya_deshmukh,chicken-tacos-da3bd6,like,2025-01-07T08:32:19.540036+00:00,{},Priya Deshmukh liked Chicken Tacos
+int-a5177ad1,spicequeen,veg-manchurian-gravy-a8b654,rating,2025-08-05T08:32:20.120303+00:00,"{""rating"": 4}",SpiceQueen rated Veg Manchurian (Gravy) 4 stars
+int-a62576cf,sofia_romano_c21f,idli-sambar-975e40,attempt,2025-01-19T08:32:21.116142+00:00,"{""success"": false, ""time_taken_minutes"": 25}",Sofia Romano attempted Idli with Sambar (failed)
+int-aef335ac,priya_deshmukh,sweet-corn-soup-6ab0e5,attempt,2025-10-08T08:32:19.892346+00:00,"{""success"": true, ""time_taken_minutes"": 44}",Priya Deshmukh attempted Sweet Corn Soup (success)
+int-af50e475,aditya_patel,chicken-tacos-da3bd6,attempt,2025-03-30T08:32:20.425340+00:00,"{""success"": false, ""time_taken_minutes"": 63}",Aditya Patel attempted Chicken Tacos (failed)
+int-b4cdbd90,aditya_patel,tomato-soup-a85541,view,2025-02-12T08:32:20.540942+00:00,"{""device"": ""mobile"", ""session_seconds"": 9}",Aditya Patel viewed Tomato Basil Soup
+int-b4d71361,butterchickenboss,chocolate-cake-f16dfc,rating,2025-08-16T08:32:20.674302+00:00,"{""rating"": 5}",ButterChickenBoss rated Chocolate Cake (One Bowl) 5 stars
+int-ba40502c,sofia_romano_c21f,veg-manchurian-gravy-a8b654,like,2025-05-06T08:32:21.007630+00:00,{},Sofia Romano liked Veg Manchurian (Gravy)
+int-be76b5aa,omar_hassan,tomato-soup-a85541,attempt,2025-05-08T08:32:18.067839+00:00,"{""success"": true, ""time_taken_minutes"": 88}",Omar Hassan attempted Tomato Basil Soup (success)
+int-c78d3982,sofia_romano,paneer-butter-masala-800573,rating,2025-05-15T08:32:18.843989+00:00,"{""rating"": 4}",Sofia Romano rated Paneer Butter Masala 4 stars
+int-cb9db962,sofia_romano_c21f,dal-tadka-c85b00,view,2025-05-03T08:32:20.952278+00:00,"{""device"": ""desktop"", ""session_seconds"": 7}",Sofia Romano viewed Dal Tadka (Yellow Lentils with Tadka)
+int-cebf1044,sofia_romano_c21f,egg-fried-rice-72b54e,view,2025-08-04T08:32:21.169518+00:00,"{""device"": ""desktop"", ""session_seconds"": 7}",Sofia Romano viewed Egg Fried Rice
+int-cef1aaf8,kabir_singh,chicken-tacos-da3bd6,attempt,2025-02-19T08:32:21.925452+00:00,"{""success"": true, ""time_taken_minutes"": 53}",Kabir Singh attempted Chicken Tacos (success)
+int-dc22d96c,spicequeen,pav-bhaji-882dd3,like,2025-06-14T08:32:20.057887+00:00,{},SpiceQueen liked Pav Bhaji
+int-e1b5992a,omar_hassan,chocolate-cake-f16dfc,attempt,2025-04-04T08:32:17.998365+00:00,"{""success"": false, ""time_taken_minutes"": 76}",Omar Hassan attempted Chocolate Cake (One Bowl) (failed)
+int-e38a9a9b,priya_deshmukh,veg-hakka-noodles-c77a96,rating,2025-10-21T08:32:19.646054+00:00,"{""rating"": 3}",Priya Deshmukh rated Veg Hakka Noodles 3 stars
+int-e932e46e,spicequeen,chicken-curry-8ae415,view,2025-01-26T08:32:20.230607+00:00,"{""device"": ""mobile"", ""session_seconds"": 14}",SpiceQueen viewed Home-style Chicken Curry
+int-ec6d93a3,sofia_romano,veg-burrito-62d582,view,2024-12-26T08:32:18.971451+00:00,"{""device"": ""desktop"", ""session_seconds"": 9}",Sofia Romano viewed Veg Burrito
+int-edee84be,priya_deshmukh,chicken-curry-8ae415,view,2025-08-26T08:32:19.750029+00:00,"{""device"": ""mobile"", ""session_seconds"": 4}",Priya Deshmukh viewed Home-style Chicken Curry
+int-ee8b066f,sofia_romano,tomato-soup-a85541,rating,2025-02-14T08:32:19.053617+00:00,"{""rating"": 4}",Sofia Romano rated Tomato Basil Soup 4 stars
+int-f00dcaf4,noodleninja,sweet-corn-soup-6ab0e5,rating,2025-04-17T08:32:21.255476+00:00,"{""rating"": 5}",NoodleNinja rated Sweet Corn Soup 5 stars
+int-f59701f8,butterchickenboss,pasta-alfredo-1a77fe,attempt,2024-11-29T08:32:20.725243+00:00,"{""success"": false, ""time_taken_minutes"": 69}",ButterChickenBoss attempted Pasta Alfredo (failed)
+int-f6b568f5,noodleninja,masala-dosa-92a40e,view,2025-10-02T08:32:21.322489+00:00,"{""device"": ""mobile"", ""session_seconds"": 13}",NoodleNinja viewed Masala Dosa with Potato Masala
+int-fdff3070,kabir_singh,masala-dosa-92a40e,view,2025-08-15T08:32:21.657365+00:00,"{""device"": ""mobile"", ""session_seconds"": 9}",Kabir Singh viewed Masala Dosa with Potato Masala
+int-fff97b76,kabir_singh,aloo-paratha-10cfbd,like,2025-03-28T08:32:21.859682+00:00,{},Kabir Singh liked Aloo Paratha

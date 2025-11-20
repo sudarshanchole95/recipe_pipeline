@@ -1,0 +1,563 @@
+[
+    {
+        "timestamp": "2025-02-15T08:32:21.799923+00:00",
+        "metadata": {
+            "device": "mobile",
+            "session_seconds": 4
+        },
+        "type": "view",
+        "recipe_id": "gulab-jamun-728ea6",
+        "id": "int-07db5d08",
+        "user_id": "kabir_singh",
+        "description": "Kabir Singh viewed Gulab Jamun"
+    },
+    {
+        "timestamp": "2025-09-20T08:32:18.209353+00:00",
+        "metadata": {
+            "success": true,
+            "time_taken_minutes": 69
+        },
+        "type": "attempt",
+        "recipe_id": "sweet-corn-soup-6ab0e5",
+        "id": "int-0a7a66d5",
+        "user_id": "omar_hassan",
+        "description": "Omar Hassan attempted Sweet Corn Soup (success)"
+    },
+    {
+        "timestamp": "2025-04-03T08:32:21.057429+00:00",
+        "metadata": {
+            "rating": 4
+        },
+        "type": "rating",
+        "recipe_id": "veg-burrito-62d582",
+        "id": "int-0ecde5a7",
+        "user_id": "sofia_romano_c21f",
+        "description": "Sofia Romano rated Veg Burrito 4 stars"
+    },
+    {
+        "timestamp": "2025-05-13T08:32:18.520752+00:00",
+        "metadata": {},
+        "type": "like",
+        "recipe_id": "idli-sambar-975e40",
+        "id": "int-11eeb1d8",
+        "user_id": "snackattack",
+        "description": "SnackAttack liked Idli with Sambar"
+    },
+    {
+        "timestamp": "2025-08-20T08:32:21.384775+00:00",
+        "metadata": {
+            "rating": 5
+        },
+        "type": "rating",
+        "recipe_id": "kheer-68fb1f",
+        "id": "int-13dd3cb9",
+        "user_id": "noodleninja",
+        "description": "NoodleNinja rated Kheer (Rice Pudding) 5 stars"
+    },
+    {
+        "timestamp": "2025-05-19T08:32:20.880479+00:00",
+        "metadata": {
+            "rating": 3
+        },
+        "type": "rating",
+        "recipe_id": "chicken-tacos-da3bd6",
+        "id": "int-33351b7f",
+        "user_id": "butterchickenboss",
+        "description": "ButterChickenBoss rated Chicken Tacos 3 stars"
+    },
+    {
+        "timestamp": "2025-09-08T08:32:20.779330+00:00",
+        "metadata": {},
+        "type": "like",
+        "recipe_id": "khichdi-5072f67b",
+        "id": "int-359672a3",
+        "user_id": "butterchickenboss",
+        "description": "ButterChickenBoss liked Khichdi"
+    },
+    {
+        "timestamp": "2024-11-28T08:32:19.954971+00:00",
+        "metadata": {
+            "success": true,
+            "time_taken_minutes": 34
+        },
+        "type": "attempt",
+        "recipe_id": "khichdi-5072f67b",
+        "id": "int-3d14f75c",
+        "user_id": "priya_deshmukh",
+        "description": "Priya Deshmukh attempted Khichdi (success)"
+    },
+    {
+        "timestamp": "2025-07-23T08:32:18.385841+00:00",
+        "metadata": {
+            "success": false,
+            "time_taken_minutes": 55
+        },
+        "type": "attempt",
+        "recipe_id": "sweet-corn-soup-6ab0e5",
+        "id": "int-40abef6d",
+        "user_id": "snackattack",
+        "description": "SnackAttack attempted Sweet Corn Soup (failed)"
+    },
+    {
+        "timestamp": "2025-11-20T08:32:20.482377+00:00",
+        "metadata": {
+            "device": "desktop",
+            "session_seconds": 8
+        },
+        "type": "view",
+        "recipe_id": "kheer-68fb1f",
+        "id": "int-453cb956",
+        "user_id": "aditya_patel",
+        "description": "Aditya Patel viewed Kheer (Rice Pudding)"
+    },
+    {
+        "timestamp": "2025-11-07T08:32:20.369779+00:00",
+        "metadata": {},
+        "type": "like",
+        "recipe_id": "idli-sambar-975e40",
+        "id": "int-45acaf08",
+        "user_id": "aditya_patel",
+        "description": "Aditya Patel liked Idli with Sambar"
+    },
+    {
+        "timestamp": "2025-04-10T08:32:18.912775+00:00",
+        "metadata": {
+            "success": true,
+            "time_taken_minutes": 85
+        },
+        "type": "attempt",
+        "recipe_id": "aloo-paratha-10cfbd",
+        "id": "int-476a9a2f",
+        "user_id": "sofia_romano",
+        "description": "Sofia Romano attempted Aloo Paratha (success)"
+    },
+    {
+        "timestamp": "2025-06-03T08:32:21.532772+00:00",
+        "metadata": {},
+        "type": "like",
+        "recipe_id": "veg-hakka-noodles-c77a96",
+        "id": "int-4e426f7d",
+        "user_id": "noodleninja",
+        "description": "NoodleNinja liked Veg Hakka Noodles"
+    },
+    {
+        "timestamp": "2025-10-30T08:32:19.150222+00:00",
+        "metadata": {},
+        "type": "like",
+        "recipe_id": "veg-hakka-noodles-c77a96",
+        "id": "int-504caea9",
+        "user_id": "sofia_romano",
+        "description": "Sofia Romano liked Veg Hakka Noodles"
+    },
+    {
+        "timestamp": "2025-04-19T08:32:18.450557+00:00",
+        "metadata": {
+            "success": false,
+            "time_taken_minutes": 30
+        },
+        "type": "attempt",
+        "recipe_id": "aloo-paratha-10cfbd",
+        "id": "int-5bec61bd",
+        "user_id": "snackattack",
+        "description": "SnackAttack attempted Aloo Paratha (failed)"
+    },
+    {
+        "timestamp": "2024-11-22T08:32:20.830864+00:00",
+        "metadata": {
+            "rating": 4
+        },
+        "type": "rating",
+        "recipe_id": "veg-manchurian-gravy-a8b654",
+        "id": "int-5dd2f5c2",
+        "user_id": "butterchickenboss",
+        "description": "ButterChickenBoss rated Veg Manchurian (Gravy) 4 stars"
+    },
+    {
+        "timestamp": "2024-12-14T08:32:21.734462+00:00",
+        "metadata": {
+            "device": "desktop",
+            "session_seconds": 13
+        },
+        "type": "view",
+        "recipe_id": "kheer-68fb1f",
+        "id": "int-66a49b06",
+        "user_id": "kabir_singh",
+        "description": "Kabir Singh viewed Kheer (Rice Pudding)"
+    },
+    {
+        "timestamp": "2025-07-01T08:32:18.756866+00:00",
+        "metadata": {
+            "success": true,
+            "time_taken_minutes": 41
+        },
+        "type": "attempt",
+        "recipe_id": "pasta-alfredo-1a77fe",
+        "id": "int-708bbd07",
+        "user_id": "snackattack",
+        "description": "SnackAttack attempted Pasta Alfredo (success)"
+    },
+    {
+        "timestamp": "2025-05-20T08:32:20.600006+00:00",
+        "metadata": {
+            "rating": 4
+        },
+        "type": "rating",
+        "recipe_id": "chole-masala-9f567d",
+        "id": "int-739abfcb",
+        "user_id": "aditya_patel",
+        "description": "Aditya Patel rated Chole Masala 4 stars"
+    },
+    {
+        "timestamp": "2024-12-18T08:32:18.607579+00:00",
+        "metadata": {
+            "rating": 5
+        },
+        "type": "rating",
+        "recipe_id": "masala-dosa-92a40e",
+        "id": "int-84743473",
+        "user_id": "snackattack",
+        "description": "SnackAttack rated Masala Dosa with Potato Masala 5 stars"
+    },
+    {
+        "timestamp": "2025-05-30T08:32:20.179354+00:00",
+        "metadata": {
+            "device": "desktop",
+            "session_seconds": 4
+        },
+        "type": "view",
+        "recipe_id": "aloo-paratha-10cfbd",
+        "id": "int-868caf6b",
+        "user_id": "spicequeen",
+        "description": "SpiceQueen viewed Aloo Paratha"
+    },
+    {
+        "timestamp": "2025-04-05T08:32:18.271708+00:00",
+        "metadata": {
+            "success": true,
+            "time_taken_minutes": 41
+        },
+        "type": "attempt",
+        "recipe_id": "veg-manchurian-gravy-a8b654",
+        "id": "int-8baf358e",
+        "user_id": "omar_hassan",
+        "description": "Omar Hassan attempted Veg Manchurian (Gravy) (success)"
+    },
+    {
+        "timestamp": "2025-02-17T08:32:21.454175+00:00",
+        "metadata": {
+            "success": true,
+            "time_taken_minutes": 72
+        },
+        "type": "attempt",
+        "recipe_id": "gulab-jamun-728ea6",
+        "id": "int-8bd22036",
+        "user_id": "noodleninja",
+        "description": "NoodleNinja attempted Gulab Jamun (success)"
+    },
+    {
+        "timestamp": "2025-05-02T08:32:18.138416+00:00",
+        "metadata": {
+            "device": "mobile",
+            "session_seconds": 7
+        },
+        "type": "view",
+        "recipe_id": "chicken-biryani-f5e5ca",
+        "id": "int-9249fd7a",
+        "user_id": "omar_hassan",
+        "description": "Omar Hassan viewed Chicken Biryani (Dum Style)"
+    },
+    {
+        "timestamp": "2025-06-16T08:32:20.288679+00:00",
+        "metadata": {
+            "success": false,
+            "time_taken_minutes": 69
+        },
+        "type": "attempt",
+        "recipe_id": "gulab-jamun-728ea6",
+        "id": "int-950540e9",
+        "user_id": "spicequeen",
+        "description": "SpiceQueen attempted Gulab Jamun (failed)"
+    },
+    {
+        "timestamp": "2025-01-07T08:32:19.540036+00:00",
+        "metadata": {},
+        "type": "like",
+        "recipe_id": "chicken-tacos-da3bd6",
+        "id": "int-983c8047",
+        "user_id": "priya_deshmukh",
+        "description": "Priya Deshmukh liked Chicken Tacos"
+    },
+    {
+        "timestamp": "2025-08-05T08:32:20.120303+00:00",
+        "metadata": {
+            "rating": 4
+        },
+        "type": "rating",
+        "recipe_id": "veg-manchurian-gravy-a8b654",
+        "id": "int-a5177ad1",
+        "user_id": "spicequeen",
+        "description": "SpiceQueen rated Veg Manchurian (Gravy) 4 stars"
+    },
+    {
+        "timestamp": "2025-01-19T08:32:21.116142+00:00",
+        "metadata": {
+            "success": false,
+            "time_taken_minutes": 25
+        },
+        "type": "attempt",
+        "recipe_id": "idli-sambar-975e40",
+        "id": "int-a62576cf",
+        "user_id": "sofia_romano_c21f",
+        "description": "Sofia Romano attempted Idli with Sambar (failed)"
+    },
+    {
+        "timestamp": "2025-10-08T08:32:19.892346+00:00",
+        "metadata": {
+            "success": true,
+            "time_taken_minutes": 44
+        },
+        "type": "attempt",
+        "recipe_id": "sweet-corn-soup-6ab0e5",
+        "id": "int-aef335ac",
+        "user_id": "priya_deshmukh",
+        "description": "Priya Deshmukh attempted Sweet Corn Soup (success)"
+    },
+    {
+        "timestamp": "2025-03-30T08:32:20.425340+00:00",
+        "metadata": {
+            "success": false,
+            "time_taken_minutes": 63
+        },
+        "type": "attempt",
+        "recipe_id": "chicken-tacos-da3bd6",
+        "id": "int-af50e475",
+        "user_id": "aditya_patel",
+        "description": "Aditya Patel attempted Chicken Tacos (failed)"
+    },
+    {
+        "timestamp": "2025-02-12T08:32:20.540942+00:00",
+        "metadata": {
+            "device": "mobile",
+            "session_seconds": 9
+        },
+        "type": "view",
+        "recipe_id": "tomato-soup-a85541",
+        "id": "int-b4cdbd90",
+        "user_id": "aditya_patel",
+        "description": "Aditya Patel viewed Tomato Basil Soup"
+    },
+    {
+        "timestamp": "2025-08-16T08:32:20.674302+00:00",
+        "metadata": {
+            "rating": 5
+        },
+        "type": "rating",
+        "recipe_id": "chocolate-cake-f16dfc",
+        "id": "int-b4d71361",
+        "user_id": "butterchickenboss",
+        "description": "ButterChickenBoss rated Chocolate Cake (One Bowl) 5 stars"
+    },
+    {
+        "timestamp": "2025-05-06T08:32:21.007630+00:00",
+        "metadata": {},
+        "type": "like",
+        "recipe_id": "veg-manchurian-gravy-a8b654",
+        "id": "int-ba40502c",
+        "user_id": "sofia_romano_c21f",
+        "description": "Sofia Romano liked Veg Manchurian (Gravy)"
+    },
+    {
+        "timestamp": "2025-05-08T08:32:18.067839+00:00",
+        "metadata": {
+            "success": true,
+            "time_taken_minutes": 88
+        },
+        "type": "attempt",
+        "recipe_id": "tomato-soup-a85541",
+        "id": "int-be76b5aa",
+        "user_id": "omar_hassan",
+        "description": "Omar Hassan attempted Tomato Basil Soup (success)"
+    },
+    {
+        "timestamp": "2025-05-15T08:32:18.843989+00:00",
+        "metadata": {
+            "rating": 4
+        },
+        "type": "rating",
+        "recipe_id": "paneer-butter-masala-800573",
+        "id": "int-c78d3982",
+        "user_id": "sofia_romano",
+        "description": "Sofia Romano rated Paneer Butter Masala 4 stars"
+    },
+    {
+        "timestamp": "2025-05-03T08:32:20.952278+00:00",
+        "metadata": {
+            "device": "desktop",
+            "session_seconds": 7
+        },
+        "type": "view",
+        "recipe_id": "dal-tadka-c85b00",
+        "id": "int-cb9db962",
+        "user_id": "sofia_romano_c21f",
+        "description": "Sofia Romano viewed Dal Tadka (Yellow Lentils with Tadka)"
+    },
+    {
+        "timestamp": "2025-08-04T08:32:21.169518+00:00",
+        "metadata": {
+            "device": "desktop",
+            "session_seconds": 7
+        },
+        "type": "view",
+        "recipe_id": "egg-fried-rice-72b54e",
+        "id": "int-cebf1044",
+        "user_id": "sofia_romano_c21f",
+        "description": "Sofia Romano viewed Egg Fried Rice"
+    },
+    {
+        "timestamp": "2025-02-19T08:32:21.925452+00:00",
+        "metadata": {
+            "success": true,
+            "time_taken_minutes": 53
+        },
+        "type": "attempt",
+        "recipe_id": "chicken-tacos-da3bd6",
+        "id": "int-cef1aaf8",
+        "user_id": "kabir_singh",
+        "description": "Kabir Singh attempted Chicken Tacos (success)"
+    },
+    {
+        "timestamp": "2025-06-14T08:32:20.057887+00:00",
+        "metadata": {},
+        "type": "like",
+        "recipe_id": "pav-bhaji-882dd3",
+        "id": "int-dc22d96c",
+        "user_id": "spicequeen",
+        "description": "SpiceQueen liked Pav Bhaji"
+    },
+    {
+        "timestamp": "2025-04-04T08:32:17.998365+00:00",
+        "metadata": {
+            "success": false,
+            "time_taken_minutes": 76
+        },
+        "type": "attempt",
+        "recipe_id": "chocolate-cake-f16dfc",
+        "id": "int-e1b5992a",
+        "user_id": "omar_hassan",
+        "description": "Omar Hassan attempted Chocolate Cake (One Bowl) (failed)"
+    },
+    {
+        "timestamp": "2025-10-21T08:32:19.646054+00:00",
+        "metadata": {
+            "rating": 3
+        },
+        "type": "rating",
+        "recipe_id": "veg-hakka-noodles-c77a96",
+        "id": "int-e38a9a9b",
+        "user_id": "priya_deshmukh",
+        "description": "Priya Deshmukh rated Veg Hakka Noodles 3 stars"
+    },
+    {
+        "timestamp": "2025-01-26T08:32:20.230607+00:00",
+        "metadata": {
+            "device": "mobile",
+            "session_seconds": 14
+        },
+        "type": "view",
+        "recipe_id": "chicken-curry-8ae415",
+        "id": "int-e932e46e",
+        "user_id": "spicequeen",
+        "description": "SpiceQueen viewed Home-style Chicken Curry"
+    },
+    {
+        "timestamp": "2024-12-26T08:32:18.971451+00:00",
+        "metadata": {
+            "device": "desktop",
+            "session_seconds": 9
+        },
+        "type": "view",
+        "recipe_id": "veg-burrito-62d582",
+        "id": "int-ec6d93a3",
+        "user_id": "sofia_romano",
+        "description": "Sofia Romano viewed Veg Burrito"
+    },
+    {
+        "timestamp": "2025-08-26T08:32:19.750029+00:00",
+        "metadata": {
+            "device": "mobile",
+            "session_seconds": 4
+        },
+        "type": "view",
+        "recipe_id": "chicken-curry-8ae415",
+        "id": "int-edee84be",
+        "user_id": "priya_deshmukh",
+        "description": "Priya Deshmukh viewed Home-style Chicken Curry"
+    },
+    {
+        "timestamp": "2025-02-14T08:32:19.053617+00:00",
+        "metadata": {
+            "rating": 4
+        },
+        "type": "rating",
+        "recipe_id": "tomato-soup-a85541",
+        "id": "int-ee8b066f",
+        "user_id": "sofia_romano",
+        "description": "Sofia Romano rated Tomato Basil Soup 4 stars"
+    },
+    {
+        "timestamp": "2025-04-17T08:32:21.255476+00:00",
+        "metadata": {
+            "rating": 5
+        },
+        "type": "rating",
+        "recipe_id": "sweet-corn-soup-6ab0e5",
+        "id": "int-f00dcaf4",
+        "user_id": "noodleninja",
+        "description": "NoodleNinja rated Sweet Corn Soup 5 stars"
+    },
+    {
+        "timestamp": "2024-11-29T08:32:20.725243+00:00",
+        "metadata": {
+            "success": false,
+            "time_taken_minutes": 69
+        },
+        "type": "attempt",
+        "recipe_id": "pasta-alfredo-1a77fe",
+        "id": "int-f59701f8",
+        "user_id": "butterchickenboss",
+        "description": "ButterChickenBoss attempted Pasta Alfredo (failed)"
+    },
+    {
+        "timestamp": "2025-10-02T08:32:21.322489+00:00",
+        "metadata": {
+            "device": "mobile",
+            "session_seconds": 13
+        },
+        "type": "view",
+        "recipe_id": "masala-dosa-92a40e",
+        "id": "int-f6b568f5",
+        "user_id": "noodleninja",
+        "description": "NoodleNinja viewed Masala Dosa with Potato Masala"
+    },
+    {
+        "timestamp": "2025-08-15T08:32:21.657365+00:00",
+        "metadata": {
+            "device": "mobile",
+            "session_seconds": 9
+        },
+        "type": "view",
+        "recipe_id": "masala-dosa-92a40e",
+        "id": "int-fdff3070",
+        "user_id": "kabir_singh",
+        "description": "Kabir Singh viewed Masala Dosa with Potato Masala"
+    },
+    {
+        "timestamp": "2025-03-28T08:32:21.859682+00:00",
+        "metadata": {},
+        "type": "like",
+        "recipe_id": "aloo-paratha-10cfbd",
+        "id": "int-fff97b76",
+        "user_id": "kabir_singh",
+        "description": "Kabir Singh liked Aloo Paratha"
+    }
+]
