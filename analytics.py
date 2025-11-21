@@ -2,53 +2,46 @@
 analytics.py
 
 Advanced Analytics Module for Recipe Pipeline.
-- Calculates derived metrics (Engagement Rate, ROI, Complexity).
-- Generates professional visualization charts.
-- Prepends a Data Quality Summary (from validation_results.json) after Executive Summary.
-- Outputs:
-  - output/analytics/charts/*.png
-  - output/analytics/analytics_summary.md
+- Generates 10+ professional visualization charts using Seaborn.
+- Calculates 14+ deep business insights (ROI, Viral Score, Conversion Rates).
+- Integrates Data Quality checks into the final report.
 """
 
 from __future__ import annotations
 import os
 import json
-import math
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import seaborn as sns
 from typing import Dict, Any
 
-# Optional visualization niceties
+# --- Configuration & Aesthetics ---
 try:
-    import seaborn as sns
-    sns.set_theme(style="whitegrid")
+    # Set font_scale to 0.8 to ensure text fits, use a clean theme
+    sns.set_theme(style="whitegrid", context="talk", font_scale=0.8, palette="viridis")
     HAS_SEABORN = True
 except Exception:
     HAS_SEABORN = False
+    print("Warning: Seaborn not found. Charts will look basic.")
 
-# Paths (adjust if your structure differs)
+# Paths
 INPUT_DIR = os.path.join("output", "etl")
 VALIDATION_JSON = os.path.join("output", "validation", "validation_results.json")
 ANALYTICS_DIR = os.path.join("output", "analytics")
 CHARTS_DIR = os.path.join(ANALYTICS_DIR, "charts")
 MD_REPORT = os.path.join(ANALYTICS_DIR, "analytics_summary.md")
 
-# Possible CSV names
+# Input Files
 RECIPE_CSV = os.path.join(INPUT_DIR, "recipe.csv")
 RECIPE_CSV_ALT = os.path.join(INPUT_DIR, "recipes.csv")
 INGREDIENTS_CSV = os.path.join(INPUT_DIR, "ingredients.csv")
 STEPS_CSV = os.path.join(INPUT_DIR, "steps.csv")
 INTERACTIONS_CSV = os.path.join(INPUT_DIR, "interactions.csv")
 
-
-# -------------------------
-# Utilities
-# -------------------------
 def ensure_dirs():
     os.makedirs(CHARTS_DIR, exist_ok=True)
     os.makedirs(ANALYTICS_DIR, exist_ok=True)
-
 
 def safe_load_json(path: str) -> Dict[str, Any]:
     try:
@@ -57,320 +50,335 @@ def safe_load_json(path: str) -> Dict[str, Any]:
     except Exception:
         return {}
 
-
-def percent(part: int, whole: int) -> float:
-    if whole <= 0:
-        return 0.0
-    return 100.0 * (part / whole)
-
-
-# -------------------------
-# Load Data
-# -------------------------
+# ---------------------------------------------------------
+# 1. Data Loading
+# ---------------------------------------------------------
 def load_data():
-    # choose which recipe csv exists
+    """Loads CSVs into Pandas DataFrames with type safety."""
     recipe_path = RECIPE_CSV if os.path.exists(RECIPE_CSV) else (RECIPE_CSV_ALT if os.path.exists(RECIPE_CSV_ALT) else None)
-    if recipe_path is None:
-        raise FileNotFoundError("recipe.csv (or recipes.csv) not found in output/etl. Run ETL first.")
-    df_recipe = pd.read_csv(recipe_path).fillna("")
-    df_ing = pd.read_csv(INGREDIENTS_CSV).fillna("") if os.path.exists(INGREDIENTS_CSV) else pd.DataFrame()
-    df_steps = pd.read_csv(STEPS_CSV).fillna("") if os.path.exists(STEPS_CSV) else pd.DataFrame()
-    df_inter = pd.read_csv(INTERACTIONS_CSV).fillna("") if os.path.exists(INTERACTIONS_CSV) else pd.DataFrame()
+    if not recipe_path:
+        raise FileNotFoundError("ETL output not found. Run 'python pipeline.py' first.")
+    
+    df_r = pd.read_csv(recipe_path).fillna("")
+    df_i = pd.read_csv(INGREDIENTS_CSV).fillna("") if os.path.exists(INGREDIENTS_CSV) else pd.DataFrame()
+    df_s = pd.read_csv(STEPS_CSV).fillna("") if os.path.exists(STEPS_CSV) else pd.DataFrame()
+    df_int = pd.read_csv(INTERACTIONS_CSV).fillna("") if os.path.exists(INTERACTIONS_CSV) else pd.DataFrame()
 
-    # normalize column names
-    df_recipe.columns = df_recipe.columns.str.strip()
-    df_ing.columns = df_ing.columns.str.strip()
-    df_steps.columns = df_steps.columns.str.strip()
-    df_inter.columns = df_inter.columns.str.strip()
+    # Numeric Conversions
+    for col in ["prep_time_min", "cook_time_min", "total_time_min"]:
+        if col in df_r.columns:
+            df_r[col] = pd.to_numeric(df_r[col], errors="coerce").fillna(0)
+            
+    return df_r, df_i, df_s, df_int
 
-    # numeric conversions (defensive)
-    for col in ["prep_time_min", "cook_time_min", "total_time_min", "servings"]:
-        if col in df_recipe.columns:
-            df_recipe[col] = pd.to_numeric(df_recipe[col], errors="coerce").fillna(0)
+# ---------------------------------------------------------
+# 2. Advanced Metric Calculation
+# ---------------------------------------------------------
+def calculate_advanced_metrics(df_r, df_i, df_int):
+    """Derives complex KPIs: ROI, Engagement Score, Complexity, Conversion."""
+    
+    # 1. Interaction Aggregates
+    int_agg = df_int.groupby("recipe_id").agg(
+        views=("type", lambda x: (x == "view").sum()),
+        likes=("type", lambda x: (x == "like").sum()),
+        attempts=("type", lambda x: (x == "attempt").sum()),
+        total_interactions=("type", "count")
+    ).reset_index()
 
-    # parse metadata_json if present
-    if "metadata_json" in df_inter.columns:
-        df_inter["metadata"] = df_inter["metadata_json"].apply(lambda x: json.loads(x) if x and isinstance(x, str) else {})
-    else:
-        df_inter["metadata"] = [{} for _ in range(len(df_inter))]
-
-    return df_recipe, df_ing, df_steps, df_inter
-
-
-# -------------------------
-# Validation Summary handling
-# -------------------------
-def build_validation_summary(validation_path: str):
-    """
-    Loads validation_results.json and returns a dict suitable for embedding into the markdown,
-    plus draws a bar chart of issue counts.
-    """
-    v = safe_load_json(validation_path)
-    # If empty, make a "no issues" structure
-    if not v:
-        return {
-            "total_recipes": 0,
-            "checks": {},
-            "total_issues": 0,
-            "overall_score": 100.0
-        }
-
-    total_recipes = v.get("total_recipes", v.get("total_recipes", 0))
-    checks = v.get("checks", {})
-
-    # Flatten to list of categories with counts and severity emoji
-    items = []
-    total_issue_count = 0
-    for key, meta in checks.items():
-        count = meta.get("count", 0)
-        severity = meta.get("severity", "Low")
-        emoji = meta.get("severity_emoji", "🟢")
-        details = meta.get("details", [])
-        pct = percent(count, total_recipes) if total_recipes > 0 else 0.0
-        items.append({
-            "key": key,
-            "count": count,
-            "pct": pct,
-            "severity": severity,
-            "emoji": emoji,
-            "details": details
-        })
-        total_issue_count += count
-
-    # Compute an overall Data Quality Score: simpler, interpretable
-    # score = 100 - (total_issue_count / max(1,total_recipes)) * 100  (clamp to 0..100)
-    issue_rate = total_issue_count / max(1, total_recipes)
-    quality_score = max(0.0, min(100.0, 100.0 - issue_rate * 100.0))
-
-    # Draw bar chart (only categories with count>0 shown prominently, else show all with small bars)
-    chart_path = os.path.join(CHARTS_DIR, "validation_issues.png")
-    try:
-        labels = [it["key"] for it in items]
-        values = [it["count"] for it in items]
-        plt.figure(figsize=(10, 5))
-        if HAS_SEABORN:
-            # FIX APPLIED HERE: Added hue=labels and legend=False to satisfy Seaborn v0.14+
-            sns.barplot(x=values, y=labels, hue=labels, legend=False, palette="rocket")
-        else:
-            plt.barh(range(len(labels)), values, color="tab:orange")
-            plt.yticks(range(len(labels)), labels)
-        plt.title("Validation Issues (counts by category)")
-        plt.xlabel("Count")
-        plt.tight_layout()
-        plt.savefig(chart_path)
-        plt.close()
-    except Exception as e:
-        # if chart fails, still continue
-        chart_path = None
-
-    summary = {
-        "total_recipes": total_recipes,
-        "checks_list": items,
-        "total_issues": total_issue_count,
-        "overall_score": round(quality_score, 2),
-        "chart_path": chart_path
-    }
-    return summary
-
-
-# -------------------------
-# Analytics core (existing functionality simplified & reused)
-# -------------------------
-def compute_interaction_aggregates(df_inter: pd.DataFrame) -> pd.DataFrame:
-    agg = (
-        df_inter.groupby("recipe_id")
-        .agg(
-            views=("type", lambda x: (x == "view").sum()),
-            likes=("type", lambda x: (x == "like").sum()),
-            attempts=("type", lambda x: (x == "attempt").sum()),
-            events_count=("type", "count"),
-            unique_users=("user_id", lambda x: x.nunique())
-        )
-        .reset_index()
-    )
-    ratings = df_inter[df_inter["type"] == "rating"].copy()
-    if not ratings.empty:
-        def extract_rating(m):
-            if not isinstance(m, dict):
-                return np.nan
-            for k in ("rating", "rating_value", "stars", "score"):
-                if k in m:
-                    try:
-                        return float(m[k])
-                    except Exception:
-                        return np.nan
-            return np.nan
-        ratings["rating_value"] = ratings["metadata"].apply(extract_rating)
-        avg_rating = ratings.groupby("recipe_id").agg(avg_rating=("rating_value", "mean")).reset_index()
+    # 2. Rating Calculation
+    ratings = df_int[df_int["type"] == "rating"].copy()
+    if not ratings.empty and "metadata_json" in ratings.columns:
+        def get_rating(x):
+            try:
+                if isinstance(x, str) and "{" in x:
+                    d = json.loads(x)
+                    return float(d.get("rating", d.get("score", 0)))
+                return 0.0
+            except:
+                return 0.0
+        ratings["score"] = ratings["metadata_json"].apply(get_rating)
+        avg_rating = ratings.groupby("recipe_id")["score"].mean().reset_index(name="avg_rating")
     else:
         avg_rating = pd.DataFrame(columns=["recipe_id", "avg_rating"])
-    agg = agg.merge(avg_rating, on="recipe_id", how="left")
-    agg["avg_rating"] = pd.to_numeric(agg.get("avg_rating", 0)).fillna(0)
-    return agg
 
+    # 3. Ingredient Counts
+    ing_counts = df_i.groupby("recipe_id").size().reset_index(name="ingredient_count")
 
-def compute_recipe_metrics(df_recipe: pd.DataFrame, df_ing: pd.DataFrame, inter_agg: pd.DataFrame) -> pd.DataFrame:
-    ing_count = df_ing.groupby("recipe_id").size().reset_index(name="num_ingredients") if not df_ing.empty else pd.DataFrame(columns=["recipe_id","num_ingredients"])
-    df = df_recipe.copy()
-    if "id" not in df.columns:
-        df["id"] = df.index.astype(str)
-    df = df.merge(ing_count, left_on="id", right_on="recipe_id", how="left").drop(columns=["recipe_id"], errors="ignore")
-    df["num_ingredients"] = pd.to_numeric(df.get("num_ingredients", 0), errors="coerce").fillna(0).astype(int)
-    df = df.merge(inter_agg, left_on="id", right_on="recipe_id", how="left").drop(columns=["recipe_id"], errors="ignore")
-
-    # fill missing numeric interaction fields
-    for c in ["views", "likes", "attempts", "events_count", "unique_users"]:
+    # 4. Merge into Master DataFrame
+    if "id" not in df_r.columns: df_r["id"] = df_r.index # fallback
+    df = df_r.merge(int_agg, left_on="id", right_on="recipe_id", how="left")
+    df = df.merge(avg_rating, left_on="id", right_on="recipe_id", how="left")
+    df = df.merge(ing_counts, left_on="id", right_on="recipe_id", how="left")
+    
+    # Fill NaNs
+    cols_to_fill = ["views", "likes", "attempts", "total_interactions", "ingredient_count", "avg_rating"]
+    for c in cols_to_fill:
         if c in df.columns:
-            df[c] = pd.to_numeric(df[c], errors="coerce").fillna(0).astype(int)
+            df[c] = df[c].fillna(0)
         else:
             df[c] = 0
-    df["avg_rating"] = pd.to_numeric(df.get("avg_rating", 0), errors="coerce").fillna(0)
 
-    df["engagement_rate"] = df.apply(lambda r: (r["likes"] / r["views"]) if r["views"] > 0 else 0.0, axis=1)
-    df["total_time_min"] = pd.to_numeric(df.get("total_time_min", 0), errors="coerce").fillna(0)
-    df["complexity_score"] = (df["total_time_min"] / 10) + df["num_ingredients"]
-    df["roi"] = df.apply(lambda r: (r["avg_rating"] / r["total_time_min"]) if r["total_time_min"] > 0 else 0.0, axis=1)
+    # 5. Derived KPIs
+    # Engagement Rate: (Likes + Attempts) / Views
+    df["engagement_rate"] = df.apply(lambda x: ((x["likes"] + x["attempts"]) / x["views"] * 100) if x["views"] > 0 else 0, axis=1)
+    
+    # Conversion Rate: Attempts / Views
+    df["conversion_rate"] = df.apply(lambda x: (x["attempts"] / x["views"] * 100) if x["views"] > 0 else 0, axis=1)
+
+    # Complexity Score: Weighted mix of time (60%) and ingredients (40%)
+    df["complexity_score"] = (
+        (df["total_time_min"].clip(upper=120) / 120) * 60 + 
+        (df["ingredient_count"].clip(upper=20) / 20) * 40
+    )
+
+    # ROI (Return on Investment): Rating points per minute of cooking
+    df["roi_score"] = df.apply(lambda x: (x["avg_rating"] / x["total_time_min"]) if x["total_time_min"] > 0 else 0, axis=1)
+
     return df
 
-
-# -------------------------
-# Reporting: write markdown with Data Quality Summary after Executive Summary
-# -------------------------
-def write_markdown_report(validation_summary: dict, insights: dict, df_metrics: pd.DataFrame):
-    lines = []
-    # Title + Exec Summary
-    lines.append("# Analytics Summary\n")
-    lines.append("Generated by analytics.py\n")
-    lines.append("\n## Executive Summary\n")
-    lines.append(insights.get("executive_summary", "This report summarizes recipe performance.") + "\n")
-
-    # --- Data Quality Summary (NEW, placed after Executive Summary) ---
-    lines.append("## 🛡 Data Quality Summary\n")
-    total_recipes = validation_summary.get("total_recipes", 0)
-    overall = validation_summary.get("overall_score", 100.0)
-    lines.append(f"- **Overall Data Quality Score:** **{overall:.2f}%**\n")
-    lines.append(f"- **Total recipes checked:** {total_recipes}\n")
-    lines.append(f"- **Total issues detected:** {validation_summary.get('total_issues', 0)}\n")
-    lines.append("\n### Issues by Category\n")
-    for it in validation_summary.get("checks_list", []):
-        lines.append(f"- {it['emoji']} **{it['key']}** — {it['count']} ({it['pct']:.2f}% of recipes) — Severity: {it['severity']}")
-        # optionally include details (first 3)
-        if it.get("details"):
-            sample = it["details"][:3]
-            lines.append(f"   - Details (sample): {sample}")
-    # embed chart if exists (use relative path)
-    chart_path = validation_summary.get("chart_path")
-    if chart_path:
-        # Use path relative to analytics dir for nicer rendering on GitHub pages if needed
-        rel = os.path.relpath(chart_path, ANALYTICS_DIR).replace("\\", "/")
-        lines.append("\n![Validation Issues](" + "charts/" + os.path.basename(chart_path) + ")\n")
-
-    # --- Key Insights ---
-    lines.append("\n## Key Insights\n")
-    for i, ins in enumerate(insights.get("insights", []), start=1):
-        lines.append(f"### Insight {i}: {ins.get('title')}\n")
-        lines.append(ins.get("text", "") + "\n")
-
-    # Recommendations
-    lines.append("\n## Recommendations\n")
-    for rec in insights.get("recommendations", []):
-        lines.append(f"- {rec}\n")
-
-    # Quick stats
-    lines.append("\n## Quick Statistics\n")
-    total_recipes_analyzed = len(df_metrics)
-    events_total = int(df_metrics["events_count"].sum()) if "events_count" in df_metrics.columns else 0
-    avg_engagement = df_metrics["engagement_rate"].mean() if "engagement_rate" in df_metrics.columns else 0
-    lines.append(f"- Total recipes analyzed: **{total_recipes_analyzed}**")
-    lines.append(f"- Total interactions analyzed: **{events_total}**")
-    lines.append(f"- Average engagement rate: **{avg_engagement:.2%}**\n")
-
-    # Write file
-    with open(MD_REPORT, "w", encoding="utf-8") as fh:
-        fh.write("\n".join(lines))
-    print(f"✔ Markdown report written to: {MD_REPORT}")
-
-
-# -------------------------
-# Top-level controller
-# -------------------------
-def run_analytics():
-    ensure_dirs()
-    # load validation summary first (so chart is available to embed)
-    validation_summary = build_validation_summary(VALIDATION_JSON)
-
-    # load data
-    df_recipe, df_ing, df_steps, df_inter = load_data()
-    # compute aggregates & metrics
-    inter_agg = compute_interaction_aggregates(df_inter)
-    df_metrics = compute_recipe_metrics(df_recipe, df_ing, inter_agg)
-
-    # Build insights (you can expand these; using a few examples)
-    insights = {
-        "executive_summary": "This report computes engagement, ROI, complexity and other derived metrics to surface content strategy recommendations.",
-        "insights": [
-            {"title": "Most common ingredients", "text": "See the Top Ingredients chart for the most-used pantry items."},
-            {"title": "Difficulty distribution", "text": "Distribution by difficulty provides insight into audience preference."},
-            {"title": "Prep time vs rating", "text": "Scatter plot inspects whether longer prep correlates with higher ratings."},
-        ],
-        "recommendations": [
-            "Promote quick-win (low complexity, high ROI) recipes.",
-            "Augment metadata for recipes missing 'occasion' or 'nutrition_groups'.",
-            "Prioritize social promotion for high-engagement recipes."
-        ]
-    }
-
-    # Generate a few charts (top ingredients, top engagement, correlation) - reuse your previous functions or simple plotting
-    # Top ingredients chart (safe)
-    if not df_ing.empty and "ingredient_name" in df_ing.columns:
-        top = df_ing["ingredient_name"].value_counts().head(15)
-        path = os.path.join(CHARTS_DIR, "top_ingredients.png")
-        plt.figure(figsize=(9, 6))
-        if HAS_SEABORN:
-            # Added optional polish here too for consistency
-            sns.barplot(x=top.values, y=list(top.index), hue=list(top.index), legend=False)
-        else:
-            plt.barh(list(range(len(top.index))), top.values, color="tab:blue")
-            plt.yticks(range(len(top.index)), list(top.index))
-        plt.title("Top 15 Ingredients")
-        plt.xlabel("Count")
+# ---------------------------------------------------------
+# 3. Aesthetic Chart Generation (10 Charts)
+# ---------------------------------------------------------
+def generate_charts(df, df_i, df_int):
+    print("   Generating 10+ aesthetic charts...")
+    
+    def save_plot(filename):
         plt.tight_layout()
-        plt.savefig(path); plt.close()
+        plt.savefig(os.path.join(CHARTS_DIR, filename), dpi=150, bbox_inches="tight")
+        plt.close()
 
-    # Top engagement
-    if "engagement_rate" in df_metrics.columns:
-        top_eng = df_metrics.sort_values("engagement_rate", ascending=False).head(10)
-        path = os.path.join(CHARTS_DIR, "top_engagement_rate.png")
-        plt.figure(figsize=(9, 6))
-        if HAS_SEABORN:
-            # Added optional polish here too for consistency
-            sns.barplot(x=top_eng["engagement_rate"], y=top_eng["title"], hue=top_eng["title"], legend=False)
+    # 1. Top 10 Ingredients
+    if not df_i.empty:
+        top_ing = df_i["ingredient_name"].value_counts().head(10)
+        plt.figure(figsize=(10, 6))
+        sns.barplot(y=top_ing.index, x=top_ing.values, hue=top_ing.index, palette="mako", legend=False)
+        plt.title("Most Popular Ingredients (Supply Chain)")
+        plt.xlabel("Number of Recipes Using This Ingredient") # Explicit Label
+        save_plot("1_top_ingredients.png")
+
+    # 2. Difficulty Distribution
+    if "difficulty" in df.columns:
+        data = df["difficulty"].value_counts()
+        plt.figure(figsize=(6, 6))
+        plt.pie(data, labels=data.index, autopct='%1.1f%%', colors=sns.color_palette("pastel"), startangle=90, pctdistance=0.85)
+        plt.gca().add_artist(plt.Circle((0,0),0.70,fc='white'))
+        plt.title("Recipe Difficulty Distribution")
+        save_plot("2_difficulty_donut.png")
+
+    # 3. Prep Time vs Rating
+    plt.figure(figsize=(8, 6))
+    sns.regplot(data=df[df["avg_rating"] > 0], x="prep_time_min", y="avg_rating", scatter_kws={'alpha':0.5}, line_kws={'color':'red'})
+    plt.title("Does More Prep Time = Better Taste?")
+    plt.xlabel("Preparation Time (Minutes)") # Explicit Label
+    plt.ylabel("Average User Rating (1-5 Stars)") # Explicit Label
+    save_plot("3_time_vs_rating.png")
+
+    # 4. Engagement Rate Leaders
+    top_eng = df.nlargest(10, "engagement_rate")
+    if not top_eng.empty:
+        plt.figure(figsize=(10, 6))
+        sns.barplot(data=top_eng, x="engagement_rate", y="title", hue="title", palette="viridis", legend=False)
+        plt.title("Top 10 Viral Recipes (Engagement Rate)")
+        plt.xlabel("Engagement Rate (%) (Likes/Views)") # Explicit Label
+        plt.ylabel("")
+        save_plot("4_viral_recipes.png")
+
+    # 5. Cuisine Popularity
+    if "cuisine" in df.columns:
+        plt.figure(figsize=(10, 5))
+        order = df["cuisine"].value_counts().index
+        if not order.empty:
+            sns.countplot(data=df, y="cuisine", hue="cuisine", palette="Set2", order=order, legend=False)
+            plt.title("Cuisine Popularity")
+            plt.xlabel("Number of Recipes") # Explicit Label
+            save_plot("5_cuisine_popularity.png")
+
+    # 6. Complexity vs. Difficulty
+    if "difficulty" in df.columns:
+        plt.figure(figsize=(8, 6))
+        sns.boxplot(data=df, x="difficulty", y="complexity_score", hue="difficulty", palette="coolwarm", legend=False)
+        plt.title("Calculated Complexity Score by Label")
+        plt.ylabel("Complexity Score (0-100)") # Explicit Label
+        save_plot("6_complexity_validation.png")
+
+    # 7. Interaction Funnel
+    if not df_int.empty:
+        plt.figure(figsize=(8, 5))
+        sns.countplot(data=df_int, x="type", hue="type", palette="autumn", legend=False)
+        plt.title("User Interaction Funnel")
+        plt.xlabel("Interaction Type") # Explicit Label
+        plt.ylabel("Count of Events") # Explicit Label
+        save_plot("7_interaction_funnel.png")
+
+    # 8. Quick Wins Analysis [FIXED LABELS]
+    plt.figure(figsize=(10, 7))
+    sns.scatterplot(data=df, x="total_time_min", y="avg_rating", hue="difficulty", size="views", sizes=(50, 300), alpha=0.7)
+    plt.axvline(30, color='green', linestyle='--') 
+    plt.axhline(4.0, color='green', linestyle='--') 
+    plt.title("Quick Wins Analysis (Target: Top-Left Quadrant)")
+    # ADDED EXPLICIT LABELS HERE
+    plt.xlabel("Total Cooking Time (Minutes) - Lower is Faster") 
+    plt.ylabel("Average Rating (Stars) - Higher is Better")
+    save_plot("8_quick_wins.png")
+
+    # 9. Heatmap of Correlations [FIXED SIZE]
+    numeric_cols = df.select_dtypes(include=np.number)
+    if not numeric_cols.empty and len(numeric_cols.columns) > 1:
+        plt.figure(figsize=(14, 12)) # Large size for readability
+        sns.heatmap(numeric_cols.corr(), annot=True, fmt=".2f", cmap="RdBu", center=0, annot_kws={"size": 9})
+        plt.title("Metric Correlation Matrix")
+        save_plot("9_correlation_matrix.png")
+        
+    # 10. Ingredient Count Distribution [FIXED LABELS]
+    plt.figure(figsize=(8, 5))
+    sns.kdeplot(data=df, x="ingredient_count", fill=True, color="purple", alpha=0.4)
+    plt.title("Ingredient Complexity Distribution")
+    # ADDED EXPLICIT LABELS HERE
+    plt.xlabel("Number of Ingredients in Recipe")
+    plt.ylabel("Density (Frequency of Occurrence)")
+    save_plot("10_ingredient_density.png")
+
+# ---------------------------------------------------------
+# 4. Text Insight Generation
+# ---------------------------------------------------------
+def extract_text_insights(df, df_i):
+    """Generates text-based insights for the report."""
+    insights = []
+    
+    top_ing = df_i["ingredient_name"].mode()[0] if not df_i.empty else "N/A"
+    insights.append({"title": "Top Ingredient", "value": f"'{top_ing}' appears most frequently."})
+    
+    avg_time = df["prep_time_min"].mean()
+    insights.append({"title": "Average Prep Time", "value": f"{avg_time:.1f} minutes."})
+    
+    if not df.empty:
+        leader = df.loc[df["engagement_rate"].idxmax()]["title"]
+        val = df["engagement_rate"].max()
+        insights.append({"title": "Viral Leader", "value": f"'{leader}' ({val:.1f}% engagement)."})
+    
+    if "difficulty" in df.columns:
+        hard_pct = (len(df[df["difficulty"]=="Hard"]) / len(df)) * 100
+        insights.append({"title": "Difficulty Balance", "value": f"{hard_pct:.1f}% of recipes are 'Hard'."})
+        
+    quick_wins = len(df[(df["total_time_min"] < 30) & (df["avg_rating"] >= 4.0)])
+    insights.append({"title": "Quick Wins", "value": f"{quick_wins} recipes are <30mins & rated 4+ stars."})
+    
+    insights.append({"title": "Global Quality Score", "value": f"{df['avg_rating'].mean():.2f} / 5.0 Stars."})
+
+    corr = df["total_time_min"].corr(df["avg_rating"])
+    insights.append({"title": "Time/Quality Correlation", "value": f"{corr:.2f} (Positive means longer = better)."})
+
+    avg_complex = df["complexity_score"].mean()
+    insights.append({"title": "Avg Complexity Score", "value": f"{avg_complex:.1f} / 100."})
+    
+    insights.append({"title": "Total Interactions", "value": f"{df['total_interactions'].sum()} user events."})
+    
+    if "cuisine" in df.columns:
+        top_c = df["cuisine"].mode()[0] if not df["cuisine"].mode().empty else "N/A"
+        insights.append({"title": "Dominant Cuisine", "value": top_c})
+
+    avg_conv = df["conversion_rate"].mean()
+    insights.append({"title": "Avg Conversion Rate", "value": f"{avg_conv:.1f}% of viewers attempt to cook."})
+
+    if not df.empty:
+        roi_leader = df.loc[df["roi_score"].idxmax()]["title"]
+        insights.append({"title": "Best ROI Recipe", "value": f"'{roi_leader}' (Highest rating per minute spent)."})
+
+    if not df.empty:
+        most_liked = df.loc[df["likes"].idxmax()]["title"]
+        insights.append({"title": "Crowd Favorite", "value": f"'{most_liked}' has the most likes."})
+        
+    if not df.empty:
+        complex_r = df.loc[df["ingredient_count"].idxmax()]["title"]
+        count = df["ingredient_count"].max()
+        insights.append({"title": "Most Complex", "value": f"'{complex_r}' uses {int(count)} ingredients."})
+
+    return insights
+
+# ---------------------------------------------------------
+# 5. Report Writing
+# ---------------------------------------------------------
+def write_report(df, insights, validation_summary):
+    print("   Writing analytics_summary.md...")
+    
+    with open(MD_REPORT, "w", encoding="utf-8") as f:
+        f.write("# 📊 Recipe Pipeline Analytics & Insights\n\n")
+        f.write(f"**Generated:** {pd.Timestamp.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+        f.write(f"**Total Recipes Analyzed:** {len(df)}\n\n")
+        
+        # --- Validation Section ---
+        f.write("## 🛡 1. Data Quality Summary\n")
+        if validation_summary:
+            overall = validation_summary.get("overall_score", 100.0)
+            f.write(f"- **Data Health Score:** {overall:.1f}%\n")
+            f.write(f"- **Total Issues:** {validation_summary.get('total_issues', 0)}\n")
+            f.write("\n**Issues by Category:**\n")
+            for it in validation_summary.get("checks_list", []):
+                f.write(f"- {it['emoji']} **{it['key']}**: {it['count']} issues\n")
         else:
-            plt.barh(top_eng["title"], top_eng["engagement_rate"], color="tab:green")
-        plt.title("Top 10 Recipes by Engagement Rate")
-        plt.xlabel("Engagement Rate (likes/views)")
-        plt.tight_layout(); plt.savefig(path); plt.close()
+            f.write("No validation data found.\n")
+        
+        # --- Insights Section ---
+        f.write("\n## 📈 2. Business Insights\n")
+        for i, insight in enumerate(insights, 1):
+            f.write(f"{i}. **{insight['title']}:** {insight['value']}\n")
+            
+        # --- Top Lists ---
+        f.write("\n## 🏆 3. High-Performance Leaderboard\n")
+        if not df.empty:
+            cols = ["title", "difficulty", "engagement_rate", "views", "avg_rating"]
+            cols = [c for c in cols if c in df.columns]
+            top_5 = df.nlargest(5, "engagement_rate")[cols]
+            f.write(top_5.to_markdown(index=False))
+        
+        # --- Recommendations ---
+        f.write("\n\n## 💡 4. Strategic Recommendations\n")
+        f.write("- **Promote 'Quick Wins':** Focus marketing on recipes under 30 mins with >4.0 rating.\n")
+        f.write("- **Optimize Titles:** High view count but low conversion indicates misleading titles.\n")
+        f.write("- **Supply Chain:** Ensure stock for the top 3 ingredients shown in Chart 1.\n")
+        
+        f.write("\n## 📊 5. Visualizations\n")
+        f.write("All 10 professional charts are saved in: `output/analytics/charts/`\n")
 
-    # Correlation heatmap (numeric)
-    numeric_cols = [c for c in ["prep_time_min","cook_time_min","total_time_min","num_ingredients","views","likes","avg_rating","engagement_rate","roi","complexity_score"] if c in df_metrics.columns]
-    if numeric_cols:
-        nm = df_metrics[numeric_cols].fillna(0)
-        path = os.path.join(CHARTS_DIR, "correlation_heatmap.png")
-        plt.figure(figsize=(10, 8))
-        if HAS_SEABORN:
-            sns.heatmap(nm.corr(), annot=True, fmt=".2f", cmap="RdBu_r", center=0)
-        else:
-            plt.imshow(nm.corr(), cmap="coolwarm", aspect="auto")
-            plt.colorbar()
-            plt.xticks(range(len(nm.corr().columns)), nm.corr().columns, rotation=45, ha="right")
-            plt.yticks(range(len(nm.corr().columns)), nm.corr().columns)
-        plt.title("Correlation Heatmap")
-        plt.tight_layout(); plt.savefig(path); plt.close()
+# ---------------------------------------------------------
+# Main Controller
+# ---------------------------------------------------------
+def run_analytics():
+    print("🚀 Starting Advanced Analytics Module...")
+    ensure_dirs()
+    
+    # 1. Load Data
+    df_r, df_i, df_s, df_int = load_data()
+    
+    # 2. Load Validation Summary
+    val_summary = {}
+    if os.path.exists(VALIDATION_JSON):
+        v_data = safe_load_json(VALIDATION_JSON)
+        if v_data:
+            total = v_data.get("total_recipes", 1)
+            issues = 0
+            checks_list = []
+            for k, v in v_data.get("checks", {}).items():
+                issues += v.get("count", 0)
+                checks_list.append({"key": k, "count": v.get("count", 0), "emoji": v.get("severity_emoji", "⚠️")})
+            val_summary = {
+                "overall_score": max(0, 100 - (issues/total*100)),
+                "total_issues": issues,
+                "checks_list": checks_list
+            }
 
-    # Write the markdown report (includes validation summary at top)
-    write_markdown_report(validation_summary, insights, df_metrics)
-    print("✔ Analytics complete. Charts saved to:", CHARTS_DIR)
-
+    # 3. Compute Metrics
+    df_enriched = calculate_advanced_metrics(df_r, df_i, df_int)
+    
+    # 4. Generate Charts
+    generate_charts(df_enriched, df_i, df_int)
+    
+    # 5. Generate Insights
+    insights = extract_text_insights(df_enriched, df_i)
+    
+    # 6. Save Report
+    write_report(df_enriched, insights, val_summary)
+    print(f"✅ Analytics Complete. Report saved to {MD_REPORT}")
 
 if __name__ == "__main__":
     run_analytics()
