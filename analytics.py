@@ -149,7 +149,8 @@ def build_validation_summary(validation_path: str):
         values = [it["count"] for it in items]
         plt.figure(figsize=(10, 5))
         if HAS_SEABORN:
-            sns.barplot(x=values, y=labels, palette="rocket")
+            # FIX APPLIED HERE: Added hue=labels and legend=False to satisfy Seaborn v0.14+
+            sns.barplot(x=values, y=labels, hue=labels, legend=False, palette="rocket")
         else:
             plt.barh(range(len(labels)), values, color="tab:orange")
             plt.yticks(range(len(labels)), labels)
@@ -256,7 +257,7 @@ def write_markdown_report(validation_summary: dict, insights: dict, df_metrics: 
         # optionally include details (first 3)
         if it.get("details"):
             sample = it["details"][:3]
-            lines.append(f"  - Details (sample): {sample}")
+            lines.append(f"   - Details (sample): {sample}")
     # embed chart if exists (use relative path)
     chart_path = validation_summary.get("chart_path")
     if chart_path:
@@ -326,7 +327,8 @@ def run_analytics():
         path = os.path.join(CHARTS_DIR, "top_ingredients.png")
         plt.figure(figsize=(9, 6))
         if HAS_SEABORN:
-            sns.barplot(x=top.values, y=list(top.index))
+            # Added optional polish here too for consistency
+            sns.barplot(x=top.values, y=list(top.index), hue=list(top.index), legend=False)
         else:
             plt.barh(list(range(len(top.index))), top.values, color="tab:blue")
             plt.yticks(range(len(top.index)), list(top.index))
@@ -341,7 +343,8 @@ def run_analytics():
         path = os.path.join(CHARTS_DIR, "top_engagement_rate.png")
         plt.figure(figsize=(9, 6))
         if HAS_SEABORN:
-            sns.barplot(x=top_eng["engagement_rate"], y=top_eng["title"])
+            # Added optional polish here too for consistency
+            sns.barplot(x=top_eng["engagement_rate"], y=top_eng["title"], hue=top_eng["title"], legend=False)
         else:
             plt.barh(top_eng["title"], top_eng["engagement_rate"], color="tab:green")
         plt.title("Top 10 Recipes by Engagement Rate")

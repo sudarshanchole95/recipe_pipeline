@@ -9,24 +9,75 @@
 
 ## 1. Project Overview
 
-This project implements a fully automated, end-to-end **Data Engineering Pipeline** that extracts recipe, user, and interaction data from **Google Firestore**, cleans & normalizes it, enforces data-quality rules, and generates analytical insights and visualizations.
+This project implements a fully automated, end-to-end **Data Engineering Pipeline** that extracts recipe, user, and interaction data from **Google Firestore**, cleans and normalizes it, validates data quality, and generates analytics-ready insights and visualizations.
 
-The pipeline is built to simulate a production‑grade data engineering environment involving:
-- NoSQL → Relational transformations  
-- Data quality validation  
-- Error quarantining  
-- Orchestration via a single command  
-- Complete analytics generation  
+The pipeline simulates a real-world production data system with:
 
-**Seed Data:** The project includes a **custom real recipe** created by the user as the mandatory primary dataset.
+- NoSQL → relational normalization  
+- Data quality validation and quarantining  
+- Automated orchestration via a single command  
+- Insight generation with visual analytics  
+
+**Seed Data:** Includes one custom, real recipe (user-provided) as the foundational dataset, along with synthetic supporting data.
 
 ---
 
-## 2. Data Model Architecture
+## 2. Expanded Data Model Architecture
 
-The system follows a clear relational schema built from Firestore’s nested documents.
+Firestore stores semi-structured JSON documents. During ETL, this data is normalized into a clean relational model.
 
-### **Entity Relationship Diagram (ERD)**
+### 🔹 Recipe Model
+
+Each recipe contains:
+
+- Unique ID  
+- Title & description  
+- Cuisine & difficulty  
+- Prep/Cook/Total times  
+- Ingredients (array of objects)  
+- Steps (array of strings)  
+- Metadata: created_by, timestamps  
+
+Ingredients example:
+
+```json
+{
+  "name": "Onion",
+  "quantity": 2,
+  "unit": "pcs"
+}
+```
+
+Steps stored as an ordered list.
+
+---
+
+### 🔹 Users Model
+
+User documents store:
+
+- user_id  
+- display name  
+- age  
+- food preferences  
+- account creation timestamp  
+
+---
+
+### 🔹 Interactions Model
+
+Captures user engagement:
+
+- interaction_id  
+- user_id  
+- recipe_id  
+- type: view / like / rating / attempt  
+- rating (optional)  
+- timestamp  
+
+---
+
+## Entity Relationship Diagram (ERD)
 
 ```mermaid
 erDiagram
@@ -80,41 +131,33 @@ erDiagram
 
 ## 3. Firebase Setup & Data Seeding
 
-### **Firestore Configuration**
-The system connects using a service account key:
+### Firestore Collections
 
-```
-serviceAccountKey.json
-```
-
-### **Collections Used**
 - `recipes`
 - `users`
 - `interactions`
 
-### **Synthetic Data Generation**
-A Python-based Seeder generates:
+### Seeder Script Generates:
 
-- 1 authentic custom recipe (primary)
-- 20 synthetic recipes
-- 10 realistic user personas
-- 300–400 weighted interactions  
-  (views, likes, ratings, attempts)
+- 1 real recipe  
+- 20 synthetic recipes  
+- 10 synthetic users  
+- 300–400 interactions  
 
-All synthetic records follow realistic probabilities and metadata behavior.
+This creates a realistic dataset for analytics.
 
 ---
 
-## 4. ETL Pipeline Process
+## 4. ETL Pipeline Overview
 
-### **Pipeline Architecture Diagram**
+### Pipeline Diagram
 
 ```mermaid
 flowchart LR
     A[Firestore Source] --> B[Extract JSON]
-    
+
     B --> C[Normalize via ETL]
-    
+
     subgraph Transformation Logic
     C --> C1[Explode Arrays]
     C --> C2[Type Casting]
@@ -126,8 +169,9 @@ flowchart LR
     C --> E[Quarantine Bad Data]
 ```
 
-### **Extraction**
-The `export.py` module exports entire collections into:
+### Extraction
+
+Firestore → JSON:
 
 ```
 export/
@@ -136,14 +180,9 @@ export/
 └── interactions.json
 ```
 
-### **Transformation**
-The ETL performs:
-- JSON normalization
-- Exploding ingredients & steps arrays
-- Detecting duplicates
-- Ensuring strict schema types
-- Rejecting malformed records
-- Writing only validated rows to:
+### Transformation
+
+ETL normalizes documents into:
 
 ```
 output/etl/
@@ -153,34 +192,30 @@ output/etl/
 └── interactions.csv
 ```
 
-### **Data Quarantine System**
-All rejected rows are stored safely:
+### Quarantine System
+
+Invalid records stored at:
 
 ```
 output/bad_data/
-├── bad_recipes.json
-├── bad_ingredients.csv
-├── bad_steps.csv
-├── bad_interactions.csv
-└── duplicate_recipes.csv
 ```
 
 ---
 
 ## 5. Data Quality & Validation
 
-### **Validation Rules Implemented**
+Validation rules include:
 
-| Category         | Rule Description | Action |
-|------------------|------------------|--------|
-| Completeness      | Required fields must exist | Reject |
-| Non‑negative Time | prep/cook/total time ≥ 0 | Warn/Reject |
-| Difficulty Domain | Must be: Easy/Medium/Hard | Quarantine |
-| Referential       | Interactions must reference valid Recipe IDs | Orphan File |
-| Structure         | Steps and Ingredients cannot be empty | Reject |
-| Duplicate IDs     | Repeated Recipe IDs | Quarantine |
+| Rule Type | Description |
+|----------|-------------|
+| Completeness | Required fields must exist |
+| Numeric Validity | Times must be ≥ 0 |
+| Difficulty Domain | Only Easy / Medium / Hard |
+| Referential Integrity | Valid recipe_id references |
+| Structural Integrity | Steps & ingredients must be non-empty |
+| Duplicate Detection | Duplicate IDs are quarantined |
 
-### **Validation Reports Generated**
+Outputs:
 
 ```
 output/validation/
@@ -188,72 +223,76 @@ output/validation/
 └── validation_results.json
 ```
 
-`validation_results.json` includes:
-- Severity levels (High/Medium/Low)
-- Color indicators
-- Percentages
-- Total issue count
-- Breakdown per rule
-
 ---
 
 ## 6. Analytics & Insights
 
-The analytics engine automatically produces ~10 insights including:
+Analytics includes:
 
-- Most common ingredients
-- Recipe difficulty distribution
-- Prep-time vs rating correlation
-- Engagement leaders (top 10 recipes)
-- Ingredients associated with high engagement
-- Time complexity / ROI scoring
-- Heatmap correlations
-- Word cloud of ingredients
+- Most common ingredients  
+- Difficulty distribution  
+- Prep-time vs rating correlation  
+- Top engagement recipes  
+- Heatmap correlations  
+- Word cloud of ingredients  
 
-Charts are saved in:
+Outputs:
 
 ```
 output/analytics/charts/
-```
-
-A full summary is written to:
-
-```
 output/analytics/analytics_summary.md
 ```
 
 ---
 
-## 7. Setup & Execution Instructions
+## 7. Orchestration System
 
-### **Prerequisites**
-- Python 3.9+
-- Firebase Admin SDK credentials
-- Installed dependencies:
+The entire workflow is automated using a single orchestrator:
+
+```
+python pipeline.py
+```
+
+Pipeline stages triggered:
+
+1. Export Firestore  
+2. ETL normalization  
+3. Validation  
+4. Analytics  
+
+A complete manifest is stored:
+
+```
+output/logs/
+```
+
+This ensures reproducibility and traceability—similar to real-world Airflow or Prefect workflows, but implemented in pure Python.
+
+---
+
+## 8. Setup & Execution Instructions
+
+### Install Requirements
 
 ```
 pip install -r requirements.txt
 ```
 
-### **Steps to Run Pipeline**
+### Add Firebase Credentials
 
-#### **1. Place Firebase Key**
+Place Firestore key:
+
 ```
-serviceAccountKey.json in project root
+serviceAccountKey.json
 ```
 
-#### **2. Run Full Pipeline**
+### Run Entire Pipeline
+
 ```
 python pipeline.py
 ```
 
-This automatically runs:
-```
-Export → ETL → Validation → Analytics
-```
-
-#### **3. Check Outputs**
-Everything appears in:
+### View Outputs
 
 ```
 output/
@@ -262,15 +301,6 @@ output/
     ├── analytics/
     └── bad_data/
 ```
-
----
-
-## 8. Known Constraints
-
-- Synthetic recipes may not represent real-world cooking accuracy.
-- Pipeline is optimized for local execution (Pandas).  
-  For big data scale, migration to Spark / Dataflow is recommended.
-- Firestore export is non‑incremental (full dump each run).
 
 ---
 
@@ -292,11 +322,23 @@ project/
 
 ---
 
-## 10. Final Notes
+## 10. Known Limitations
 
-This project demonstrates a complete production‑style data engineering system:
-- Firestore → ETL → Validation → Analytics  
+- Synthetic recipe data may not reflect real-world distributions.
+- Pandas-based ETL is optimized for local scale.
+- Firestore export is full-dump (not incremental).
+- Orchestration is Python-based, not Airflow/Prefect.
+
+---
+
+## Final Statement
+
+This project demonstrates a strong production-style data engineering workflow with:
+
 - Automated orchestration  
-- Strong data‑quality safeguards  
-- Business‑driven insights
+- Reliable validation  
+- Scalable transformation  
+- Insightful analytics  
+
+A complete end-to-end Firestore → ETL → Validation → Analytics pipeline.
 
