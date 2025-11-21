@@ -1,144 +1,249 @@
-import json
+# validation.py
+"""
+Enhanced validation script (Option A severity scheme).
+
+Outputs:
+ - VALIDATION_DIR/validation_report.md         (human readable)
+ - VALIDATION_DIR/validation_results.json      (machine readable)
+ - VALIDATION_DIR/validation_summary.png       (color bar chart)
+ - BAD_DATA_DIR/bad_steps.csv
+ - BAD_DATA_DIR/bad_ingredients.csv
+ - BAD_DATA_DIR/orphan_interactions.csv
+ - BAD_DATA_DIR/dup_recipes.csv
+"""
+from pathlib import Path
 import pandas as pd
-import os
+import numpy as np
+import json
+import matplotlib.pyplot as plt
 
-INPUT_DIR = "output/etl"
-OUTPUT_DIR = "output/validation"
+from config import ETL_DIR, VALIDATION_DIR, BAD_DATA_DIR
+from utils import ensure_dirs, small_report
 
-RECIPE_CSV = os.path.join(INPUT_DIR, "recipe.csv")
-INGREDIENT_CSV = os.path.join(INPUT_DIR, "ingredients.csv")
-STEPS_CSV = os.path.join(INPUT_DIR, "steps.csv")
-INTERACTIONS_CSV = os.path.join(INPUT_DIR, "interactions.csv")
+# CSV paths
+RECIPE_CSV = ETL_DIR / "recipe.csv"
+ING_CSV = ETL_DIR / "ingredients.csv"
+STEPS_CSV = ETL_DIR / "steps.csv"
+INTER_CSV = ETL_DIR / "interactions.csv"
 
-REPORT_JSON = os.path.join(OUTPUT_DIR, "validation_report.json")
-REPORT_TXT = os.path.join(OUTPUT_DIR, "validation_report.txt")
+# Severity mapping (Option A)
+SEVERITY = {
+    "critical": {"emoji": "🔥", "label": "Critical"},
+    "high":     {"emoji": "⚠️", "label": "High"},
+    "medium":   {"emoji": "🟡", "label": "Medium"},
+    "low":      {"emoji": "🟢", "label": "Low"},
+}
 
-
-def ensure_output_dir():
-    if not os.path.exists(OUTPUT_DIR):
-        os.makedirs(OUTPUT_DIR)
-
-
-def load_csv(path):
-    return pd.read_csv(path)
-
-
-def validate_recipes(df):
-    issues = []
-
-    for idx, row in df.iterrows():
-        rid = row["id"]
-
-        # Required fields
-        if pd.isna(rid) or rid == "":
-            issues.append({"id": None, "field": "id", "error": "Missing recipe ID"})
-
-        if pd.isna(row["title"]) or row["title"].strip() == "":
-            issues.append({"id": rid, "field": "title", "error": "Missing title"})
-
-        # Numeric validation
-        for field in ["prep_time_min", "cook_time_min", "total_time_min", "servings"]:
-            if pd.isna(row[field]):
-                continue
-            try:
-                val = float(row[field])
-                if val < 0:
-                    issues.append({"id": rid, "field": field, "error": "Negative value"})
-            except:
-                issues.append({"id": rid, "field": field, "error": "Invalid number"})
-
-        # Array fields
-        for field in ["tags", "occasion", "nutrition_groups"]:
-            if pd.isna(row[field]):
-                continue
-            if not isinstance(row[field], str):
-                issues.append({"id": rid, "field": field, "error": "Not string after flattening"})
-
-    return issues
-
-
-def validate_ingredients(df):
-    issues = []
-    for idx, row in df.iterrows():
-        if pd.isna(row["recipe_id"]) or row["recipe_id"] == "":
-            issues.append({"recipe_id": None, "field": "recipe_id", "error": "Missing recipe_id"})
-
-        if pd.isna(row["ingredient_name"]) or row["ingredient_name"].strip() == "":
-            issues.append({"recipe_id": row["recipe_id"], "field": "ingredient_name", "error": "Missing ingredient name"})
-    return issues
-
-
-def validate_steps(df):
-    issues = []
-    for idx, row in df.iterrows():
-        if pd.isna(row["recipe_id"]) or row["recipe_id"] == "":
-            issues.append({"recipe_id": None, "field": "recipe_id", "error": "Missing recipe_id"})
-
-        if pd.isna(row["step_number"]):
-            issues.append({"recipe_id": row["recipe_id"], "field": "step_number", "error": "Missing step number"})
-
-        if pd.isna(row["step_text"]) or row["step_text"].strip() == "":
-            issues.append({"recipe_id": row["recipe_id"], "field": "step_text", "error": "Empty step text"})
-
-    return issues
-
-
-def validate_interactions(df):
-    issues = []
-    for idx, row in df.iterrows():
-
-        # Required fields
-        for field in ["id", "user_id", "recipe_id", "type", "timestamp"]:
-            if pd.isna(row[field]) or str(row[field]).strip() == "":
-                issues.append({"id": row.get("id"), "field": field, "error": "Missing required interaction field"})
-
-        # Metadata validation
+def _safe_read_csv(path: Path) -> pd.DataFrame:
+    if path.exists():
         try:
-            json.loads(row["metadata_json"])
-        except:
-            issues.append({"id": row["id"], "field": "metadata_json", "error": "Invalid JSON"})
-
-    return issues
-
-
-def write_reports(issues):
-    # JSON report
-    with open(REPORT_JSON, "w", encoding="utf-8") as f:
-        json.dump(issues, f, indent=4)
-
-    # Human-readable text report
-    with open(REPORT_TXT, "w", encoding="utf-8") as f:
-        f.write("DATA VALIDATION REPORT\n")
-        f.write("======================\n\n")
-        f.write(f"Total Issues Found: {len(issues)}\n\n")
-
-        for issue in issues:
-            f.write(json.dumps(issue) + "\n")
-
-    print("\n✔ Validation reports saved in output/validation/")
-
+            df = pd.read_csv(path)
+            # strip whitespace from column names
+            df.columns = df.columns.str.strip()
+            return df
+        except Exception:
+            return pd.DataFrame()
+    return pd.DataFrame()
 
 def run_validation():
-    print("Starting validation...")
+    ensure_dirs(VALIDATION_DIR, BAD_DATA_DIR)
+    results = {
+        "run_time": pd.Timestamp.now().isoformat(),
+        "total_recipes": 0,
+        "checks": {},
+        "total_issues": 0
+    }
 
-    ensure_output_dir()
+    # load
+    df_r = _safe_read_csv(RECIPE_CSV)
+    df_ing = _safe_read_csv(ING_CSV)
+    df_steps = _safe_read_csv(STEPS_CSV)
+    df_inter = _safe_read_csv(INTER_CSV)
 
-    df_recipe = load_csv(RECIPE_CSV)
-    df_ing = load_csv(INGREDIENT_CSV)
-    df_steps = load_csv(STEPS_CSV)
-    df_inter = load_csv(INTERACTIONS_CSV)
+    results["total_recipes"] = int(len(df_r))
 
-    issues = []
-    issues += validate_recipes(df_recipe)
-    issues += validate_ingredients(df_ing)
-    issues += validate_steps(df_steps)
-    issues += validate_interactions(df_inter)
+    # helper to register a check
+    def register(name, count, severity, details=None):
+        results["checks"][name] = {
+            "count": int(count),
+            "severity": SEVERITY[severity]["label"],
+            "severity_emoji": SEVERITY[severity]["emoji"],
+            "details": details or []
+        }
+        results["total_issues"] += int(count)
 
-    write_reports(issues)
+    # ---------- CHECK 1: Required columns (Critical) ----------
+    required_recipe_cols = {"id", "title"}
+    missing_cols = list(required_recipe_cols - set(df_r.columns))
+    if missing_cols:
+        register("missing_recipe_columns", len(missing_cols), "critical", details=missing_cols)
+    else:
+        register("missing_recipe_columns", 0, "low")
 
-    print("🎉 Validation complete.")
-    print(f"Total issues detected: {len(issues)}")
+    # ---------- CHECK 2: Negative time values (High) ----------
+    neg_counts = 0
+    neg_examples = []
+    for col in ["prep_time_min", "cook_time_min", "total_time_min"]:
+        if col in df_r.columns:
+            # coerce numeric then check negative
+            series = pd.to_numeric(df_r[col], errors="coerce")
+            invalid = df_r[series < 0]
+            if not invalid.empty:
+                cnt = len(invalid)
+                neg_counts += cnt
+                neg_examples.extend(invalid["id"].astype(str).head(5).tolist())
+    register("negative_time_values", neg_counts, "high", details=neg_examples[:10])
 
+    # ---------- CHECK 3: Steps numbering (Medium) ----------
+    step_issues = pd.DataFrame()
+    if not df_steps.empty and "step_number" in df_steps.columns:
+        # step_number should be >= 1 and integer
+        # coerce to numeric
+        snum = pd.to_numeric(df_steps["step_number"], errors="coerce")
+        bad_steps = df_steps[snum.isna() | (snum < 1)]
+        if not bad_steps.empty:
+            step_issues = bad_steps
+            bad_steps.to_csv(BAD_DATA_DIR / "bad_steps.csv", index=False, encoding="utf-8")
+            register("invalid_steps", len(bad_steps), "medium", details=bad_steps.head(5).to_dict(orient="records"))
+        else:
+            register("invalid_steps", 0, "low")
+    else:
+        register("invalid_steps", 0, "low")
+
+    # ---------- CHECK 4: Ingredient names present (High) ----------
+    ing_issues = pd.DataFrame()
+    if not df_ing.empty:
+        if "ingredient_name" in df_ing.columns:
+            bad_ing = df_ing[df_ing["ingredient_name"].isna() | (df_ing["ingredient_name"].astype(str).str.strip() == "")]
+            if not bad_ing.empty:
+                bad_ing.to_csv(BAD_DATA_DIR / "bad_ingredients.csv", index=False, encoding="utf-8")
+                register("invalid_ingredients", len(bad_ing), "high", details=bad_ing.head(5).to_dict(orient="records"))
+            else:
+                register("invalid_ingredients", 0, "low")
+        else:
+            register("invalid_ingredients", 0, "low")
+    else:
+        register("invalid_ingredients", 0, "low")
+
+    # ---------- CHECK 5: Referential integrity - orphan interactions (Critical) ----------
+    orphan_count = 0
+    orphan_examples = []
+    if not df_inter.empty:
+        if "recipe_id" in df_inter.columns:
+            recipe_ids = set(df_r["id"].astype(str).tolist())
+            orphan_inter = df_inter[~df_inter["recipe_id"].astype(str).isin(recipe_ids)]
+            if not orphan_inter.empty:
+                orphan_count = len(orphan_inter)
+                orphan_inter.to_csv(BAD_DATA_DIR / "orphan_interactions.csv", index=False, encoding="utf-8")
+                orphan_examples = orphan_inter.head(5).to_dict(orient="records")
+                register("orphan_interactions", orphan_count, "critical", details=orphan_examples)
+            else:
+                register("orphan_interactions", 0, "low")
+        else:
+            register("orphan_interactions", 0, "low")
+    else:
+        register("orphan_interactions", 0, "low")
+
+    # ---------- CHECK 6: Duplicate recipe IDs (High) ----------
+    dup_count = 0
+    dup_examples = []
+    if not df_r.empty:
+        if "id" in df_r.columns:
+            dup_r = df_r[df_r.duplicated(subset=["id"], keep=False)].copy()
+            if not dup_r.empty:
+                dup_count = len(dup_r)
+                dup_r.to_csv(BAD_DATA_DIR / "dup_recipes.csv", index=False, encoding="utf-8")
+                dup_examples = dup_r["id"].astype(str).unique().tolist()[:10]
+                register("duplicate_recipe_ids", dup_count, "high", details=dup_examples)
+            else:
+                register("duplicate_recipe_ids", 0, "low")
+        else:
+            register("duplicate_recipe_ids", 0, "low")
+    else:
+        register("duplicate_recipe_ids", 0, "low")
+
+    # ---------- Additional: invalid difficulty values (Low) ----------
+    difficulty_issues = 0
+    valid_difficulties = {"easy", "medium", "hard", "unknown", ""}
+    if "difficulty" in df_r.columns:
+        diffs = df_r["difficulty"].astype(str).str.strip().str.lower().fillna("")
+        invalid_diff = df_r[~diffs.isin(valid_difficulties)]
+        if not invalid_diff.empty:
+            difficulty_issues = len(invalid_diff)
+            register("invalid_difficulty_values", difficulty_issues, "low", details=invalid_diff.head(5).to_dict(orient="records"))
+        else:
+            register("invalid_difficulty_values", 0, "low")
+    else:
+        register("invalid_difficulty_values", 0, "low")
+
+    # ---------- Finalize results and write files ----------
+    # Write JSON machine-readable summary
+    json_path = VALIDATION_DIR / "validation_results.json"
+    with open(json_path, "w", encoding="utf-8") as fh:
+        json.dump(results, fh, ensure_ascii=False, indent=2)
+
+    # Create human-readable Markdown report
+    md_lines = []
+    md_lines.append("# Validation Report")
+    md_lines.append("")
+    md_lines.append(f"**Run:** {results['run_time']}")
+    md_lines.append(f"**Total recipes processed:** {results['total_recipes']}")
+    md_lines.append(f"**Total issues found:** {results['total_issues']}")
+    md_lines.append("")
+
+    if results["total_issues"] == 0:
+        md_lines.append("✔ No validation issues detected.")
+    else:
+        md_lines.append("## Issues by Severity")
+        md_lines.append("")
+        # Group by severity for display
+        sev_order = ["critical", "high", "medium", "low"]
+        for sev in sev_order:
+            # collect checks of this severity
+            for check_name, info in results["checks"].items():
+                if info["severity"].lower() == SEVERITY[sev]["label"].lower():
+                    emoji = info["severity_emoji"]
+                    md_lines.append(f"- {emoji} **{info['severity']}** — `{check_name}` : {info['count']} issues")
+                    # show a couple of details (ids / snippets) if available
+                    if info.get("details"):
+                        md_lines.append(f"  - Examples: `{json.dumps(info['details'][:3], ensure_ascii=False)}`")
+        md_lines.append("")
+
+    # Write the report using your util (small_report) for consistency
+    report_path = VALIDATION_DIR / "validation_report.md"
+    small_report(report_path, md_lines)
+
+    # Create a small bar chart (severity aggregated counts)
+    # Aggregate counts by severity
+    severity_agg = {"Critical": 0, "High": 0, "Medium": 0, "Low": 0}
+    for info in results["checks"].values():
+        sev = info["severity"]
+        severity_agg[sev] = severity_agg.get(sev, 0) + info["count"]
+
+    # Plot chart
+    labels = list(severity_agg.keys())
+    counts = [severity_agg[l] for l in labels]
+    colors = ["#D62828", "#FF9F1C", "#F4D35E", "#2EC4B6"]  # red, orange, yellow, green
+
+    try:
+        plt.figure(figsize=(6,3.5))
+        bars = plt.bar(labels, counts, color=colors)
+        plt.title("Validation Issues by Severity")
+        plt.ylabel("Count")
+        for bar in bars:
+            h = bar.get_height()
+            plt.text(bar.get_x() + bar.get_width()/2, h + 0.1, str(int(h)), ha="center", va="bottom")
+        plt.tight_layout()
+        plt.savefig(VALIDATION_DIR / "validation_summary.png", dpi=150)
+        plt.close()
+    except Exception:
+        # If plotting fails, continue silently (chart is optional)
+        pass
+
+    # Return results summary
+    return results
 
 if __name__ == "__main__":
-    run_validation()
+    out = run_validation()
+    print("Validation run complete. Summary:")
+    print(json.dumps(out, indent=2, ensure_ascii=False))

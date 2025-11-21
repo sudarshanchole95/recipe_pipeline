@@ -1,0 +1,20 @@
+{
+  "timestamp": "2025-11-21T04:56:31.086571Z",
+  "new_recipes": 0,
+  "duplicate_recipes": 21,
+  "bad_recipes": 0,
+  "new_ingredients": 0,
+  "new_steps": 0,
+  "new_interactions": 0,
+  "duplicate_interactions": 898,
+  "bad_interactions": 0,
+  "component_failures": {
+    "missing_title": 0,
+    "no_ingredients": 0,
+    "no_steps": 0,
+    "invalid_time": 0,
+    "invalid_difficulty": 0,
+    "missing_id": 0,
+    "ingredient_name_missing": 0
+  }
+}

@@ -1,8 +1,20 @@
-venv/
-.venv/
+# Python cache
 __pycache__/
 *.pyc
 
-serviceAccountKey.json
+# Raw data & outputs
+output/logs/
+export/
 
+# venv
+venv/
+.env/
+.venv/
+
+# IDE
 .vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db

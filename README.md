@@ -1,258 +1,301 @@
-# Recipe Analytics Pipeline – Final Project Documentation
+# Firebase Recipe Analytics Pipeline
 
-## 1. Overview
-This project implements a complete end‑to‑end **Data Engineering pipeline** for a recipe application using:
-- **Firestore** (NoSQL source)
-- **Python ETL** (Extraction → Transformation → Normalization)
-- **Analytics & Visualization**
-- **Data Quality Validation**
-- **Exported CSV datasets** for downstream analysis
-
-The goal is to simulate a real production-grade data engineering workflow suitable for ThinkBridge assignment evaluations.
+![Python](https://img.shields.io/badge/Python-3.9%2B-blue?logo=python)
+![Firebase](https://img.shields.io/badge/Firebase-Firestore-orange?logo=firebase)
+![ETL](https://img.shields.io/badge/Pipeline-ETL-green)
+![Status](https://img.shields.io/badge/Status-Production_Ready-success)
 
 ---
 
-## 2. Data Model (Firestore → JSON → Normalized CSV)
+## 1. Project Overview
 
-### 2.1 Collections in Firestore
-The raw data is stored in three collections:
+This project implements a fully automated, end-to-end **Data Engineering Pipeline** that extracts recipe, user, and interaction data from **Google Firestore**, cleans & normalizes it, enforces data-quality rules, and generates analytical insights and visualizations.
 
-### **A) recipes**
-Each recipe document contains:
-- `id` – unique slug + UUID  
-- `title`  
-- `author`  
-- `cuisine`  
-- `difficulty`  
-- `occasion` (array)  
-- `category_type`  
-- `texture`  
-- `served_temperature`  
-- `tags` (array)  
-- `nutrition_groups` (array)  
-- `prep_time_min`, `cook_time_min`, `total_time_min`  
-- `ingredients` (array of objects)  
-- `steps` (array of objects)  
+The pipeline is built to simulate a production‑grade data engineering environment involving:
+- NoSQL → Relational transformations  
+- Data quality validation  
+- Error quarantining  
+- Orchestration via a single command  
+- Complete analytics generation  
+
+**Seed Data:** The project includes a **custom real recipe** created by the user as the mandatory primary dataset.
 
 ---
 
-### **B) users**
-Used to simulate real application interaction patterns.
+## 2. Data Model Architecture
 
- contains:
-- `id`
-- `username`
-- `joined_at`
+The system follows a clear relational schema built from Firestore’s nested documents.
 
----
+### **Entity Relationship Diagram (ERD)**
 
-### **C) interactions**
-Simulated behavioral actions for analytics:
-- `view`
-- `like`
-- `rating`
-- `attempt`
+```mermaid
+erDiagram
+    USERS ||--o{ INTERACTIONS : performs
+    RECIPES ||--o{ INTERACTIONS : receives
+    RECIPES ||--o{ INGREDIENTS : contains
+    RECIPES ||--o{ STEPS : includes
 
-Each interaction contains:
-- `id`
-- `user_id`
-- `recipe_id`
-- `timestamp`
-- `type`
-- `metadata` (device, rating stars, etc.)
+    USERS {
+        string id PK
+        string display_name
+        string city
+        string food_preferences
+    }
 
----
+    RECIPES {
+        string id PK
+        string title
+        string cuisine
+        string difficulty
+        number prep_time_min
+        number cook_time_min
+        number total_time_min
+        string tags
+    }
 
-## 2.2 Normalized CSV Outputs
-After ETL, the dataset is transformed into fully normalized relational tables:
+    INGREDIENTS {
+        string recipe_id FK
+        string ingredient_name
+        string quantity
+        string unit
+    }
 
-### **1. recipe.csv**
-| Column            | Description |
-|--------           |-------------|
-| id                | Unique recipe ID |
-| title             | Recipe name |
-| author            | Who created it |
-| cuisine           | Indian/Italian/etc. |
-| difficulty        | Easy/Medium/Hard |
-| servings          | Number of people served |
-| prep_time_min     | Minutes |
-| cook_time_min     | Minutes |
-| total_time_min    | Minutes |
-| category_type     | Comfort Food / Main Course |
-| texture           | Soft / Crispy / Creamy |
-| served_temperature | Hot / Cold |
-| occasion          | Stored as comma-separated string |
-| tags              | Comma-separated string |
-| nutrition_groups  | Carbs, Protein, etc. |
+    STEPS {
+        string recipe_id FK
+        number step_number
+        string step_text
+    }
 
----
-
-### **2. ingredients.csv**
-| recipe_id | ingredient_name | quantity | unit |
-
-Each ingredient becomes 1 row → supports SQL joins & analytics.
+    INTERACTIONS {
+        string id PK
+        string recipe_id FK
+        string user_id FK
+        string type
+        string metadata_json
+        timestamp timestamp
+    }
+```
 
 ---
 
-### **3. steps.csv**
-| recipe_id | step_number | step_text |
+## 3. Firebase Setup & Data Seeding
 
-Maintains the sequence of the cooking workflow.
+### **Firestore Configuration**
+The system connects using a service account key:
+
+```
+serviceAccountKey.json
+```
+
+### **Collections Used**
+- `recipes`
+- `users`
+- `interactions`
+
+### **Synthetic Data Generation**
+A Python-based Seeder generates:
+
+- 1 authentic custom recipe (primary)
+- 20 synthetic recipes
+- 10 realistic user personas
+- 300–400 weighted interactions  
+  (views, likes, ratings, attempts)
+
+All synthetic records follow realistic probabilities and metadata behavior.
 
 ---
 
-### **4. interactions.csv**
-| id | user_id | recipe_id | type | timestamp | metadata_json |
+## 4. ETL Pipeline Process
 
-Dynamic values (e.g., rating vs. device info) are preserved using a JSON string.
+### **Pipeline Architecture Diagram**
 
----
+```mermaid
+flowchart LR
 
-## 3. ETL Pipeline Overview
+A[Firestore (Source)] --> B[Extract JSON]
+
+B --> C[Normalize via ETL]
+C --> C1[Explode Arrays]
+C --> C2[Type Casting]
+C --> C3[Deduplication]
+C --> C4[Schema Enforcement]
+
+C --> D[Validated CSV Outputs]
+
+C --> E[Quarantine Bad Data]
+```
 
 ### **Extraction**
-- Firestore is exported into:
-  - output/recipes.json  
-  - output/users.json  
-  - output/interactions.json  
+The `export.py` module exports entire collections into:
 
-### **Transformation (Python)**
-- Flatten nested arrays
-- Convert arrays → comma-separated strings
-- Parse metadata_json into Python dict
-- Normalize ingredients & steps into their own tables
-- Convert Firestore timestamp → ISO format
-- Fix inconsistent fields (strip whitespace, handle missing values)
+```
+export/
+├── recipes.json
+├── users.json
+└── interactions.json
+```
 
-### **Loading**
-- Save final CSVs into:
+### **Transformation**
+The ETL performs:
+- JSON normalization
+- Exploding ingredients & steps arrays
+- Detecting duplicates
+- Ensuring strict schema types
+- Rejecting malformed records
+- Writing only validated rows to:
+
 ```
 output/etl/
-  ├── recipe.csv
-  ├── ingredients.csv
-  ├── steps.csv
-  └── interactions.csv
+├── recipe.csv
+├── ingredients.csv
+├── steps.csv
+└── interactions.csv
+```
+
+### **Data Quarantine System**
+All rejected rows are stored safely:
+
+```
+output/bad_data/
+├── bad_recipes.json
+├── bad_ingredients.csv
+├── bad_steps.csv
+├── bad_interactions.csv
+└── duplicate_recipes.csv
 ```
 
 ---
 
-## 4. Running the Pipeline
+## 5. Data Quality & Validation
 
-### **1. Seed Firestore**
-```
-python seed_firestore.py
-```
+### **Validation Rules Implemented**
 
-### **2. Export data**
-```
-python export_firestore.py
-```
+| Category         | Rule Description | Action |
+|------------------|------------------|--------|
+| Completeness      | Required fields must exist | Reject |
+| Non‑negative Time | prep/cook/total time ≥ 0 | Warn/Reject |
+| Difficulty Domain | Must be: Easy/Medium/Hard | Quarantine |
+| Referential       | Interactions must reference valid Recipe IDs | Orphan File |
+| Structure         | Steps and Ingredients cannot be empty | Reject |
+| Duplicate IDs     | Repeated Recipe IDs | Quarantine |
 
-### **3. Run ETL**
-```
-python etl_pipeline.py
-```
+### **Validation Reports Generated**
 
-### **4. Validate data**
 ```
-python validation.py
-```
-
-### **5. Run analytics**
-```
-python analytics.py
+output/validation/
+├── validation_report.md
+└── validation_results.json
 ```
 
-Charts will be generated in:
+`validation_results.json` includes:
+- Severity levels (High/Medium/Low)
+- Color indicators
+- Percentages
+- Total issue count
+- Breakdown per rule
+
+---
+
+## 6. Analytics & Insights
+
+The analytics engine automatically produces ~10 insights including:
+
+- Most common ingredients
+- Recipe difficulty distribution
+- Prep-time vs rating correlation
+- Engagement leaders (top 10 recipes)
+- Ingredients associated with high engagement
+- Time complexity / ROI scoring
+- Heatmap correlations
+- Word cloud of ingredients
+
+Charts are saved in:
+
 ```
 output/analytics/charts/
 ```
 
----
-
-## 5. Analytics Summary (Highlights)
-
-The analytics module calculates:
-
-### 📌 **Derived Metrics**
-- **Engagement Rate = likes / views**
-- **ROI = avg_rating / total_time_min**
-- **Complexity Score = total_time_min/10 + num_ingredients**
-
-### 📌 **Visualizations**
-- Top 15 Ingredients (bar chart)
-- Word Cloud of ingredients *(if library installed)*
-- Correlation Heatmap (views, likes, rating, time, complexity)
-- Prep Time vs Rating (scatter)
-- Steps Count vs Engagement
-- Cuisine Popularity
-- Difficulty Distribution
-- Rating Histogram
-
-### 📌 **Insights Example**
-- Recipes with **fewer than 30 minutes** cooking time received **higher engagement**.
-- **Indian cuisine** dominated total views.
-- **High ROI dishes** (Rating per minute) included quick comfort dishes.
-- Recipes with **more steps** showed **lower engagement rate** (user drop-off).
-- Missing metadata categories can be enriched to improve segmentation.
-
----
-
-## 6. Known Constraints / Limitations
-- Data is synthetic; interaction patterns may not reflect real user behavior.
-- Metadata quality varies (e.g., some recipes may not have full fields).
-- Ratings are simulated (averages may not reflect real user sentiment).
-- Firestore export is snapshot-based; not a real-time streaming pipeline.
-- Some advanced analytics like predictive modeling are out of scope.
-
----
-
-## 7. Deliverables Summary
-
-### ✔ Source Scripts
-- `seed_firestore.py`
-- `export_firestore.py`
-- `etl_pipeline.py`
-- `validation.py`
-- `analytics.py`
-
-### ✔ Normalized CSV Output
-Located in: `output/etl/`
-
-### ✔ Analytics
-- Markdown summary → `output/analytics/analytics_summary.md`
-- Charts → `output/analytics/charts/`
-
-### ✔ README.md
-(Current file)
-
----
-
-## 8. Architecture Diagram
+A full summary is written to:
 
 ```
-       Firestore
-           │
-           ▼
-   export_firestore.py
-           │
-           ▼
-      JSON Files
-           │
-           ▼
-    etl_pipeline.py
-   (Flatten + Normalize)
-           │
-           ▼
-     Normalized CSVs
-           │
-           ▼
-    analytics.py (EDA)
-           │
-           ▼
- Charts + Summary Report
+output/analytics/analytics_summary.md
 ```
 
 ---
 
+## 7. Setup & Execution Instructions
+
+### **Prerequisites**
+- Python 3.9+
+- Firebase Admin SDK credentials
+- Installed dependencies:
+
+```
+pip install -r requirements.txt
+```
+
+### **Steps to Run Pipeline**
+
+#### **1. Place Firebase Key**
+```
+serviceAccountKey.json in project root
+```
+
+#### **2. Run Full Pipeline**
+```
+python pipeline.py
+```
+
+This automatically runs:
+```
+Export → ETL → Validation → Analytics
+```
+
+#### **3. Check Outputs**
+Everything appears in:
+
+```
+output/
+    ├── etl/
+    ├── validation/
+    ├── analytics/
+    └── bad_data/
+```
+
+---
+
+## 8. Known Constraints
+
+- Synthetic recipes may not represent real-world cooking accuracy.
+- Pipeline is optimized for local execution (Pandas).  
+  For big data scale, migration to Spark / Dataflow is recommended.
+- Firestore export is non‑incremental (full dump each run).
+
+---
+
+## 9. Directory Structure
+
+```
+project/
+├── pipeline.py
+├── export/
+├── output/
+│   ├── etl/
+│   ├── analytics/
+│   ├── validation/
+│   └── bad_data/
+├── serviceAccountKey.json
+├── requirements.txt
+└── README.md
+```
+
+---
+
+## 10. Final Notes
+
+This project demonstrates a complete production‑style data engineering system:
+- Firestore → ETL → Validation → Analytics  
+- Automated orchestration  
+- Strong data‑quality safeguards  
+- Business‑driven insights
 

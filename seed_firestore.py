@@ -960,65 +960,329 @@ for i in range(10):
 # --------------------------------------
 # 5. Insert Interactions (With UUID + Descriptive Text)
 # --------------------------------------
+# ----------------------------------------------------------
+# 4. REALISTIC USER INTERACTIONS GENERATOR (Final Version)
+# ----------------------------------------------------------
+# ----------------------------
+# Improved Interaction Generator
+# Target = 300 interactions, mixed distribution with trending recipes
+# Paste this block into seed_firestore.py where interactions are generated
+# ----------------------------
 
-print("Creating descriptive interactions...")
+import random
+import uuid
+from datetime import datetime, timedelta
 
-interaction_types = ["view", "like", "rating", "attempt"]
-all_recipe_ids = [khichdi_id] + synthetic_ids
+print("Generating 300 realistic mixed interactions (with trending recipes)...")
 
-for user in user_ids:
-    # get display name from Firestore
-    user_doc = db.collection("users").document(user).get()
-    display_name = user_doc.to_dict().get("display_name")
+# Safety checks (assume these are present earlier in the file)
+try:
+    all_recipe_ids = [khichdi_id] + synthetic_ids
+except NameError:
+    raise RuntimeError("all_recipe_ids not found — ensure khichdi_id and synthetic_ids exist above this block.")
 
-    chosen_recipes = random.sample(all_recipe_ids, 5)
+if not user_ids:
+    raise RuntimeError("user_ids is empty — create users first.")
 
-    for rid in chosen_recipes:
-        itype = random.choice(interaction_types)
-        iid = f"int-{uuid.uuid4().hex[:8]}"
+TARGET_INTERACTIONS = 300
+DAYS_SPAN = 400  # spread interactions across last N days
 
-        interaction = {
-            "id": iid,
-            "user_id": user,
-            "recipe_id": rid,
-            "type": itype,
-            "timestamp": datetime.utcnow() - timedelta(days=random.randint(0, 365))
+# Choose 3 trending recipes (if less than 3 available, use all)
+TRENDING_COUNT = min(3, max(1, len(all_recipe_ids)//7))  # choose sensible number
+trending_recipes = random.sample(all_recipe_ids, k=TRENDING_COUNT)
+
+# Persona definitions (probabilities + session behavior)
+USER_PERSONAS = {
+    "casual_browser": {
+        "weights": {"view": 0.9, "like": 0.06, "rating": 0.02, "attempt": 0.02},
+        "session_events": (2, 6),
+        "trend_bias": 0.05
+    },
+    "engaged_foodie": {
+        "weights": {"view": 0.5, "like": 0.3, "rating": 0.15, "attempt": 0.05},
+        "session_events": (4, 12),
+        "trend_bias": 0.12
+    },
+    "home_cook": {
+        "weights": {"view": 0.35, "like": 0.15, "rating": 0.2, "attempt": 0.3},
+        "session_events": (3, 8),
+        "trend_bias": 0.08
+    },
+    "critic": {
+        "weights": {"view": 0.4, "like": 0.05, "rating": 0.45, "attempt": 0.1},
+        "session_events": (2, 6),
+        "trend_bias": 0.03
+    },
+    "viral_scroller": {
+        "weights": {"view": 0.95, "like": 0.03, "rating": 0.01, "attempt": 0.01},
+        "session_events": (15, 40),
+        "trend_bias": 0.35
+    },
+}
+
+persona_keys = list(USER_PERSONAS.keys())
+
+# helper: weighted choice for interaction type
+def weighted_choice(weights: dict):
+    return random.choices(list(weights.keys()), weights=list(weights.values()), k=1)[0]
+
+# maintain last timestamp per user (so sessions look real)
+user_last_ts = {}
+# maintain current session_id per user and events in that session
+user_session = {}
+user_session_count = {}
+
+events_created = 0
+counts_by_type = {"view":0, "like":0, "rating":0, "attempt":0}
+counts_by_recipe = {rid:0 for rid in all_recipe_ids}
+
+# helper to randomize a timestamp near last_ts or fresh
+def next_timestamp_for_user(uid):
+    base = user_last_ts.get(uid)
+    if base is None:
+        # start somewhere in last DAYS_SPAN days at a random time
+        base = datetime.utcnow() - timedelta(days=random.randint(0, DAYS_SPAN), hours=random.randint(0,23), minutes=random.randint(0,59))
+    # increment by a few seconds to minutes to simulate session steps
+    delta_seconds = random.randint(5, 900)  # 5s to 15min between actions
+    newt = base + timedelta(seconds=delta_seconds)
+    # don't go into future
+    if newt > datetime.utcnow():
+        newt = datetime.utcnow() - timedelta(seconds=random.randint(10,300))
+    user_last_ts[uid] = newt
+    return newt
+
+# Prebuild a simple user -> persona assignment to add consistency
+user_persona_map = {}
+for uid in user_ids:
+    user_persona_map[uid] = random.choice(persona_keys)
+
+# Main loop: produce events until we hit TARGET_INTERACTIONS
+while events_created < TARGET_INTERACTIONS:
+    # choose user randomly (weights could be added here for heavy users)
+    user = random.choice(user_ids)
+    persona = user_persona_map.get(user, random.choice(persona_keys))
+    p = USER_PERSONAS[persona]
+
+    # Decide whether to start a new session for this user
+    cur_sess = user_session.get(user)
+    if cur_sess is None or user_session_count.get(user,0) <= 0:
+        # create new session
+        sess_id = f"sess-{uuid.uuid4().hex[:10]}"
+        user_session[user] = sess_id
+        # how many events this session will have
+        user_session_count[user] = random.randint(*p["session_events"])
+        # small chance of a long session for viral scroller
+        if persona == "viral_scroller" and random.random() < 0.15:
+            user_session_count[user] += random.randint(10, 40)
+    else:
+        sess_id = cur_sess
+
+    # choose recipe: trending bias + small chance to revisit user's recent recipe
+    if random.random() < p.get("trend_bias", 0.08):
+        rid = random.choice(trending_recipes)
+    else:
+        # 20% chance to pick a recipe the user recently visited
+        if random.random() < 0.20 and "recent_recipe" in user_session:
+            # sometimes pick the same recipe as the user's last event
+            rid = user_session.get("recent_recipe", random.choice(all_recipe_ids))
+        else:
+            rid = random.choice(all_recipe_ids)
+
+    # choose interaction type weighted by persona
+    itype = weighted_choice(p["weights"])
+
+    # Build metadata & description
+    ts = next_timestamp_for_user(user)
+    iid = f"int-{uuid.uuid4().hex[:10]}"
+
+    # ensure recipe_title present (fetch once and cache is optional)
+    recipe_doc = db.collection("recipes").document(rid).get().to_dict()
+    recipe_title = recipe_doc.get("title", "Recipe")
+
+    interaction = {
+        "id": iid,
+        "user_id": user,
+        "recipe_id": rid,
+        "type": itype,
+        "timestamp": ts,
+        "session_id": sess_id,
+        "metadata": {}
+    }
+
+    # common platform/device/referrer
+    platform_choices = ["android", "ios", "web"]
+    device_by_platform = {
+        "android": "mobile",
+        "ios": "mobile",
+        "web": random.choice(["desktop", "tablet"])
+    }
+    platform = random.choice(platform_choices)
+    device = device_by_platform[platform]
+    referrer = random.choices(["search", "homepage", "suggested", "social", "internal"], weights=[0.4,0.25,0.15,0.12,0.08], k=1)[0]
+
+    if itype == "view":
+        interaction["metadata"] = {
+            "device": device,
+            "platform": platform,
+            "referrer": referrer,
+            "duration_seconds": random.randint(4, 90),
+            "scroll_depth": round(random.uniform(0.2, 0.99), 2)
         }
+        interaction["description"] = f"{recipe_title} viewed by {user} on {platform}"
 
-        # fetch recipe name
-        recipe_doc = db.collection("recipes").document(rid).get()
-        recipe_title = recipe_doc.to_dict().get("title")
+    elif itype == "like":
+        interaction["metadata"] = {
+            "device": device,
+            "platform": platform,
+            "referrer": referrer
+        }
+        interaction["description"] = f"{user} liked {recipe_title}"
 
-        # Metadata + description generation
-        if itype == "view":
-            interaction["metadata"] = {
-                "device": random.choice(["mobile", "desktop"]),
-                "session_seconds": random.randint(2, 15)
-            }
-            interaction["description"] = f"{display_name} viewed {recipe_title}"
-
-        elif itype == "like":
-            interaction["metadata"] = {}
-            interaction["description"] = f"{display_name} liked {recipe_title}"
-
-        elif itype == "rating":
+    elif itype == "rating":
+        # rating distribution depends on persona slightly
+        if persona == "critic":
+            rating_value = random.randint(1, 5)
+        elif persona == "home_cook":
             rating_value = random.randint(3, 5)
-            interaction["metadata"] = {"rating": rating_value}
-            interaction["description"] = (
-                f"{display_name} rated {recipe_title} {rating_value} stars"
-            )
+        else:
+            rating_value = random.randint(2, 5)
+        interaction["metadata"] = {
+            "rating": rating_value,
+            "platform": platform,
+            "device": device,
+            "referrer": referrer
+        }
+        # add sentiment quick tag
+        sentiment = "positive" if rating_value >= 4 else ("neutral" if rating_value == 3 else "negative")
+        interaction["metadata"]["sentiment"] = sentiment
+        interaction["description"] = f"{user} rated {recipe_title} {rating_value} stars"
 
-        elif itype == "attempt":
-            success_val = random.choice([True, False])
-            interaction["metadata"] = {
-                "success": success_val,
-                "time_taken_minutes": random.randint(15, 90)
-            }
-            status_text = "success" if success_val else "failed"
-            interaction["description"] = (
-                f"{display_name} attempted {recipe_title} ({status_text})"
-            )
+    elif itype == "attempt":
+        success = random.random() < 0.7 if persona == "home_cook" else random.random() < 0.45
+        time_taken = random.randint(10, 180)
+        notes = ""
+        if random.random() < 0.12:
+            notes = random.choice([
+                "Added extra spices", "Reduced salt", "Used ghee instead of oil", "Took longer than expected"
+            ])
+        interaction["metadata"] = {
+            "success": success,
+            "time_taken_minutes": time_taken,
+            "platform": platform,
+            "device": device,
+            "referrer": referrer,
+            "notes": notes
+        }
+        status = "success" if success else "failed"
+        interaction["description"] = f"{user} attempted {recipe_title} ({status})"
 
-        db.collection("interactions").document(iid).set(interaction)
-        print(f"✔ Added interaction: {interaction['description']}")
+    # push to Firestore
+    db.collection("interactions").document(iid).set(interaction)
 
+    # bookkeeping
+    events_created += 1
+    counts_by_type[itype] = counts_by_type.get(itype, 0) + 1
+    counts_by_recipe[rid] = counts_by_recipe.get(rid, 0) + 1
+    user_session_count[user] = user_session_count.get(user, 1) - 1
+    # store last recipe for possible revisit behavior
+    # (we store in user_session under a reserved key name)
+    user_session["recent_recipe"] = rid
+
+# done
+print(f"✔ Done: generated {events_created} interactions.")
+print("Type counts:", counts_by_type)
+
+# show top 5 recipes by interactions
+top_recipes = sorted(counts_by_recipe.items(), key=lambda x: x[1], reverse=True)[:8]
+print("Top recipe activity (top 8):")
+for rid, cnt in top_recipes:
+    try:
+        title = db.collection("recipes").document(rid).get().to_dict().get("title", rid)
+    except Exception:
+        title = rid
+    print(f" - {title} ({rid}): {cnt} interactions")
+
+print("Trending recipes were:", trending_recipes)
+
+# ----------------------------------------------------------
+# 5. BASELINE BALANCED INTERACTIONS FOR ALL RECIPES
+# Ensures EVERY recipe has views + likes + some ratings
+# ----------------------------------------------------------
+
+print("\nAdding BASELINE interactions for clean analytics...")
+
+for rid in all_recipe_ids:
+    recipe_doc = db.collection("recipes").document(rid).get().to_dict()
+    recipe_title = recipe_doc.get("title", "Recipe")
+
+    # 10–25 guaranteed views
+    view_count = random.randint(10, 25)
+
+    # 3–10 likes (must be <= views)
+    like_count = random.randint(3, min(10, view_count))
+
+    # 1–5 ratings
+    rating_count = random.randint(1, 5)
+
+    # 0–3 attempts
+    attempt_count = random.randint(0, 3)
+
+    # Random user for each event
+    for _ in range(view_count):
+        uid = random.choice(user_ids)
+        iid = f"int-{uuid.uuid4().hex[:10]}"
+        db.collection("interactions").document(iid).set({
+            "id": iid,
+            "user_id": uid,
+            "recipe_id": rid,
+            "type": "view",
+            "timestamp": datetime.utcnow() - timedelta(days=random.randint(0, 120)),
+            "metadata": {"device": random.choice(["mobile", "desktop"])},
+            "description": f"{uid} viewed {recipe_title}"
+        })
+
+    for _ in range(like_count):
+        uid = random.choice(user_ids)
+        iid = f"int-{uuid.uuid4().hex[:10]}"
+        db.collection("interactions").document(iid).set({
+            "id": iid,
+            "user_id": uid,
+            "recipe_id": rid,
+            "type": "like",
+            "timestamp": datetime.utcnow() - timedelta(days=random.randint(0, 120)),
+            "metadata": {},
+            "description": f"{uid} liked {recipe_title}"
+        })
+
+    for _ in range(rating_count):
+        uid = random.choice(user_ids)
+        stars = random.randint(3, 5)
+        iid = f"int-{uuid.uuid4().hex[:10]}"
+        db.collection("interactions").document(iid).set({
+            "id": iid,
+            "user_id": uid,
+            "recipe_id": rid,
+            "type": "rating",
+            "timestamp": datetime.utcnow() - timedelta(days=random.randint(0, 120)),
+            "metadata": {"rating": stars},
+            "description": f"{uid} rated {recipe_title} {stars} stars"
+        })
+
+    for _ in range(attempt_count):
+        uid = random.choice(user_ids)
+        success = random.choice([True, False])
+        iid = f"int-{uuid.uuid4().hex[:10]}"
+        db.collection("interactions").document(iid).set({
+            "id": iid,
+            "user_id": uid,
+            "recipe_id": rid,
+            "type": "attempt",
+            "timestamp": datetime.utcnow() - timedelta(days=random.randint(0, 120)),
+            "metadata": {
+                "success": success,
+                "time_taken_minutes": random.randint(20, 120),
+            },
+            "description": f"{uid} attempted {recipe_title} ({'success' if success else 'failed'})"
+        })
+
+print("✔ Baseline interactions added.")

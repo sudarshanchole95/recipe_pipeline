@@ -1,22 +1,22 @@
-id,title,cuisine,difficulty,servings,prep_time_min,cook_time_min,total_time_min,tags,occasion,nutrition_groups,category_type,texture,served_temperature
-aloo-paratha-10cfbd,Aloo Paratha,Indian,easy,4,20,20,40,"breakfast,flatbread","Breakfast,Lunch","Carbs,Fat,Vitamins",Comfort Food,Soft,Hot
-chicken-biryani-f5e5ca,Chicken Biryani (Dum Style),Indian,hard,4,40,60,100,"one-pot,festive","Lunch,Dinner,Festive","Carbs,Protein,Fat,Vitamins,Minerals",Spicy,Layered,Hot
-chicken-curry-8ae415,Home-style Chicken Curry,Indian,medium,4,15,40,55,"homestyle,comfort","Lunch,Dinner","Protein,Fat,Vitamins",Spicy,Thick,Hot
-chicken-tacos-da3bd6,Chicken Tacos,Mexican,easy,4,15,15,30,"street-food,quick","Lunch,Snack","Protein,Carbs",Spicy,Crunchy,Warm
-chocolate-cake-f16dfc,Chocolate Cake (One Bowl),Dessert,medium,8,15,30,45,"dessert,baking","Celebration,Dessert","Carbs,Fat,Sugars",Sweet,Soft,Warm
-chole-masala-9f567d,Chole Masala,Indian,medium,4,30,40,70,"north-indian,street-food","Lunch,Dinner","Protein,Carbs,Vitamins",Spicy,Thick,Hot
-dal-tadka-c85b00,Dal Tadka (Yellow Lentils with Tadka),Indian,easy,4,10,25,35,"comfort,vegetarian","Lunch,Dinner","Protein,Carbs,Vitamins",Savory,Soft,Hot
-egg-fried-rice-72b54e,Egg Fried Rice,Chinese,easy,2,10,8,18,"quick,lunch","Lunch,Dinner","Carbs,Protein",Savory,Soft,Hot
-gulab-jamun-728ea6,Gulab Jamun,Dessert,medium,20,30,20,50,"dessert,festive","Festive,Dessert","Carbs,Fats,Sugars",Sweet,Soft,Warm
-idli-sambar-975e40,Idli with Sambar,Indian,medium,4,480,30,510,"breakfast,south-indian","Breakfast,Lunch","Carbs,Protein,Vitamins",Comfort Food,Soft,Hot
-kheer-68fb1f,Kheer (Rice Pudding),Indian,easy,4,5,40,45,"dessert,festive","Festive,Dessert","Carbs,Fats,Proteins",Sweet,Creamy,Warm
-khichdi-5072f67b,Khichdi,Indian,easy,3,20,25,45,"comfort,vegetarian,one-pot","Dinner,Sick Day Comfort","Carbs,Protein,Fiber",Comfort Food,Soft,Hot
-masala-dosa-92a40e,Masala Dosa with Potato Masala,Indian,medium,4,480,30,510,"breakfast,south-indian","Breakfast,Snack","Carbs,Fiber,Vitamins",Savory,Crispy,Hot
-paneer-butter-masala-800573,Paneer Butter Masala,Indian,medium,4,15,25,40,"restaurant-style,vegetarian,gravy","Lunch,Dinner","Protein,Fat,Carbs,Vitamins,Minerals",Creamy Gravy,Creamy,Hot
-pasta-alfredo-1a77fe,Pasta Alfredo,Italian,easy,2,10,15,25,"italian,comfort","Lunch,Dinner","Carbs,Fat,Protein",Creamy,Creamy,Hot
-pav-bhaji-882dd3,Pav Bhaji,Indian,medium,4,20,30,50,"street-food,vegan","Lunch,Dinner,Snack","Carbs,Vitamins,Fiber",Spicy,Thick,Hot
-sweet-corn-soup-6ab0e5,Sweet Corn Soup,Chinese,easy,3,10,15,25,"soup,comfort","Lunch,Dinner,Snack","Vitamins,Fiber,Carbs",Savory,Liquid,Hot
-tomato-soup-a85541,Tomato Basil Soup,International,easy,3,10,20,30,"soup,comfort","Lunch,Dinner","Vitamins,Fiber,Carbs",Savory,Liquid,Hot
-veg-burrito-62d582,Veg Burrito,Mexican,easy,2,15,10,25,"wrap,quick","Lunch,Snack","Carbs,Fiber,Vitamins",Savory,Soft,Warm
-veg-hakka-noodles-c77a96,Veg Hakka Noodles,Chinese,easy,2,15,10,25,"street-style,quick","Lunch,Dinner,Snack","Carbs,Vitamins,Fiber",Savory,Soft,Hot
-veg-manchurian-gravy-a8b654,Veg Manchurian (Gravy),Chinese,medium,4,20,25,45," Indo-Chinese,gravy","Lunch,Dinner","Carbs,Fiber,Vitamins",Savory,Soft,Hot
+id,title,author,cuisine,difficulty,servings,prep_time_min,cook_time_min,total_time_min,tags,occasion,category_type,texture,served_temperature,nutrition_groups,created_at
+aloo-paratha-6d7a6c,Aloo Paratha,Synthetic Chef,Indian,easy,4,20,20,40,"breakfast,flatbread","Breakfast,Lunch",Comfort Food,Soft,Hot,"Carbs,Fat,Vitamins",2025-02-21T04:10:32.067954+00:00
+chicken-biryani-1e5d57,Chicken Biryani (Dum Style),Synthetic Chef,Indian,hard,4,40,60,100,"one-pot,festive","Lunch,Dinner,Festive",Spicy,Layered,Hot,"Carbs,Protein,Fat,Vitamins,Minerals",2025-09-05T04:10:31.055497+00:00
+chicken-curry-1307bd,Home-style Chicken Curry,Synthetic Chef,Indian,medium,4,15,40,55,"homestyle,comfort","Lunch,Dinner",Spicy,Thick,Hot,"Protein,Fat,Vitamins",2025-03-31T04:10:32.848499+00:00
+chicken-tacos-e1e0b9,Chicken Tacos,Synthetic Chef,Mexican,easy,4,15,15,30,"street-food,quick","Lunch,Snack",Spicy,Crunchy,Warm,"Protein,Carbs",2025-05-29T04:10:33.209852+00:00
+chocolate-cake-1cfb0b,Chocolate Cake (One Bowl),Synthetic Chef,Dessert,medium,8,15,30,45,"dessert,baking","Celebration,Dessert",Sweet,Soft,Warm,"Carbs,Fat,Sugars",2025-01-31T04:10:33.341392+00:00
+chole-masala-4b4978,Chole Masala,Synthetic Chef,Indian,medium,4,30,40,70,"north-indian,street-food","Lunch,Dinner",Spicy,Thick,Hot,"Protein,Carbs,Vitamins",2025-10-15T04:10:32.546897+00:00
+dal-tadka-038f43,Dal Tadka (Yellow Lentils with Tadka),Synthetic Chef,Indian,easy,4,10,25,35,"comfort,vegetarian","Lunch,Dinner",Savory,Soft,Hot,"Protein,Carbs,Vitamins",2025-04-08T04:10:32.352230+00:00
+egg-fried-rice-962d81,Egg Fried Rice,Synthetic Chef,Chinese,easy,2,10,8,18,"quick,lunch","Lunch,Dinner",Savory,Soft,Hot,"Carbs,Protein",2025-11-13T04:10:32.674341+00:00
+gulab-jamun-37f6d0,Gulab Jamun,Synthetic Chef,Dessert,medium,20,30,20,50,"dessert,festive","Festive,Dessert",Sweet,Soft,Warm,"Carbs,Fats,Sugars",2025-08-15T04:10:33.485455+00:00
+idli-sambar-60d47e,Idli with Sambar,Synthetic Chef,Indian,medium,4,480,30,510,"breakfast,south-indian","Breakfast,Lunch",Comfort Food,Soft,Hot,"Carbs,Protein,Vitamins",2025-01-29T04:10:31.936411+00:00
+kheer-12334d,Kheer (Rice Pudding),Synthetic Chef,Indian,easy,4,5,40,45,"dessert,festive","Festive,Dessert",Sweet,Creamy,Warm,"Carbs,Fats,Proteins",2025-02-08T04:10:33.622003+00:00
+khichdi-909bc6db,Khichdi,Sudarshan Chole,Indian,easy,3,20,25,45,"comfort,vegetarian,one-pot","Dinner,Sick Day Comfort",Comfort Food,Soft,Hot,"Carbs,Protein,Fiber",2025-11-21T04:10:29.949609+00:00
+masala-dosa-3d8339,Masala Dosa with Potato Masala,Synthetic Chef,Indian,medium,4,480,30,510,"breakfast,south-indian","Breakfast,Snack",Savory,Crispy,Hot,"Carbs,Fiber,Vitamins",2025-06-17T04:10:31.792080+00:00
+paneer-butter-masala-c68624,Paneer Butter Masala,Synthetic Chef,Indian,medium,4,15,25,40,"restaurant-style,vegetarian,gravy","Lunch,Dinner",Creamy Gravy,Creamy,Hot,"Protein,Fat,Carbs,Vitamins,Minerals",2025-06-18T04:10:30.907007+00:00
+pasta-alfredo-7764e3,Pasta Alfredo,Synthetic Chef,Italian,easy,2,10,15,25,"italian,comfort","Lunch,Dinner",Creamy,Creamy,Hot,"Carbs,Fat,Protein",2024-12-20T04:10:32.970284+00:00
+pav-bhaji-ba0e72,Pav Bhaji,Synthetic Chef,Indian,medium,4,20,30,50,"street-food,vegan","Lunch,Dinner,Snack",Spicy,Thick,Hot,"Carbs,Vitamins,Fiber",2024-12-29T04:10:32.215613+00:00
+sweet-corn-soup-6d7691,Sweet Corn Soup,Synthetic Chef,Chinese,easy,3,10,15,25,"soup,comfort","Lunch,Dinner,Snack",Savory,Liquid,Hot,"Vitamins,Fiber,Carbs",2024-11-29T04:10:31.493583+00:00
+tomato-soup-a813c8,Tomato Basil Soup,Synthetic Chef,International,easy,3,10,20,30,"soup,comfort","Lunch,Dinner",Savory,Liquid,Hot,"Vitamins,Fiber,Carbs",2025-10-26T04:10:31.640108+00:00
+veg-burrito-74023a,Veg Burrito,Synthetic Chef,Mexican,easy,2,15,10,25,"wrap,quick","Lunch,Snack",Savory,Soft,Warm,"Carbs,Fiber,Vitamins",2025-07-01T04:10:33.082758+00:00
+veg-hakka-noodles-55c3f0,Veg Hakka Noodles,Synthetic Chef,Chinese,easy,2,15,10,25,"street-style,quick","Lunch,Dinner,Snack",Savory,Soft,Hot,"Carbs,Vitamins,Fiber",2024-12-18T04:10:31.190008+00:00
+veg-manchurian-gravy-e7a92b,Veg Manchurian (Gravy),Synthetic Chef,Chinese,medium,4,20,25,45," Indo-Chinese,gravy","Lunch,Dinner",Savory,Soft,Hot,"Carbs,Fiber,Vitamins",2025-11-12T04:10:31.320038+00:00
