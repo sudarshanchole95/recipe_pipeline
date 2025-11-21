@@ -1,0 +1,49 @@
+{
+  "run_time": "2025-11-21T12:26:54.946827",
+  "total_recipes": 21,
+  "checks": {
+    "missing_recipe_columns": {
+      "count": 0,
+      "severity": "Low",
+      "severity_emoji": "🟢",
+      "details": []
+    },
+    "negative_time_values": {
+      "count": 0,
+      "severity": "High",
+      "severity_emoji": "⚠️",
+      "details": []
+    },
+    "invalid_steps": {
+      "count": 0,
+      "severity": "Low",
+      "severity_emoji": "🟢",
+      "details": []
+    },
+    "invalid_ingredients": {
+      "count": 0,
+      "severity": "Low",
+      "severity_emoji": "🟢",
+      "details": []
+    },
+    "orphan_interactions": {
+      "count": 0,
+      "severity": "Low",
+      "severity_emoji": "🟢",
+      "details": []
+    },
+    "duplicate_recipe_ids": {
+      "count": 0,
+      "severity": "Low",
+      "severity_emoji": "🟢",
+      "details": []
+    },
+    "invalid_difficulty_values": {
+      "count": 0,
+      "severity": "Low",
+      "severity_emoji": "🟢",
+      "details": []
+    }
+  },
+  "total_issues": 0
+}

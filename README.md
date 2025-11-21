@@ -111,18 +111,19 @@ All synthetic records follow realistic probabilities and metadata behavior.
 
 ```mermaid
 flowchart LR
+    A[Firestore Source] --> B[Extract JSON]
+    
+    B --> C[Normalize via ETL]
+    
+    subgraph Transformation Logic
+    C --> C1[Explode Arrays]
+    C --> C2[Type Casting]
+    C --> C3[Deduplication]
+    C --> C4[Schema Enforcement]
+    end
 
-A[Firestore (Source)] --> B[Extract JSON]
-
-B --> C[Normalize via ETL]
-C --> C1[Explode Arrays]
-C --> C2[Type Casting]
-C --> C3[Deduplication]
-C --> C4[Schema Enforcement]
-
-C --> D[Validated CSV Outputs]
-
-C --> E[Quarantine Bad Data]
+    C --> D[Validated CSV Outputs]
+    C --> E[Quarantine Bad Data]
 ```
 
 ### **Extraction**
