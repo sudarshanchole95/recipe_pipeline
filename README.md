@@ -229,43 +229,43 @@ output/validation/
 
 The analytics module (`analytics.py`) generates **15 strategic, consultant-grade visualizations** designed to reveal user behavior, recipe performance, operational risks, and business opportunities.
 
-Charts cover **four strategic categories**:
+The insights are grouped into four strategic pillars:
 
 ---
 
 ### 🧠 Category 1 — User Psychology & Behavior
+*Understanding how users interact with content versus how they actually cook.*
 
-1. **Instagram Trap** — high views ≠ conversions  
-2. **Step Fatigue** — drop-off after ~15 steps  
-3. **30-Minute Cliff** — 2× engagement for fast recipes  
-4. **Effort vs Reward** — complexity vs rating  
+1. **The Instagram Trap:** Identifies "Clickbait" (High Views, Low Cooks) vs. "Retention" content.
+2. **Step Fatigue:** Detects the exact step count (e.g., >15) where user drop-off accelerates.  
+3. **30-Minute Cliff:** Validates demand for speed by comparing engagement for <30m vs >30m recipes.  
+4. **Effort vs. Reward:** Correlates complexity with user ratings to see if "hard work" pays off.
 
 ---
 
 ### 💰 Category 2 — Content Strategy & ROI
 
-5. **ROI Landscape** — rating / minute  
-6. **Skill Gap** — variance by difficulty  
-7. **Cuisine Conversion Power**  
-8. **Batch Cooking Demand**  
+5. **ROI Landscape:** Identifies the "Golden Quadrant" of recipes (High Rating + Low Time).
+6. **The Skill Gap:** Measures rating volatility in "Hard" recipes to pinpoint bad instructions.  
+7. **Cuisine Power:** Ranks cuisines by **Intent** (Conversion Rate) rather than just traffic.  
+8. **Batch Demand:** Analyzes if users prefer single-serving or family-style portions.  
 
 ---
 
 ### 📦 Category 3 — Supply Chain & Operations
 
-9. **Critical Ingredients**  
-10. **Ingredient Barrier**  
-11. **Inventory Efficiency Risk**  
+9. **Critical Ingredients:** Top 3 items required for >50% of active cooking sessions.
+10. **The Saffron Effect:** Regression analysis on how every *additional* ingredient lowers conversion.
+11. **Inventory Risk:** Flags "Orphan Ingredients" used in only one recipe (high waste risk).  
 
 ---
 
 ### 🚀 Category 4 — App Growth & Monetization
 
-12. **Onboarding Heroes**  
-13. **Viral Vectors**  
-14. **Prep vs Cook Time Distribution**  
-15. **Correlation Matrix**  
-
+12. **Onboarding Heroes:** Best "Easy" recipes to show Day 1 users to guarantee a win.
+13. **Viral Vectors:** Highest organic engagement drivers for social media promotion.  
+14. **Workflow Preferences:** Active Prep vs. Passive Cook time analysis for appliance partnerships.  
+15. **Correlation Matrix:** Heatmap revealing hidden statistical drivers of success.
 ---
 
 ### 📄 Analytics Report Generation
