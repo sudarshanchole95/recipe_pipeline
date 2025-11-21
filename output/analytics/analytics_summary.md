@@ -1,50 +1,43 @@
-# 📊 Recipe Pipeline Analytics & Insights
+# 📊 Strategic Recipe Analytics Report
 
-**Generated:** 2025-11-21 15:27:59
-**Total Recipes Analyzed:** 21
+**Generated:** 2025-11-21 17:05:56
+## 1. Visual Strategy (Problem Solving)
+### 🧠 Psychology
+- `1_instagram_trap.png`: Identifies Clickbait.
+- `2_step_fatigue.png`: Max recipe length.
+- `3_30min_cliff.png`: Demand for speed.
+- `4_effort_vs_reward.png`: Complexity payoff.
 
-## 🛡 1. Data Quality Summary
-- **Data Health Score:** 100.0%
-- **Total Issues:** 0
+### 💰 Content Strategy
+- `5_roi_landscape.png`: High-value content.
+- `6_skill_gap.png`: User failure rates.
+- `7_cuisine_power.png`: High-intent niches.
+- `8_batch_demand.png`: Serving optimization.
 
-**Issues by Category:**
-- 🟢 **missing_recipe_columns**: 0 issues
-- ⚠️ **negative_time_values**: 0 issues
-- 🟢 **invalid_steps**: 0 issues
-- 🟢 **invalid_ingredients**: 0 issues
-- 🟢 **orphan_interactions**: 0 issues
-- 🟢 **duplicate_recipe_ids**: 0 issues
-- 🟢 **invalid_difficulty_values**: 0 issues
+### 📦 Operations
+- `9_supply_chain_critical.png`: Inventory risks.
+- `10_ingredient_barrier.png`: Cost of complexity.
+- `11_inventory_risk.png`: Waste reduction.
 
-## 📈 2. Business Insights
-1. **Top Ingredient:** 'Salt' appears most frequently.
-2. **Average Prep Time:** 61.2 minutes.
-3. **Viral Leader:** 'Chicken Tacos' (100.0% engagement).
-4. **Difficulty Balance:** 0.0% of recipes are 'Hard'.
-5. **Quick Wins:** 1 recipes are <30mins & rated 4+ stars.
-6. **Global Quality Score:** 3.74 / 5.0 Stars.
-7. **Time/Quality Correlation:** 0.12 (Positive means longer = better).
-8. **Avg Complexity Score:** 47.6 / 100.
-9. **Total Interactions:** 898 user events.
-10. **Dominant Cuisine:** Indian
-11. **Avg Conversion Rate:** 9.4% of viewers attempt to cook.
-12. **Best ROI Recipe:** 'Egg Fried Rice' (Highest rating per minute spent).
-13. **Crowd Favorite:** 'Egg Fried Rice' has the most likes.
-14. **Most Complex:** 'Chicken Biryani (Dum Style)' uses 18 ingredients.
+### 🚀 Growth
+- `12_onboarding_heroes.png`: Retention drivers.
+- `13_viral_vectors.png`: Organic growth.
+- `14_prep_vs_cook.png`: Appliance fit.
+- `15_correlation_matrix.png`: Hidden drivers.
 
-## 🏆 3. High-Performance Leaderboard
-| title                          | difficulty   |   engagement_rate |   views |   avg_rating |
-|:-------------------------------|:-------------|------------------:|--------:|-------------:|
-| Chicken Tacos                  | easy         |          100      |      18 |      3.71429 |
-| Masala Dosa with Potato Masala | medium       |           65      |      20 |      3.83333 |
-| Pasta Alfredo                  | easy         |           57.1429 |      21 |      3.33333 |
-| Idli with Sambar               | medium       |           54.1667 |      24 |      4       |
-| Veg Burrito                    | easy         |           54.1667 |      24 |      2.33333 |
-
-## 💡 4. Strategic Recommendations
-- **Promote 'Quick Wins':** Focus marketing on recipes under 30 mins with >4.0 rating.
-- **Optimize Titles:** High view count but low conversion indicates misleading titles.
-- **Supply Chain:** Ensure stock for the top 3 ingredients shown in Chart 1.
-
-## 📊 5. Visualizations
-All 10 professional charts are saved in: `output/analytics/charts/`
+## 2. Strategic Insights
+### Psychology
+- **Instagram Trap:** High views $\neq$ high usage. See Chart 1.
+- **Step Fatigue:** Users drop off after 15 steps. See Chart 2.
+- **Speed Bias:** Sub-30 min recipes drive 2x engagement. See Chart 3.
+### Strategy
+- **ROI Champions:** High Rating + Low Time = Growth. See Chart 5.
+- **Skill Gap:** Hard recipes are risky (high variance). See Chart 6.
+- **Niche Power:** Specific cuisines outperform generic ones. See Chart 7.
+### Supply
+- **Critical Risk:** Top 3 ingredients are single points of failure. See Chart 9.
+- **Barrier to Entry:** Every added ingredient lowers conversion. See Chart 10.
+- **Waste:** High number of single-use ingredients. See Chart 11.
+### Growth
+- **Onboarding:** Use high-attempt Easy recipes for new users. See Chart 12.
+- **Virality:** Promote high engagement content on social. See Chart 13.

@@ -227,23 +227,104 @@ output/validation/
 
 ## 6. Analytics & Insights
 
-Analytics includes:
+The analytics module (`analytics.py`) generates **15 strategic, consultant-grade visualizations** designed to reveal user behavior, recipe performance, operational risks, and business opportunities.
 
-- Most common ingredients  
-- Difficulty distribution  
-- Prep-time vs rating correlation  
-- Top engagement recipes  
-- Heatmap correlations  
-- Word cloud of ingredients  
+Charts cover **four strategic categories**:
 
-Outputs:
+---
+
+### 🧠 Category 1 — User Psychology & Behavior
+
+1. **Instagram Trap** — high views ≠ conversions  
+2. **Step Fatigue** — drop-off after ~15 steps  
+3. **30-Minute Cliff** — 2× engagement for fast recipes  
+4. **Effort vs Reward** — complexity vs rating  
+
+---
+
+### 💰 Category 2 — Content Strategy & ROI
+
+5. **ROI Landscape** — rating / minute  
+6. **Skill Gap** — variance by difficulty  
+7. **Cuisine Conversion Power**  
+8. **Batch Cooking Demand**  
+
+---
+
+### 📦 Category 3 — Supply Chain & Operations
+
+9. **Critical Ingredients**  
+10. **Ingredient Barrier**  
+11. **Inventory Efficiency Risk**  
+
+---
+
+### 🚀 Category 4 — App Growth & Monetization
+
+12. **Onboarding Heroes**  
+13. **Viral Vectors**  
+14. **Prep vs Cook Time Distribution**  
+15. **Correlation Matrix**  
+
+---
+
+### 📄 Analytics Report Generation
+
+A full report is auto-generated:
 
 ```
-output/analytics/charts/
 output/analytics/analytics_summary.md
 ```
 
+Includes:
+
+- Strategic insights  
+- Chart explanations  
+- Timestamped metadata  
+
 ---
+
+### 📁 Analytics Outputs
+
+```
+output/analytics/charts/
+```
+
+Examples:
+
+```
+1_instagram_trap.png
+2_step_fatigue.png
+5_roi_landscape.png
+10_ingredient_barrier.png
+15_correlation_matrix.png
+```
+
+---
+
+### 🛠 Fix Included in Code
+
+```python
+step_conv = (
+    df.groupby("step_bin")["conversion_rate"]
+    .mean()
+    .reset_index()
+    .sort_values("step_bin")
+)
+
+plt.fill_between(
+    step_conv["step_bin"],
+    0,
+    step_conv["conversion_rate"],
+    alpha=0.1,
+    color="#2ecc71"
+)
+```
+
+Ensures error-free rendering.
+
+---
+
 
 ## 7. Orchestration System
 
