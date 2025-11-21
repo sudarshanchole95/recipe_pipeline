@@ -22,7 +22,7 @@ The pipeline simulates a real-world production data system with:
 
 ---
 
-## 2. Expanded Data Model Architecture
+## 2.Data Model Architecture
 
 Firestore stores semi-structured JSON documents. During ETL, this data is normalized into a clean relational model.
 
@@ -300,30 +300,7 @@ Examples:
 15_correlation_matrix.png
 ```
 
----
 
-### 🛠 Fix Included in Code
-
-```python
-step_conv = (
-    df.groupby("step_bin")["conversion_rate"]
-    .mean()
-    .reset_index()
-    .sort_values("step_bin")
-)
-
-plt.fill_between(
-    step_conv["step_bin"],
-    0,
-    step_conv["conversion_rate"],
-    alpha=0.1,
-    color="#2ecc71"
-)
-```
-
-Ensures error-free rendering.
-
----
 
 
 ## 7. Orchestration System
