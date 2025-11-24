@@ -1,6 +1,6 @@
 {
-  "run_time": "2025-11-21T17:05:50.238718",
-  "total_recipes": 21,
+  "run_time": "2025-11-24T14:00:48.414324",
+  "total_recipes": 65,
   "checks": {
     "missing_recipe_columns": {
       "count": 0,
@@ -15,10 +15,31 @@
       "details": []
     },
     "invalid_steps": {
-      "count": 0,
-      "severity": "Low",
-      "severity_emoji": "🟢",
-      "details": []
+      "count": 4,
+      "severity": "Medium",
+      "severity_emoji": "🟡",
+      "details": [
+        {
+          "recipe_id": "test-paneer-9593",
+          "step_number": NaN,
+          "step_text": "Heat oil in a pan."
+        },
+        {
+          "recipe_id": "test-paneer-9593",
+          "step_number": NaN,
+          "step_text": "Add tomatoes, cook and add paneer."
+        },
+        {
+          "recipe_id": "test-soup-6973",
+          "step_number": NaN,
+          "step_text": "Chop vegetables."
+        },
+        {
+          "recipe_id": "test-soup-6973",
+          "step_number": NaN,
+          "step_text": "Boil everything together for 15 minutes."
+        }
+      ]
     },
     "invalid_ingredients": {
       "count": 0,
@@ -45,5 +66,5 @@
       "details": []
     }
   },
-  "total_issues": 0
+  "total_issues": 4
 }

@@ -1,31 +1,13 @@
 # 📊 Strategic Recipe Analytics Report
 
-**Generated:** 2025-11-21 17:05:56
-## 1. Visual Strategy (Problem Solving)
-### 🧠 Psychology
-- `1_instagram_trap.png`: Identifies Clickbait.
-- `2_step_fatigue.png`: Max recipe length.
-- `3_30min_cliff.png`: Demand for speed.
-- `4_effort_vs_reward.png`: Complexity payoff.
+**Generated:** 2025-11-24 14:00:54
+## 1. Visual Strategy
+- **Psychology:** 1_instagram_trap, 2_step_fatigue, 3_30min_cliff, 4_effort_vs_reward
+- **Strategy:** 5_roi_landscape, 6_skill_gap, 7_cuisine_power, 8_batch_demand
+- **Supply Chain:** 9_supply_critical, 10_ingredient_barrier, 11_inventory_risk
+- **Growth:** 12_onboarding, 13_viral, 14_workflow, 15_correlations
 
-### 💰 Content Strategy
-- `5_roi_landscape.png`: High-value content.
-- `6_skill_gap.png`: User failure rates.
-- `7_cuisine_power.png`: High-intent niches.
-- `8_batch_demand.png`: Serving optimization.
-
-### 📦 Operations
-- `9_supply_chain_critical.png`: Inventory risks.
-- `10_ingredient_barrier.png`: Cost of complexity.
-- `11_inventory_risk.png`: Waste reduction.
-
-### 🚀 Growth
-- `12_onboarding_heroes.png`: Retention drivers.
-- `13_viral_vectors.png`: Organic growth.
-- `14_prep_vs_cook.png`: Appliance fit.
-- `15_correlation_matrix.png`: Hidden drivers.
-
-## 2. Strategic Insights
+## 2. Executive Insights
 ### Psychology
 - **Instagram Trap:** High views $\neq$ high usage. See Chart 1.
 - **Step Fatigue:** Users drop off after 15 steps. See Chart 2.

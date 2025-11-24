@@ -20,3 +20,47 @@ tomato-soup-a813c8,Tomato Basil Soup,Synthetic Chef,International,easy,3,10,20,3
 veg-burrito-74023a,Veg Burrito,Synthetic Chef,Mexican,easy,2,15,10,25,"wrap,quick","Lunch,Snack",Savory,Soft,Warm,"Carbs,Fiber,Vitamins",2025-07-01T04:10:33.082758+00:00
 veg-hakka-noodles-55c3f0,Veg Hakka Noodles,Synthetic Chef,Chinese,easy,2,15,10,25,"street-style,quick","Lunch,Dinner,Snack",Savory,Soft,Hot,"Carbs,Vitamins,Fiber",2024-12-18T04:10:31.190008+00:00
 veg-manchurian-gravy-e7a92b,Veg Manchurian (Gravy),Synthetic Chef,Chinese,medium,4,20,25,45," Indo-Chinese,gravy","Lunch,Dinner",Savory,Soft,Hot,"Carbs,Fiber,Vitamins",2025-11-12T04:10:31.320038+00:00
+aloo-paratha-97cd53,Aloo Paratha,,Indian,easy,,20,20,40,"breakfast,flatbread",,,,,,2024-10-24T08:12:14.209901Z
+chicken-biryani-ba7bc1,Chicken Biryani (Dum Style),,Indian,hard,,40,60,100,"one-pot,festive",,,,,,2025-11-20T08:12:13.260112Z
+chicken-curry-263486,Home-style Chicken Curry,,Indian,medium,,15,40,55,"homestyle,comfort",,,,,,2025-10-31T08:12:14.847975Z
+chicken-tacos-351b72,Chicken Tacos,,Mexican,easy,,15,15,30,"street-food,quick",,,,,,2025-04-13T08:12:15.224067Z
+chocolate-cake-f01122,Chocolate Cake (One Bowl),,Dessert,medium,,15,30,45,"dessert,baking",,,,,,2025-07-14T08:12:15.343586Z
+chole-masala-5c37aa,Chole Masala,,Indian,medium,,30,40,70,"north-indian,street-food",,,,,,2025-10-05T08:12:14.588314Z
+dal-tadka-cd6ac5,Dal Tadka (Yellow Lentils with Tadka),,Indian,easy,,10,25,35,"comfort,vegetarian",,,,,,2024-11-10T08:12:14.458895Z
+egg-fried-rice-ebcced,Egg Fried Rice,,Chinese,easy,,10,8,18,"quick,lunch",,,,,,2025-10-10T08:12:14.707074Z
+gulab-jamun-5033f7,Gulab Jamun,,Dessert,medium,,30,20,50,"dessert,festive",,,,,,2025-06-16T08:12:15.476113Z
+idli-sambar-35cf3e,Idli with Sambar,,Indian,medium,,480,30,510,"breakfast,south-indian",,,,,,2025-02-18T08:12:14.075156Z
+kheer-b652e4,Kheer (Rice Pudding),,Indian,easy,,5,40,45,"dessert,festive",,,,,,2025-09-03T08:12:15.604142Z
+khichdi-cf1a02b3,Khichdi,,Indian,easy,,20,25,45,"comfort,vegetarian,one-pot",,,,,,2025-11-24T08:12:12.218740Z
+masala-dosa-0e7c2f,Masala Dosa with Potato Masala,,Indian,medium,,480,30,510,"breakfast,south-indian",,,,,,2025-02-19T08:12:13.950799Z
+paneer-butter-masala-7d6ed0,Paneer Butter Masala,,Indian,medium,,15,25,40,"restaurant-style,vegetarian,gravy",,,,,,2024-11-02T08:12:13.123177Z
+pasta-alfredo-bf06c6,Pasta Alfredo,,Italian,easy,,10,15,25,"italian,comfort",,,,,,2025-01-19T08:12:14.979504Z
+pav-bhaji-c8dc67,Pav Bhaji,,Indian,medium,,20,30,50,"street-food,vegan",,,,,,2025-11-03T08:12:14.331103Z
+sweet-corn-soup-77c927,Sweet Corn Soup,,Chinese,easy,,10,15,25,"soup,comfort",,,,,,2024-12-09T08:12:13.656589Z
+tomato-soup-c219c8,Tomato Basil Soup,,International,easy,,10,20,30,"soup,comfort",,,,,,2025-06-07T08:12:13.783073Z
+veg-burrito-a1bc63,Veg Burrito,,Mexican,easy,,15,10,25,"wrap,quick",,,,,,2025-03-23T08:12:15.108222Z
+veg-hakka-noodles-0d5438,Veg Hakka Noodles,,Chinese,easy,,15,10,25,"street-style,quick",,,,,,2024-10-20T08:12:13.393442Z
+veg-manchurian-gravy-d32525,Veg Manchurian (Gravy),,Chinese,medium,,20,25,45," Indo-Chinese,gravy",,,,,,2025-06-05T08:12:13.527395Z
+aloo-paratha-43a5df,Aloo Paratha,,Indian,easy,,20,20,40,"breakfast,flatbread",,,,,,2025-09-16T08:20:53.390057Z
+chicken-biryani-478714,Chicken Biryani (Dum Style),,Indian,hard,,40,60,100,"one-pot,festive",,,,,,2024-12-28T08:20:52.498634Z
+chicken-curry-839b8a,Home-style Chicken Curry,,Indian,medium,,15,40,55,"homestyle,comfort",,,,,,2025-01-11T08:20:54.006010Z
+chicken-tacos-3537bc,Chicken Tacos,,Mexican,easy,,15,15,30,"street-food,quick",,,,,,2025-02-11T08:20:54.358366Z
+chocolate-cake-80b61a,Chocolate Cake (One Bowl),,Dessert,medium,,15,30,45,"dessert,baking",,,,,,2025-07-13T08:20:54.468161Z
+chole-masala-c339ad,Chole Masala,,Indian,medium,,30,40,70,"north-indian,street-food",,,,,,2024-12-11T08:20:53.763461Z
+dal-tadka-b4e22c,Dal Tadka (Yellow Lentils with Tadka),,Indian,easy,,10,25,35,"comfort,vegetarian",,,,,,2025-03-06T08:20:53.641998Z
+egg-fried-rice-12dc44,Egg Fried Rice,,Chinese,easy,,10,8,18,"quick,lunch",,,,,,2025-03-11T08:20:53.883177Z
+gulab-jamun-1346cf,Gulab Jamun,,Dessert,medium,,30,20,50,"dessert,festive",,,,,,2025-05-31T08:20:54.589961Z
+idli-sambar-9bc1ff,Idli with Sambar,,Indian,medium,,480,30,510,"breakfast,south-indian",,,,,,2025-04-07T08:20:53.268012Z
+kheer-e3ef20,Kheer (Rice Pudding),,Indian,easy,,5,40,45,"dessert,festive",,,,,,2025-10-12T08:20:54.703341Z
+khichdi-37255734,Khichdi,,Indian,easy,,20,25,45,"comfort,vegetarian,one-pot",,,,,,2025-11-24T08:20:51.357030Z
+masala-dosa-733f88,Masala Dosa with Potato Masala,,Indian,medium,,480,30,510,"breakfast,south-indian",,,,,,2025-06-28T08:20:53.151488Z
+paneer-butter-masala-6b6d65,Paneer Butter Masala,,Indian,medium,,15,25,40,"restaurant-style,vegetarian,gravy",,,,,,2025-11-14T08:20:52.352748Z
+pasta-alfredo-1175f5,Pasta Alfredo,,Italian,easy,,10,15,25,"italian,comfort",,,,,,2025-09-15T08:20:54.119442Z
+pav-bhaji-ff8248,Pav Bhaji,,Indian,medium,,20,30,50,"street-food,vegan",,,,,,2024-11-03T08:20:53.513853Z
+sweet-corn-soup-3ba218,Sweet Corn Soup,,Chinese,easy,,10,15,25,"soup,comfort",,,,,,2025-07-17T08:20:52.901273Z
+tomato-soup-d1e249,Tomato Basil Soup,,International,easy,,10,20,30,"soup,comfort",,,,,,2025-10-11T08:20:53.022994Z
+veg-burrito-9dc677,Veg Burrito,,Mexican,easy,,15,10,25,"wrap,quick",,,,,,2025-02-27T08:20:54.237403Z
+veg-hakka-noodles-5f19f2,Veg Hakka Noodles,,Chinese,easy,,15,10,25,"street-style,quick",,,,,,2025-04-08T08:20:52.627911Z
+veg-manchurian-gravy-a8b208,Veg Manchurian (Gravy),,Chinese,medium,,20,25,45," Indo-Chinese,gravy",,,,,,2024-12-17T08:20:52.763480Z
+test-paneer-9593,Test Paneer Masala,,Indian,easy,,15,20,35,"test,paneer",,,,,,2025-11-24T08:22:06.928000Z
+test-soup-6973,Test Veg Soup,,Fusion,medium,,10,15,25,"test,soup",,,,,,2025-11-24T08:22:06.967000Z
