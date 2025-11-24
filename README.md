@@ -388,15 +388,40 @@ project/
 - Orchestration is Python-based, not Airflow/Prefect.
 
 ---
+## References
+
+These references are helpful for understanding and validating concepts used in this project.
+
+### 🔹 Firebase
+- **Firestore Documentation**: https://firebase.google.com/docs/firestore  
+- **Firestore Admin SDK (Python)**: https://firebase.google.com/docs/admin/setup
+
+### 🔹 Python & Data Engineering
+- **pandas Documentation**: https://pandas.pydata.org/docs/  
+- **Python JSON Handling**: https://docs.python.org/3/library/json.html  
+- **Matplotlib Guide**: https://matplotlib.org/stable/users/index.html  
+- **Seaborn Docs**: https://seaborn.pydata.org/
+
+### 🔹 Data Modeling & Pipelines
+- **Kimball Dimensional Modeling**: https://www.kimballgroup.com/  
+- **Data Quality Principles**: https://www.oreilly.com/library/view/data-quality/9780123743695/  
+- **ETL Pipeline Concepts (AWS Glue)**: https://docs.aws.amazon.com/glue/latest/dg/what-is-glue.html
+
+### 🔹 Visualization & Analytics
+- **Visualization Best Practices**: https://www.data-to-viz.com/  
+- **Correlation Interpretation**: https://statisticsbyjim.com/statistics/correlation/
+
+---
 
 ## Final Statement
 
-This project demonstrates a strong production-style data engineering workflow with:
+This pipeline demonstrates a complete, production-style workflow covering:
 
-- Automated orchestration  
-- Reliable validation  
-- Scalable transformation  
-- Insightful analytics  
+- Automated ingestion from Firestore  
+- Schema normalization  
+- Data quality enforcement  
+- Analytics generation  
+- End-to-end orchestration
 
-A complete end-to-end Firestore → ETL → Validation → Analytics pipeline.
+A powerful demonstration of **Data Engineering → Analytics Engineering → Business Insights**.
 
