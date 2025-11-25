@@ -1,6 +1,6 @@
 # 📊 Strategic Recipe Analytics Report
 
-**Generated:** 2025-11-24 14:00:54
+**Generated:** 2025-11-25 10:27:30
 ## 1. Visual Strategy
 - **Psychology:** 1_instagram_trap, 2_step_fatigue, 3_30min_cliff, 4_effort_vs_reward
 - **Strategy:** 5_roi_landscape, 6_skill_gap, 7_cuisine_power, 8_batch_demand

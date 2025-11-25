@@ -1,6 +1,6 @@
 {
-  "run_time": "2025-11-24T14:00:48.414324",
-  "total_recipes": 65,
+  "run_time": "2025-11-25T10:27:24.161871",
+  "total_recipes": 23,
   "checks": {
     "missing_recipe_columns": {
       "count": 0,
@@ -48,10 +48,51 @@
       "details": []
     },
     "orphan_interactions": {
-      "count": 0,
-      "severity": "Low",
-      "severity_emoji": "🟢",
-      "details": []
+      "count": 6356,
+      "severity": "Critical",
+      "severity_emoji": "🔥",
+      "details": [
+        {
+          "id": "int-004652dc48",
+          "user_id": "sofia_romano",
+          "recipe_id": "kheer-12334d",
+          "type": "view",
+          "timestamp": "2025-10-06T04:11:45.367874+00:00",
+          "metadata_json": "{\"device\": \"desktop\"}"
+        },
+        {
+          "id": "int-0048e7966b",
+          "user_id": "ishita_pandey_cb13",
+          "recipe_id": "pasta-alfredo-7764e3",
+          "type": "like",
+          "timestamp": "2025-09-11T04:11:39.385834+00:00",
+          "metadata_json": "{}"
+        },
+        {
+          "id": "int-00662c48fd",
+          "user_id": "noodleninja",
+          "recipe_id": "aloo-paratha-6d7a6c",
+          "type": "like",
+          "timestamp": "2025-08-20T04:11:31.011183+00:00",
+          "metadata_json": "{}"
+        },
+        {
+          "id": "int-00ad4bf869",
+          "user_id": "ananya_verma",
+          "recipe_id": "veg-burrito-74023a",
+          "type": "like",
+          "timestamp": "2025-09-12T04:11:40.549620+00:00",
+          "metadata_json": "{}"
+        },
+        {
+          "id": "int-013d7f2684",
+          "user_id": "ishita_pandey",
+          "recipe_id": "egg-fried-rice-962d81",
+          "type": "like",
+          "timestamp": "2025-05-13T23:17:28.423176+00:00",
+          "metadata_json": "{\"platform\": \"ios\", \"device\": \"mobile\", \"referrer\": \"homepage\"}"
+        }
+      ]
     },
     "duplicate_recipe_ids": {
       "count": 0,
@@ -66,5 +107,5 @@
       "details": []
     }
   },
-  "total_issues": 4
+  "total_issues": 6360
 }

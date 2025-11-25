@@ -1,63 +1,26 @@
 [
   {
     "record": {
-      "created_at": "2025-11-24T08:22:07.006000Z",
+      "created_at": "2025-11-25T04:54:51.288093Z",
       "steps": [
-        "Just mix everything"
+        {
+          "text": "Just cook.",
+          "step_number": 1
+        }
       ],
       "ingredients": [
         {
-          "name": "Onion"
+          "name": "Something"
         }
       ],
-      "cuisine": "Indian",
       "difficulty": "easy",
-      "updated_at": "2025-11-24T08:22:07.006000Z",
-      "id": "bad-missing-title-6646"
+      "prep_time_min": 5,
+      "cuisine": "Indian",
+      "updated_at": "2025-11-25T04:54:51.288209Z",
+      "id": "bad-216a55"
     },
     "reasons": [
       "missing_title"
-    ]
-  },
-  {
-    "record": {
-      "created_at": "2025-11-24T08:22:07.088000Z",
-      "steps": [
-        "Step 1"
-      ],
-      "prep_time_min": -5,
-      "cook_time_min": 10,
-      "updated_at": "2025-11-24T08:22:07.088000Z",
-      "cuisine": "Global",
-      "total_time_min": 5,
-      "ingredients": [
-        {
-          "name": "Salt"
-        }
-      ],
-      "difficulty": "easy",
-      "title": "Invalid Negative Time",
-      "id": "bad-negative-time-3502"
-    },
-    "reasons": [
-      "negative_time_value"
-    ]
-  },
-  {
-    "record": {
-      "created_at": "2025-11-24T08:22:07.051000Z",
-      "steps": [
-        "Random step"
-      ],
-      "ingredients": [],
-      "updated_at": "2025-11-24T08:22:07.051000Z",
-      "difficulty": "hard",
-      "cuisine": "Indian",
-      "title": "Broken Recipe No Ingredients",
-      "id": "bad-no-ingredients-4697"
-    },
-    "reasons": [
-      "no_ingredients"
     ]
   }
 ]

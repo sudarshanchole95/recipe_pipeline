@@ -910,9 +910,8 @@ for r in recipes_data:
 
 print("All 20 recipes uploaded.")
 
-# ---------- 3) Create 10 sample users ----------
-# --------------------------------------
-# 4. Insert Realistic Mixed Users
+# ----------  Create 10 sample users ----------
+
 # --------------------------------------
 
 print("Creating realistic mixed users...")
@@ -957,16 +956,9 @@ for i in range(10):
 
 
 # ---------- 4) Create interactions ----------
-# --------------------------------------
-# 5. Insert Interactions (With UUID + Descriptive Text)
-# --------------------------------------
-# ----------------------------------------------------------
-# 4. REALISTIC USER INTERACTIONS GENERATOR (Final Version)
-# ----------------------------------------------------------
-# ----------------------------
+
 # Improved Interaction Generator
-# Target = 300 interactions, mixed distribution with trending recipes
-# Paste this block into seed_firestore.py where interactions are generated
+
 # ----------------------------
 
 import random

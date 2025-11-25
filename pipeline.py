@@ -94,7 +94,6 @@ def run_step(step_name: str, fn, run_args=None):
 
     return result
 
-
 # ------------------------------------------------------------
 # Main Orchestrator
 # ------------------------------------------------------------
@@ -129,7 +128,9 @@ def main():
     valid_fn = getattr(VALID_MOD, "run_validation", None) if VALID_MOD else None
     res_valid = run_step("VALIDATION", valid_fn)
     run_manifest["steps"].append(res_valid)
+# ===============================================================test 1
 
+# =============================================================== test 1
     # ------- 4) ANALYTICS -------
     analytics_fn = getattr(ANALYTICS_MOD, "run_analytics", None) if ANALYTICS_MOD else None
     res_analytics = run_step("ANALYTICS", analytics_fn)
@@ -166,7 +167,8 @@ def main():
 
     print(f"Manifest saved → {out_file}\n")
     print("==============================================")
-
+# ===================================================
+   
     return run_manifest
 
 

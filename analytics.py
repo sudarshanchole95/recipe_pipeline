@@ -1,7 +1,7 @@
 """
 analytics.py
 ------------------------------------------------
-Advanced Analytics Module for Recipe Pipeline.
+Analytics Module for Recipe Pipeline.
 Generates strategic visualizations and KPI reports.
 ------------------------------------------------
 """
@@ -75,10 +75,13 @@ def load_data() -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame]
     df_s = pd.read_csv(STEPS_CSV).fillna("") if os.path.exists(STEPS_CSV) else pd.DataFrame()
     df_int = pd.read_csv(INTERACTIONS_CSV).fillna("") if os.path.exists(INTERACTIONS_CSV) else pd.DataFrame()
 
-    # Type casting
-    numeric_cols = ["prep_time_min", "cook_time_min", "total_time_min", "servings"]
-    for col in numeric_cols:
-        if col in df_r.columns:
+    # Ensure critical columns exist to prevent downstream crashes
+    expected_cols = ["prep_time_min", "cook_time_min", "total_time_min", "servings"]
+    for col in expected_cols:
+        if col not in df_r.columns:
+            # log_step(f"Optional column '{col}' missing. Filling with 0.", "WARN")
+            df_r[col] = 0
+        else:
             df_r[col] = pd.to_numeric(df_r[col], errors="coerce").fillna(0)
             
     return df_r, df_i, df_s, df_int
@@ -155,16 +158,21 @@ def calculate_advanced_metrics(df_r, df_i, df_s, df_int):
 def generate_charts(df, df_i, df_int):
     
     def save_plot(filename):
-        sns.despine()
-        plt.tight_layout()
-        plt.savefig(os.path.join(CHARTS_DIR, filename), dpi=300, bbox_inches="tight")
-        plt.close()
+        try:
+            sns.despine()
+            plt.tight_layout()
+            plt.savefig(os.path.join(CHARTS_DIR, filename), dpi=300, bbox_inches="tight")
+        except Exception as e:
+            log_step(f"Failed to save {filename}: {e}", "WARN")
+        finally:
+            plt.close()
 
     # --- 🧠 User Psychology ---
     # 1. The "Instagram Trap"
     plt.figure(figsize=(10, 6))
-    sns.scatterplot(data=df, x="views", y="conversion_rate", hue="difficulty", palette="viridis", size="likes", sizes=(50, 300), alpha=0.8, edgecolor="w")
-    plt.axhline(df["conversion_rate"].mean(), color='#e74c3c', linestyle='--', linewidth=2)
+    if not df.empty and "difficulty" in df.columns:
+        sns.scatterplot(data=df, x="views", y="conversion_rate", hue="difficulty", palette="viridis", size="likes", sizes=(50, 300), alpha=0.8, edgecolor="w")
+        plt.axhline(df["conversion_rate"].mean(), color='#e74c3c', linestyle='--', linewidth=2)
     plt.title("The 'Instagram Trap': Views vs. Action", fontsize=16, fontweight='bold')
     plt.xlabel("Total Views")
     plt.ylabel("Conversion Rate %")
@@ -173,39 +181,43 @@ def generate_charts(df, df_i, df_int):
 
     # 2. Step Fatigue
     plt.figure(figsize=(10, 5))
-    df["step_bin"] = pd.cut(df["step_count"], bins=[0, 5, 10, 15, 20, 50], labels=["0-5", "5-10", "10-15", "15-20", "20+"])
-    step_trend = df.groupby("step_bin", observed=True)["conversion_rate"].mean()
-    sns.lineplot(data=df, x="step_bin", y="conversion_rate", marker="o", color="#2ecc71", linewidth=3, errorbar=None)
+    if not df.empty:
+        df["step_bin"] = pd.cut(df["step_count"], bins=[0, 5, 10, 15, 20, 50], labels=["0-5", "5-10", "10-15", "15-20", "20+"])
+        step_trend = df.groupby("step_bin", observed=True)["conversion_rate"].mean()
+        sns.lineplot(data=df, x="step_bin", y="conversion_rate", marker="o", color="#2ecc71", linewidth=3, errorbar=None)
+        if not step_trend.empty:
+            plt.fill_between(step_trend.index, 0, step_trend.values, alpha=0.1, color="#2ecc71")
     plt.title("Step Fatigue: Drop-off by Length", fontsize=16, fontweight='bold')
     plt.ylabel("Avg Conversion (%)")
-    if not step_trend.empty:
-        plt.fill_between(step_trend.index, 0, step_trend.values, alpha=0.1, color="#2ecc71")
     save_plot("2_step_fatigue.png")
 
     # 3. 30-Minute Cliff
     plt.figure(figsize=(8, 5))
-    df["time_bucket"] = pd.cut(df["total_time_min"], bins=[0, 30, 60, 1000], labels=["< 30m", "30-60m", "> 60m"])
-    sns.barplot(data=df, x="time_bucket", y="engagement_rate", palette="crest", hue="time_bucket", dodge=False)
+    if not df.empty:
+        df["time_bucket"] = pd.cut(df["total_time_min"], bins=[0, 30, 60, 1000], labels=["< 30m", "30-60m", "> 60m"])
+        sns.barplot(data=df, x="time_bucket", y="engagement_rate", palette="crest", hue="time_bucket", dodge=False)
     plt.title("The '30-Minute Cliff'", fontsize=16, fontweight='bold')
     plt.legend([],[], frameon=False)
     save_plot("3_30min_cliff.png")
 
     # 4. Effort vs Reward
     plt.figure(figsize=(8, 6))
-    sns.regplot(data=df, x="complexity_score", y="avg_rating", scatter_kws={'alpha':0.5, 'color': '#9b59b6'}, line_kws={'color':'#8e44ad'})
+    if not df.empty:
+        sns.regplot(data=df, x="complexity_score", y="avg_rating", scatter_kws={'alpha':0.5, 'color': '#9b59b6'}, line_kws={'color':'#8e44ad'})
     plt.title("Effort vs. Reward", fontsize=16, fontweight='bold')
     save_plot("4_effort_vs_reward.png")
 
     # --- 💰 ROI Strategy ---
     # 5. ROI Landscape
     plt.figure(figsize=(10, 6))
-    sns.scatterplot(data=df, x="total_time_min", y="avg_rating", hue="roi_score", palette="RdYlGn", size="views", sizes=(50,400), alpha=0.9, edgecolor="k")
+    if not df.empty:
+        sns.scatterplot(data=df, x="total_time_min", y="avg_rating", hue="roi_score", palette="RdYlGn", size="views", sizes=(50,400), alpha=0.9, edgecolor="k")
     plt.title("Content ROI Landscape", fontsize=16, fontweight='bold')
     plt.legend(bbox_to_anchor=(1.02, 1), loc=2, frameon=False)
     save_plot("5_roi_landscape.png")
 
     # 6. Skill Gap
-    if "rating_std" in df.columns:
+    if "rating_std" in df.columns and not df.empty and df["rating_std"].sum() > 0:
         plt.figure(figsize=(8, 5))
         sns.barplot(data=df, x="difficulty", y="rating_std", palette="magma", hue="difficulty", order=["Easy", "Medium", "Hard"])
         plt.title("Skill Gap: Rating Volatility", fontsize=16, fontweight='bold')
@@ -213,7 +225,7 @@ def generate_charts(df, df_i, df_int):
         save_plot("6_skill_gap.png")
 
     # 7. Cuisine Power
-    if "cuisine" in df.columns:
+    if "cuisine" in df.columns and not df.empty:
         plt.figure(figsize=(10, 6))
         order = df.groupby("cuisine")["conversion_rate"].mean().sort_values(ascending=False).index
         sns.barplot(data=df, y="cuisine", x="conversion_rate", order=order, palette="cool", hue="cuisine")
@@ -223,14 +235,21 @@ def generate_charts(df, df_i, df_int):
 
     # 8. Batch Demand
     plt.figure(figsize=(8, 5))
-    sns.boxplot(data=df, x="servings", y="attempts", palette="Set2", hue="servings")
-    plt.title("Batch Cooking Demand", fontsize=16, fontweight='bold')
+    # STRICT GUARD: Check if column exists AND has meaningful data (not just all 0s from the fillna)
+    if "servings" in df.columns and not df.empty and df["servings"].max() > 0:
+        sns.boxplot(data=df, x="servings", y="attempts", palette="Set2", hue="servings")
+        plt.title("Batch Cooking Demand", fontsize=16, fontweight='bold')
+    else:
+        # Render a placeholder so the file is still created
+        plt.text(0.5, 0.5, "Data Unavailable: 'servings'", ha='center', va='center', fontsize=12)
+        plt.title("Batch Cooking Demand (No Data)", fontsize=16, fontweight='bold')
+        
     plt.legend([],[], frameon=False)
     save_plot("8_batch_demand.png")
 
     # --- 📦 Supply Chain ---
     # 9. Supply Criticality
-    if not df_i.empty:
+    if not df_i.empty and not df.empty:
         merged_i = df_i.merge(df[["id", "attempts"]], left_on="recipe_id", right_on="id")
         crit_ing = merged_i.groupby("ingredient_name")["attempts"].sum().nlargest(10)
         plt.figure(figsize=(10, 6))
@@ -241,7 +260,8 @@ def generate_charts(df, df_i, df_int):
 
     # 10. Ingredient Barrier
     plt.figure(figsize=(8, 5))
-    sns.regplot(data=df, x="ingredient_count", y="conversion_rate", marker="D", color="#e67e22", scatter_kws={'alpha':0.6})
+    if not df.empty:
+        sns.regplot(data=df, x="ingredient_count", y="conversion_rate", marker="D", color="#e67e22", scatter_kws={'alpha':0.6})
     plt.title("Ingredient Count Barrier", fontsize=16, fontweight='bold')
     save_plot("10_ingredient_barrier.png")
 
@@ -257,24 +277,26 @@ def generate_charts(df, df_i, df_int):
 
     # --- 🚀 Growth ---
     # 12. Onboarding Heroes
-    easy_wins = df[df["difficulty"]=="Easy"].nlargest(5, "attempts")
-    if not easy_wins.empty:
-        plt.figure(figsize=(10, 5))
-        sns.barplot(data=easy_wins, y="title", x="attempts", palette="spring", hue="title")
-        plt.title("Onboarding Heroes", fontsize=16, fontweight='bold')
-        plt.legend([],[], frameon=False)
-        save_plot("12_onboarding_heroes.png")
+    if "difficulty" in df.columns and not df.empty:
+        easy_wins = df[df["difficulty"]=="Easy"].nlargest(5, "attempts")
+        if not easy_wins.empty:
+            plt.figure(figsize=(10, 5))
+            sns.barplot(data=easy_wins, y="title", x="attempts", palette="spring", hue="title")
+            plt.title("Onboarding Heroes", fontsize=16, fontweight='bold')
+            plt.legend([],[], frameon=False)
+            save_plot("12_onboarding_heroes.png")
 
     # 13. Viral Vectors
-    viral = df.nlargest(10, "engagement_rate")
-    plt.figure(figsize=(10, 6))
-    sns.barplot(data=viral, y="title", x="engagement_rate", palette="plasma", hue="title")
-    plt.title("Viral Vectors", fontsize=16, fontweight='bold')
-    plt.legend([],[], frameon=False)
-    save_plot("13_viral_vectors.png")
+    if not df.empty:
+        viral = df.nlargest(10, "engagement_rate")
+        plt.figure(figsize=(10, 6))
+        sns.barplot(data=viral, y="title", x="engagement_rate", palette="plasma", hue="title")
+        plt.title("Viral Vectors", fontsize=16, fontweight='bold')
+        plt.legend([],[], frameon=False)
+        save_plot("13_viral_vectors.png")
 
     # 14. Prep vs Cook
-    if "cuisine" in df.columns:
+    if "cuisine" in df.columns and not df.empty:
         time_melt = df.melt(id_vars="cuisine", value_vars=["prep_time_min", "cook_time_min"], var_name="Type", value_name="Minutes")
         plt.figure(figsize=(10, 6))
         sns.barplot(data=time_melt, x="cuisine", y="Minutes", hue="Type", palette="muted", errorbar=None)

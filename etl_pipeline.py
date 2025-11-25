@@ -1,6 +1,6 @@
 """
 etl_pipeline.py  
-Clean Professional ETL – Senior Data Engineer Level
+
 
 Behaviour:
 - Reads export/*.json
@@ -111,8 +111,15 @@ def load_json(path):
     return json.loads(path.read_text()) if path.exists() else []
 
 
-def read_csv(path):
-    return pd.read_csv(path, dtype=str).fillna("") if path.exists() else pd.DataFrame()
+def read_csv(path: Path):
+    # If file doesn't exist OR is empty → return empty DF
+    if not path.exists() or path.stat().st_size == 0:
+        return pd.DataFrame()
+
+    try:
+        return pd.read_csv(path, dtype=str).fillna("")
+    except pd.errors.EmptyDataError:
+        return pd.DataFrame()
 
 
 def write_csv(path, df):
@@ -139,8 +146,17 @@ def normalize_recipes():
     steps_csv = ETL_DIR / "steps.csv"
     inter_csv = ETL_DIR / "interactions.csv"
 
-    existing_rec_ids = set(read_csv(recipe_csv)["id"]) if recipe_csv.exists() else set()
-    existing_inter_ids = set(read_csv(inter_csv)["id"]) if inter_csv.exists() else set()
+    # Fix: Safely load existing IDs only if 'id' column exists
+    rec_df = read_csv(recipe_csv)
+    existing_rec_ids = set(rec_df["id"]) if "id" in rec_df.columns else set()
+
+    # NEW: Safely load existing Content Keys (Title + Cuisine) for deduplication
+    existing_content_keys = set()
+    if "title" in rec_df.columns and "cuisine" in rec_df.columns:
+        existing_content_keys = set(zip(rec_df["title"], rec_df["cuisine"]))
+
+    inter_df = read_csv(inter_csv)
+    existing_inter_ids = set(inter_df["id"]) if "id" in inter_df.columns else set()
 
     recipe_rows = []
     ing_rows = []
@@ -157,6 +173,10 @@ def normalize_recipes():
     #--------------------------
     for rec in rec_json:
         rid = _to_str(rec.get("id") or rec.get("slug"))
+        
+        # Extract content fields for deduplication
+        title = _to_str(rec.get("title")).strip()
+        cuisine = _to_str(rec.get("cuisine")).strip()
 
         is_valid, reasons = validate_recipe(rec)
 
@@ -172,11 +192,16 @@ def normalize_recipes():
             bad_recipes.append({"record": rec, "reasons": reasons})
             continue
 
+        # NEW: Content-based Deduplication Check (Title + Cuisine)
+        if (title, cuisine) in existing_content_keys:
+            dup_recipes.append({"record": rec, "reasons": ["duplicate_content"]})
+            continue
+
         # Valid → flatten recipe
         recipe_rows.append({
             "id": rid,
-            "title": _to_str(rec.get("title")),
-            "cuisine": _to_str(rec.get("cuisine")),
+            "title": title,
+            "cuisine": cuisine,
             "difficulty": _to_str(rec.get("difficulty")),
             "prep_time_min": rec.get("prep_time_min", ""),
             "cook_time_min": rec.get("cook_time_min", ""),
@@ -207,6 +232,7 @@ def normalize_recipes():
             })
 
         existing_rec_ids.add(rid)
+        existing_content_keys.add((title, cuisine))
 
     # -------------------------
     # PROCESS INTERACTIONS

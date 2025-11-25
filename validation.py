@@ -1,6 +1,6 @@
 # validation.py
 """
-Enhanced validation script (Option A severity scheme).
+
 
 Outputs:
  - VALIDATION_DIR/validation_report.md         (human readable)
